@@ -1,12 +1,14 @@
 package com.example.demo.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Book {
@@ -22,6 +24,12 @@ public class Book {
 	private String author;
 	private String genre;
 	private Date yearPublished;
+	
+	@OneToMany(mappedBy="book")
+	private List<Reservation> reservations;
+	
+	@OneToMany(mappedBy="book")
+	private List<Loan> loans;
 	
 	public Book(long id, String title, String image, String author, String genre, Date yearPublished) {
 		super();

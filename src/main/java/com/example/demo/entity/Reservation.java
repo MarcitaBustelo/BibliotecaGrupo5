@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Reservation {
@@ -14,16 +16,22 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	private User user;
-	private Book book;
 	private Date reservation;
 	private String status;
+	
+	@ManyToOne
+	@JoinColumn(name="id_user", nullable = false)
+	private User id_user;
+ 
+	@ManyToOne
+	@JoinColumn(name="id_book", nullable = false)
+	private Book id_book;
 
-	public Reservation(long id, User user, Book book, Date reservation, String status) {
+	public Reservation(long id, User id_user, Book id_book, Date reservation, String status) {
 		super();
 		this.id = id;
-		this.user = user;
-		this.book = book;
+		this.id_user = id_user;
+		this.id_book = id_book;
 		this.reservation = reservation;
 		this.status = status;
 	}
@@ -40,20 +48,20 @@ public class Reservation {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public User getId_User() {
+		return id_user;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setId_User(User id_user) {
+		this.id_user = id_user;
 	}
 
-	public Book getBook() {
-		return book;
+	public Book getId_Book() {
+		return id_book;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setId_Book(Book id_book) {
+		this.id_book = id_book;
 	}
 
 	public Date getReservation() {
@@ -74,7 +82,7 @@ public class Reservation {
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", user=" + user + ", book=" + book + ", reservation=" + reservation
+		return "Reservation [id=" + id + ", id_user=" + id_user + ", id_book=" + id_book + ", reservation=" + reservation
 				+ ", status=" + status + "]";
 	}
 
