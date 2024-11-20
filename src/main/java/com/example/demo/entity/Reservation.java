@@ -21,17 +21,17 @@ public class Reservation {
 	
 	@ManyToOne
 	@JoinColumn(name="id_user", nullable = false)
-	private User id_user;
+	private User user;
  
 	@ManyToOne
 	@JoinColumn(name="id_book", nullable = false)
-	private Book id_book;
+	private Book book;
 
 	public Reservation(long id, User id_user, Book id_book, Date reservation, String status) {
 		super();
 		this.id = id;
-		this.id_user = id_user;
-		this.id_book = id_book;
+		this.user = id_user;
+		this.book = id_book;
 		this.reservation = reservation;
 		this.status = status;
 	}
@@ -49,19 +49,19 @@ public class Reservation {
 	}
 
 	public User getId_User() {
-		return id_user;
+		return user;
 	}
 
 	public void setId_User(User id_user) {
-		this.id_user = id_user;
+		this.user = id_user;
 	}
 
 	public Book getId_Book() {
-		return id_book;
+		return book;
 	}
 
 	public void setId_Book(Book id_book) {
-		this.id_book = id_book;
+		this.book = id_book;
 	}
 
 	public Date getReservation() {
@@ -82,7 +82,7 @@ public class Reservation {
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", id_user=" + id_user + ", id_book=" + id_book + ", reservation=" + reservation
+		return "Reservation [id=" + id + ", id_user=" + user + ", id_book=" + book + ", reservation=" + reservation
 				+ ", status=" + status + "]";
 	}
 

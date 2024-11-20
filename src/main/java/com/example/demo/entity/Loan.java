@@ -20,18 +20,18 @@ public class Loan {
 	private Date due_date;
 
 	@ManyToOne
-	@JoinColumn(name="id_user", nullable = false)
-	private User id_user;
- 
+	@JoinColumn(name = "id_user", nullable = false)
+	private User user;
+
 	@ManyToOne
-	@JoinColumn(name="id_book",nullable = false)
-	private Book id_book;
-	
-	public Loan(long id, User id_user, Book id_book, Date initial_date, Date due_date) {
+	@JoinColumn(name = "id_book", nullable = false)
+	private Book book;
+
+	public Loan(long id, User user, Book book, Date initial_date, Date due_date) {
 		super();
 		this.id = id;
-		this.id_user = id_user;
-		this.id_book = id_book;
+		this.user = user;
+		this.book = book;
 		this.initial_date = initial_date;
 		this.due_date = due_date;
 	}
@@ -48,20 +48,20 @@ public class Loan {
 		this.id = id;
 	}
 
-	public User getId_User() {
-		return id_user;
+	public User getUser() {
+		return user;
 	}
 
-	public void setId_User(User id_user) {
-		this.id_user = id_user;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Book getId_Book() {
-		return id_book;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setId_Book(Book id_book) {
-		this.id_book = id_book;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public Date getInitial_date() {
@@ -82,8 +82,8 @@ public class Loan {
 
 	@Override
 	public String toString() {
-		return "Loan [id=" + id + ", user=" + id_user + ", book=" + id_book + ", initial_date=" + initial_date + ", due_date="
-				+ due_date + "]";
+		return "Loan [id=" + id + ", initial_date=" + initial_date + ", due_date=" + due_date + ", user=" + user
+				+ ", book=" + book + "]";
 	}
 
 }
