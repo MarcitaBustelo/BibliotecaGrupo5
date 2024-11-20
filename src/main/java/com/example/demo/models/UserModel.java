@@ -1,29 +1,17 @@
-package com.example.demo.entity;
+package com.example.demo.models;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
-@Entity
-public class User {
+public class UserModel {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
 	private String name;
 	private String lastname;
-
-	@Column(unique = true, nullable = false)
 	private String email;
-
-	@Column(nullable = false)
 	private String password;
 	private String role;
 
-	public User(long id, String name, String lastname, String email, String password, String role) {
+	public UserModel(long id, String name, String lastname, String email, String password, String role) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -33,7 +21,7 @@ public class User {
 		this.role = role;
 	}
 
-	public User() {
+	public UserModel() {
 		super();
 	}
 
@@ -87,7 +75,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", lastname=" + lastname + ", email=" + email + ", password="
+		return "UserModel [id=" + id + ", name=" + name + ", lastname=" + lastname + ", email=" + email + ", password="
 				+ password + ", role=" + role + "]";
 	}
 

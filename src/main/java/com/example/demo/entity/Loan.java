@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Reservation {
+public class Loan {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,19 +16,19 @@ public class Reservation {
 
 	private User user;
 	private Book book;
-	private Date reservation;
-	private String status;
+	private Date initial_date;
+	private Date due_date;
 
-	public Reservation(long id, User user, Book book, Date reservation, String status) {
+	public Loan(long id, User user, Book book, Date initial_date, Date due_date) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.book = book;
-		this.reservation = reservation;
-		this.status = status;
+		this.initial_date = initial_date;
+		this.due_date = due_date;
 	}
 
-	public Reservation() {
+	public Loan() {
 		super();
 	}
 
@@ -56,26 +56,26 @@ public class Reservation {
 		this.book = book;
 	}
 
-	public Date getReservation() {
-		return reservation;
+	public Date getInitial_date() {
+		return initial_date;
 	}
 
-	public void setReservation(Date reservation) {
-		this.reservation = reservation;
+	public void setInitial_date(Date initial_date) {
+		this.initial_date = initial_date;
 	}
 
-	public String getStatus() {
-		return status;
+	public Date getDue_date() {
+		return due_date;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setDue_date(Date due_date) {
+		this.due_date = due_date;
 	}
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", user=" + user + ", book=" + book + ", reservation=" + reservation
-				+ ", status=" + status + "]";
+		return "Loan [id=" + id + ", user=" + user + ", book=" + book + ", initial_date=" + initial_date + ", due_date="
+				+ due_date + "]";
 	}
 
 }
