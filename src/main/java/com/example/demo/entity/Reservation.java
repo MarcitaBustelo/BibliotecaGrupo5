@@ -5,5 +5,5 @@ import jakarta.persistence.Entity;
 @Entity
 public class Reservation {
 
-	//id, user, book, fechaReserva, estado("pending", "notified")
+	//id, user, book, fechaReserva, status("pending", "notified")
 }
