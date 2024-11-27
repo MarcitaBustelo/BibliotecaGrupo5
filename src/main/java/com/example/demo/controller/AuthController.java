@@ -15,7 +15,6 @@ import com.example.demo.entity.User;
 import com.example.demo.services.impl.UserService;
 
 @Controller
-@RequestMapping("/register")
 public class AuthController {
 
 	@Autowired
@@ -27,7 +26,7 @@ public class AuthController {
 		return "welcome";
 	}
 
-	@GetMapping("/auth/login")
+	@GetMapping("/login")
 	public String login(Model model, @RequestParam(name = "error", required = false) String error,
 			@RequestParam(name = "logout", required = false) String logout) {
 		model.addAttribute("user", new User());
@@ -36,17 +35,16 @@ public class AuthController {
 		return "login";
 	}
 
-	@GetMapping("/auth/registerForm")
+	@GetMapping("/register")
 	public String registerForm(Model model) {
 		model.addAttribute("user", new User());
 		return "register";
-
 	}
 
-	@PostMapping("/auth/register")
+	@PostMapping("/register")
 	public String register(@ModelAttribute User user, RedirectAttributes flash) {
 		userService.registrar(user);
 		flash.addFlashAttribute("success", "User registered successfully!");
-		return "redirect:/auth/login";
+		return "redirect:/login";
 	}
 }

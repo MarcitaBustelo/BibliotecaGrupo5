@@ -1,10 +1,84 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html lang="en">
 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Biblioteca</title>
+	<style>
+		body {
+			margin: 0;
+			font-family: Arial, sans-serif;
+			background-image: url('fondoBiblio.jpg');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			color: white;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			height: 100vh;
+		}
+
+		.navbar {
+			display: flex;
+			justify-content: flex-end;
+			background: rgba(0, 0, 0, 0.7);
+			/* Fondo semitransparente */
+			padding: 10px 20px;
+		}
+
+		.navbar a {
+			text-decoration: none;
+			color: white;
+			margin-left: 15px;
+			padding: 10px 20px;
+			border: 1px solid white;
+			border-radius: 5px;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+
+		.navbar a:hover {
+			background-color: white;
+			color: black;
+		}
+
+		.content {
+			text-align: center;
+			margin: auto;
+		}
+
+		.content h1 {
+			font-size: 3rem;
+			background: rgba(0, 0, 0, 0.5);
+			/* Fondo semitransparente para texto */
+			display: inline-block;
+			padding: 20px;
+			border-radius: 10px;
+		}
+
+		.content p {
+			font-size: 1.2rem;
+			margin-top: 20px;
+			background: rgba(0, 0, 0, 0.5);
+			/* Fondo semitransparente para texto */
+			display: inline-block;
+			padding: 10px;
+			border-radius: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="navbar">
+		<a href="/register">Register</a>
+		<a href="/login">Login</a>
+	</div>
+	<div class="content">
+		<h1>Bienvenido a la Biblioteca</h1>
+		<p>Descubre un mundo de conocimiento</p>
+		<p>y aventura en cada página.</p>
+	</div>
 </body>
+
 </html>
