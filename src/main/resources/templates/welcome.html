@@ -4,81 +4,98 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Biblioteca</title>
+	<title>Welcome to Biblioteca</title>
+
 	<style>
-		body {
-			margin: 0;
-			font-family: Arial, sans-serif;
-			background-image: url('fondoBiblio.jpg');
+		/* Establecer el fondo de la biblioteca */
+		.background-container {
+			background-image: url('/images/fondo-png.png');
+			/* Ruta correcta de la imagen */
 			background-size: cover;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			color: white;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
+			background-position: center;
 			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			/* Asegura que el contenido se coloque en columna */
 		}
 
+		/* Barra de navegación */
 		.navbar {
+			position: absolute;
+			top: 20px;
+			right: 20px;
 			display: flex;
-			justify-content: flex-end;
-			background: rgba(0, 0, 0, 0.7);
-			/* Fondo semitransparente */
-			padding: 10px 20px;
+			gap: 10px;
 		}
 
 		.navbar a {
-			text-decoration: none;
-			color: white;
-			margin-left: 15px;
+			background-color: #4e342e;
+			/* Marrón oscuro */
+			color: #d7ccc8;
+			/* Marrón claro */
 			padding: 10px 20px;
-			border: 1px solid white;
+			text-decoration: none;
 			border-radius: 5px;
-			transition: background-color 0.3s ease, color 0.3s ease;
+			font-weight: bold;
 		}
 
 		.navbar a:hover {
-			background-color: white;
-			color: black;
+			background-color: #6d4c41;
+			/* Marrón más claro */
 		}
 
-		.content {
+		/* Contenedor de contenido con un box */
+		.content-container {
 			text-align: center;
+		}
+
+		/* Caja de bienvenida */
+		.welcome-box {
+			background-color: #4e342e;
+			/* Marrón oscuro */
+			color: #d7ccc8;
+			/* Marrón claro */
+			padding: 30px;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+			max-width: 80%;
 			margin: auto;
 		}
 
-		.content h1 {
-			font-size: 3rem;
-			background: rgba(0, 0, 0, 0.5);
-			/* Fondo semitransparente para texto */
-			display: inline-block;
-			padding: 20px;
-			border-radius: 10px;
+		/* Estilos adicionales */
+		h1 {
+			font-size: 3em;
+			font-weight: bold;
+			margin-bottom: 10px;
 		}
 
-		.content p {
-			font-size: 1.2rem;
-			margin-top: 20px;
-			background: rgba(0, 0, 0, 0.5);
-			/* Fondo semitransparente para texto */
-			display: inline-block;
-			padding: 10px;
-			border-radius: 10px;
+		p {
+			font-size: 1.2em;
+			margin-top: 0;
 		}
 	</style>
 </head>
 
 <body>
+
+	<!-- Barra de navegación -->
 	<div class="navbar">
-		<a href="/register">Register</a>
 		<a href="/login">Login</a>
+		<a href="/register">Register</a>
 	</div>
-	<div class="content">
-		<h1>Bienvenido a la Biblioteca</h1>
-		<p>Descubre un mundo de conocimiento</p>
-		<p>y aventura en cada página.</p>
+
+	<!-- Fondo de la biblioteca -->
+	<div class="background-container">
+		<div class="content-container">
+			<div class="welcome-box">
+				<h1>Welcome to the Library</h1>
+				<p>Discover a world of knowledge and adventure on every page.</p>
+			</div>
+		</div>
 	</div>
+
 </body>
 
 </html>
