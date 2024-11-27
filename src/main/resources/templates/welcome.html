@@ -4,98 +4,101 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Welcome to Biblioteca</title>
-
+	<title>Library</title>
 	<style>
-		/* Establecer el fondo de la biblioteca */
-		.background-container {
-			background-image: url('/images/fondo-png.png');
-			/* Ruta correcta de la imagen */
-			background-size: cover;
-			background-position: center;
-			height: 100vh;
+		body {
+			margin: 0;
+			font-family: 'Roboto', sans-serif;
+			background-color: #d7ccc8;
+			color: #2e2e2e;
 			display: flex;
-			justify-content: center;
-			align-items: center;
 			flex-direction: column;
-			/* Asegura que el contenido se coloque en columna */
+			justify-content: space-between;
+			height: 100vh;
 		}
 
-		/* Barra de navegación */
 		.navbar {
-			position: absolute;
-			top: 20px;
-			right: 20px;
 			display: flex;
-			gap: 10px;
+			justify-content: flex-end;
+			background: rgba(62, 39, 35, 0.9);
+			padding: 15px 30px;
 		}
 
 		.navbar a {
-			background-color: #4e342e;
-			/* Marrón oscuro */
-			color: #d7ccc8;
-			/* Marrón claro */
-			padding: 10px 20px;
 			text-decoration: none;
+			color: #ffffff;
+			margin-left: 15px;
+			padding: 10px 20px;
 			border-radius: 5px;
+			background-color: #3e2723;
+			transition: background-color 0.3s ease, color 0.3s ease;
 			font-weight: bold;
 		}
 
 		.navbar a:hover {
 			background-color: #6d4c41;
-			/* Marrón más claro */
+			color: #ffffff;
 		}
 
-		/* Contenedor de contenido con un box */
-		.content-container {
+		.content {
 			text-align: center;
-		}
-
-		/* Caja de bienvenida */
-		.welcome-box {
-			background-color: #4e342e;
-			/* Marrón oscuro */
-			color: #d7ccc8;
-			/* Marrón claro */
-			padding: 30px;
-			border-radius: 10px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-			max-width: 80%;
 			margin: auto;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			backdrop-filter: blur(8px);
+			background: rgba(62, 39, 35, 0.8);
+			padding: 50px;
+			border-radius: 15px;
+			box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 		}
 
-		/* Estilos adicionales */
-		h1 {
-			font-size: 3em;
-			font-weight: bold;
-			margin-bottom: 10px;
+		.content h1 {
+			font-size: 3.8rem;
+			margin-bottom: 20px;
+			color: #f5f5f5;
 		}
 
-		p {
-			font-size: 1.2em;
-			margin-top: 0;
+		.content p {
+			font-size: 1.5rem;
+			margin-top: 10px;
+			width: 70%;
+			line-height: 1.8;
+			color: #e0e0e0;
+		}
+
+		@media (max-width: 768px) {
+			.content h1 {
+				font-size: 2.8rem;
+			}
+
+			.content p {
+				font-size: 1.2rem;
+				width: 85%;
+			}
+
+			.navbar {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.navbar a {
+				margin-top: 10px;
+				margin-left: 0;
+			}
 		}
 	</style>
 </head>
 
 <body>
-
-	<!-- Barra de navegación -->
 	<div class="navbar">
-		<a href="/login">Login</a>
 		<a href="/register">Register</a>
+		<a href="/login">Login</a>
 	</div>
-
-	<!-- Fondo de la biblioteca -->
-	<div class="background-container">
-		<div class="content-container">
-			<div class="welcome-box">
-				<h1>Welcome to the Library</h1>
-				<p>Discover a world of knowledge and adventure on every page.</p>
-			</div>
-		</div>
+	<div class="content">
+		<h1>Welcome to the Library</h1>
+		<p>Discover a world of knowledge and adventure on every page.</p>
 	</div>
-
 </body>
 
 </html>
