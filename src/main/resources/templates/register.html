@@ -29,7 +29,12 @@
 			<label for="password"> repe Contraseña</label>
 			<input type="password" id="password" th:field="*{password}" required />
 		</div>
+
 		<button type="submit">Registrar</button>
+		<div th:if="${success}">
+			<p style="color: green;">[[${success}]]</p>
+		</div>
+
 	</form>
 
 </body>

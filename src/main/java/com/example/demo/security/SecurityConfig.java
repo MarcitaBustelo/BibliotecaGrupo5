@@ -18,36 +18,9 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http
-	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers("/", "/register/**", "/login", "/webjars/**").permitAll()
-	            .requestMatchers("/admin/**").hasRole("ADMIN")
-	        )
-	        .formLogin(form -> form
-	            .loginPage("/login")
-	            .defaultSuccessUrl("/", true)  
-	            .permitAll()
-	            .successHandler((request, response, authentication) -> {  
-	                String role = authentication.getAuthorities().stream()
-	                        .map(grantedAuthority -> grantedAuthority.getAuthority())
-	                        .findFirst()
-	                        .orElse("ROLE_USER");
-
-	                if ("ROLE_ADMIN".equals(role)) {  
-	                    response.sendRedirect("/admin");
-	                } else {
-	                    response.sendRedirect("/user"); 
-	                }
-	            })
-	        )
-	        .logout(logout -> logout
-	            .logoutUrl("/logout")
-	            .logoutSuccessUrl("/welcome") 
-	            .permitAll()
-	        );
-
-	    return http.build();
+		http.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/", "/registerForm", "/register", "/login", "/webjars/**").permitAll().anyRequest());
+		return http.build();
 	}
-
 
 }
