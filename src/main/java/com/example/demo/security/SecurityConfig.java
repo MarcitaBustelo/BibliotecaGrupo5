@@ -20,9 +20,9 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
 				auth -> auth.requestMatchers("/", "/registerForm", "/register", "/login", "/webjars/**").permitAll()
-						.anyRequest().authenticated()) // Completar con `authenticated` o restricciones adicionales
-				.formLogin().loginPage("/login").permitAll() // Configura el formulario de inicio de sesión
-				.and().logout().permitAll(); // Configura el cierre de sesión
+						.anyRequest().authenticated()) 
+				.formLogin().loginPage("/login").permitAll()
+				.and().logout().permitAll(); 
 		return http.build();
 	}
 
