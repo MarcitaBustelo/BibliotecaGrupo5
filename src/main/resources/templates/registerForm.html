@@ -7,18 +7,17 @@
 </head>
 
 <body>
-
-	<form action="#" th:action="@{/profile}" th:object="${user}" method="post">
+	<form th:action="@{/profile}" th:object="${user}" method="post">
 		<div>
-			<label for="nombre">Nombre</label>
-			<input type="text" id="nombre" th:field="*{nombre}" required />
+			<label for="nombre">Name</label>
+			<input type="text" id="name" name="name" th:field="*{name}" required />
 		</div>
 		<div>
-			<label for="apellido">Apellido</label>
-			<input type="text" id="apellido" th:field="*{apellido}" required />
+			<label for="lastname">Lastname</label>
+			<input type="text" id="lastname" th:field="*{lastname}" required />
 		</div>
 		<div>
-			<label for="email">Email</label>
+			<label for="email">email</label>
 			<input type="email" id="email" th:field="*{email}" required readonly />
 		</div>
 		<button type="submit">Guardar</button>

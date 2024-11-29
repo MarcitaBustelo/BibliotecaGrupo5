@@ -87,6 +87,10 @@
 			<artifactId>font-awesome</artifactId>
 			<version>5.15.4</version>
 		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
