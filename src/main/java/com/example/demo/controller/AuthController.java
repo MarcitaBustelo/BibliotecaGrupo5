@@ -26,6 +26,11 @@ public class AuthController {
 	public String home() {
 		return "welcome";
 	}
+	
+	@GetMapping("/about")
+	public String aboutUs() {
+		return "about";
+	}
 
 	@GetMapping("/login")
 	public String login(Model model) {

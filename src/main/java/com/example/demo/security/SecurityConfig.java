@@ -19,7 +19,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/registerForm", "/register", "/login", "/webjars/**").permitAll().anyRequest().authenticated() // Proteger todas las demás rutas
+						.requestMatchers("/", "/registerForm", "/register", "/listBooks", "/about", "/login", "/webjars/**").permitAll().anyRequest().authenticated() // Proteger todas las demás rutas
 				).formLogin(form -> form.loginPage("/login") // Página personalizada de inicio de sesión
 						.permitAll() // Permitir acceso a todos para la página de login
 				).logout(logout -> logout.permitAll() // Permitir cierre de sesión para todos
