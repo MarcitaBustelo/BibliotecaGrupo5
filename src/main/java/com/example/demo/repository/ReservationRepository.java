@@ -5,9 +5,9 @@ import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.Reservation;
 
 @Repository("reservationRepository")
-public interface ReservationRepository extends JpaRepository<User, Serializable>{
+public interface ReservationRepository extends JpaRepository<Reservation, Serializable>{
 
 }

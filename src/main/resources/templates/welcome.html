@@ -40,6 +40,30 @@ body {
 	color: #ffffff;
 }
 
+.tab-menu {
+	display: flex;
+	justify-content: center;
+	background: rgba(93, 64, 55, 0.9);
+	padding: 10px 0;
+	margin: 0;
+}
+
+.tab-menu a {
+	text-decoration: none;
+	color: #ffffff;
+	margin: 0 15px;
+	padding: 10px 20px;
+	border-radius: 5px;
+	background-color: transparent;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	font-weight: bold;
+}
+
+.tab-menu a:hover {
+	background-color: #3e2723;
+	color: #ffffff;
+}
+
 .content {
 	text-align: center;
 	margin: auto;
@@ -67,7 +91,7 @@ body {
 	color: #e0e0e0;
 }
 
-@media ( max-width : 768px) {
+@media (max-width: 768px) {
 	.content h1 {
 		font-size: 2.8rem;
 	}
@@ -83,6 +107,12 @@ body {
 		margin-top: 10px;
 		margin-left: 0;
 	}
+	.tab-menu {
+		flex-direction: column;
+	}
+	.tab-menu a {
+		margin-top: 10px;
+	}
 }
 </style>
 </head>
@@ -91,6 +121,10 @@ body {
 	<div class="navbar">
 		<a href="/registerForm">Register</a> 
 		<a href="/login">Login</a>
+	</div>
+	<div class="tab-menu">
+		<a href="/books">Books</a>
+		<a href="/about">About Us</a>
 	</div>
 	<div class="content">
 		<h1>Welcome to the Library</h1>
