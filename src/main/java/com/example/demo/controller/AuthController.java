@@ -26,7 +26,7 @@ public class AuthController {
 	public String home() {
 		return "welcome";
 	}
-	
+
 	@GetMapping("/about")
 	public String aboutUs() {
 		return "about";
@@ -46,8 +46,25 @@ public class AuthController {
 
 	@PostMapping("/register")
 	public String register(@Valid @ModelAttribute User user, BindingResult bindingResult, RedirectAttributes flash) {
+		if (bindingResult.hasErrors()) {
+			return "registerForm";
+		}
+
 		userService.registrar(user);
 		flash.addFlashAttribute("success", "User registered successfully!");
-		return "redirect:/login";
+		return "redirect:/";
 	}
+
+	@PostMapping("/login")
+	public String login(@ModelAttribute User user, RedirectAttributes flash, Model model) {
+		User existingUser = userService.findByEmail(user.getEmail());
+		if (existingUser != null && userService.verifyPassword(user.getPassword(), existingUser.getPassword())) {
+			flash.addFlashAttribute("success", "Welcome, " + existingUser.getName() + "!");
+			return "redirect:/";
+		} else {
+			model.addAttribute("error", "Invalid email or password");
+			return "login";
+		}
+	}
+
 }

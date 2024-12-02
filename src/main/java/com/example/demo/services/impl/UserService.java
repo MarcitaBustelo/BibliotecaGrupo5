@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.repository.UserRepository;
@@ -21,6 +21,10 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	@Qualifier("userRepository")
 	private UserRepository userRepository;
+
+	public com.example.demo.entity.User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -47,9 +51,14 @@ public class UserService implements UserDetailsService {
 
 	public com.example.demo.entity.User registrar(com.example.demo.entity.User user) {
 		user.setPassword(passwordEncoder().encode(user.getPassword()));
-		//user.setEnabled(true);
-		user.setRole("ROLE_USER");
+		// user.setEnabled(true);
+		user.setRole("user");
 		return userRepository.save(user);
 
+	}
+
+	public boolean verifyPassword(String rawPassword, String encodedPassword) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder.matches(rawPassword, encodedPassword);
 	}
 }
