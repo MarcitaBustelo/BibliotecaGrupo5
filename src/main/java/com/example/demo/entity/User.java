@@ -26,12 +26,12 @@ public class User {
 	private String password;
 	private String role;
 
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "user")
 	private List<Reservation> reservations;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<Loan> loans;
-	
+
 	public User(long id, String name, String lastname, String email, String password, String role) {
 		super();
 		this.id = id;

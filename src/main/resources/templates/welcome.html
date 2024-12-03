@@ -155,18 +155,19 @@
 
 <body>
 	<div class="navbar">
-		<div th:if="${authenticated}" class="user-dropdown">
-			<span th:text="${username}"></span>
+		<div sec:authorize="isAuthenticated()" class="user-dropdown">
+			<span sec:authentication="name"></span>
 			<div class="dropdown-content">
 				<a href="/logout">Logout</a>
 				<a href="/user/profile">Ver mis datos</a>
 			</div>
 		</div>
-		<div th:if="${!authenticated}" class="auth-buttons">
+		<div sec:authorize="!isAuthenticated()" class="auth-buttons">
 			<a href="/registerForm">Register</a>
 			<a href="/login">Login</a>
 		</div>
 	</div>
+
 
 	<div class="tab-menu">
 		<a href="/">Home</a>

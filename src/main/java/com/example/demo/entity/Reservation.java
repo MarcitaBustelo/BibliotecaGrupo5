@@ -13,18 +13,18 @@ import jakarta.persistence.ManyToOne;
 public class Reservation {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	private Date reservation;
 	private String status;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_user", nullable = false)
+	@JoinColumn(name = "id_user", nullable = false)
 	private User user;
- 
+
 	@ManyToOne
-	@JoinColumn(name="id_book", nullable = false)
+	@JoinColumn(name = "id_book", nullable = false)
 	private Book book;
 
 	public Reservation(long id, User id_user, Book id_book, Date reservation, String status) {

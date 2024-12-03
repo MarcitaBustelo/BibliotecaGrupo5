@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,9 +19,15 @@ import jakarta.validation.Valid;
 @Controller
 public class AuthController {
 
+	private final UserService userService;
+
 	@Autowired
-	@Qualifier("userService")
-	private UserService userService;
+	private PasswordEncoder passwordEncoder;
+
+	// Inyección por constructor
+	public AuthController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping("/")
 	public String home(Model model, Authentication authentication) {
@@ -47,10 +53,16 @@ public class AuthController {
 		return "about";
 	}
 
-	@GetMapping("/login")
+	@GetMapping("/loginForm")
 	public String login(Model model) {
 		model.addAttribute("user", new User());
-		return "login";
+		return "loginForm";
+	}
+
+	@GetMapping("/user")
+	public String user(Model model) {
+		model.addAttribute("user", new User());
+		return "user";
 	}
 
 	@GetMapping("/registerForm")
@@ -67,13 +79,13 @@ public class AuthController {
 
 		userService.registrar(user);
 		flash.addFlashAttribute("success", "User registered successfully!");
-		return "redirect:/";
+		return "redirect:/login";
 	}
 
 	@PostMapping("/login")
 	public String login(@ModelAttribute User user, RedirectAttributes flash, Model model) {
 		User existingUser = userService.findByEmail(user.getEmail());
-		if (existingUser != null && userService.verifyPassword(user.getPassword(), existingUser.getPassword())) {
+		if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
 			flash.addFlashAttribute("success", "Welcome, " + existingUser.getName() + "!");
 			return "redirect:/";
 		} else {
@@ -81,5 +93,4 @@ public class AuthController {
 			return "login";
 		}
 	}
-
 }

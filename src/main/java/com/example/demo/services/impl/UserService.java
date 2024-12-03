@@ -51,14 +51,8 @@ public class UserService implements UserDetailsService {
 
 	public com.example.demo.entity.User registrar(com.example.demo.entity.User user) {
 		user.setPassword(passwordEncoder().encode(user.getPassword()));
-		// user.setEnabled(true);
 		user.setRole("user");
 		return userRepository.save(user);
 
-	}
-
-	public boolean verifyPassword(String rawPassword, String encodedPassword) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder.matches(rawPassword, encodedPassword);
 	}
 }
