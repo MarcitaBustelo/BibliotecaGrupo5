@@ -1,79 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a la Biblioteca</title>
-    <style>
-        /* Fondo marrón oscuro */
-        body {
-            background-color: #4e2a84; /* Color marrón oscuro */
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bienvenido a la Biblioteca</title>
+	<style>
+		/* Fondo marrón oscuro */
+		body {
+			background-color: #4e2a84;
+			/* Color marrón oscuro */
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
 
-        /* Contenedor principal */
-        .container {
-            padding: 20px;
-            color: #fff;
-        }
+		/* Contenedor principal */
+		.container {
+			padding: 20px;
+			color: #fff;
+		}
 
-        /* Estilo para el mensaje de bienvenida */
-        .welcome-message {
-            font-size: 20px;
-            color: #f4e1d2; /* Color marrón clarito */
-            margin-top: 50px;
-        }
+		/* Estilo para el mensaje de bienvenida */
+		.welcome-message {
+			font-size: 20px;
+			color: #f4e1d2;
+			/* Color marrón clarito */
+			margin-top: 50px;
+		}
 
-        /* Menú en la esquina superior derecha */
-        .user-menu {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #b58e5b; /* Color marrón clarito para el menú */
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
+		/* Menú en la esquina superior derecha */
+		.user-menu {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			background-color: #b58e5b;
+			/* Color marrón clarito para el menú */
+			padding: 10px 20px;
+			border-radius: 5px;
+			font-size: 14px;
+		}
 
-        .user-menu a {
-            color: white;
-            text-decoration: none;
-            margin-right: 15px;
-        }
+		.user-menu a {
+			color: white;
+			text-decoration: none;
+			margin-right: 15px;
+		}
 
-        /* Estilo para el menú de opciones */
-        .user-menu a:hover {
-            text-decoration: underline;
-        }
-
-    </style>
+		/* Estilo para el menú de opciones */
+		.user-menu a:hover {
+			text-decoration: underline;
+		}
+	</style>
 </head>
+
 <body>
 
-    <!-- Menú superior derecho -->
-    <div class="user-menu">
-        <span>Usuario: <span id="username">NombreUsuario</span></span>
-        <a href="/edit-profile">Editar Perfil</a>
-    </div>
+	<!-- Menú superior derecho -->
+	<div class="user-menu">
+		<span>Usuario: <span id="username">NombreUsuario</span></span>
+		<a href="/edit-profile">Editar Perfil</a>
+	</div>
 
-    <!-- Contenido principal -->
-    <div class="container">
-        <!-- Mensaje de bienvenida -->
-        <div class="welcome-message">
-            <p>Welcome to Biblioteca 5, <span id="username-welcome">NombreUsuario</span>!</p>
-        </div>
-    </div>
+	<!-- Contenido principal -->
+	<div class="container">
+		<!-- Mensaje de bienvenida -->
+		<div class="welcome-message">
+			<p>Welcome to Biblioteca 5, <span id="username-welcome">NombreUsuario</span>!</p>
+		</div>
+	</div>
 
-    <script>
-        // Aquí puedes obtener el nombre del usuario desde el backend o el contexto de seguridad
-        const username = "NombreUsuario"; // Esto se debe reemplazar con el nombre del usuario real
+	<script>
+		// Aquí puedes obtener el nombre del usuario desde el backend o el contexto de seguridad
+		const username = "NombreUsuario"; // Esto se debe reemplazar con el nombre del usuario real
 
-        // Cambiar el texto del nombre del usuario en la página
-        document.getElementById("username").textContent = username;
-        document.getElementById("username-welcome").textContent = username;
-    </script>
+		// Cambiar el texto del nombre del usuario en la página
+		document.getElementById("username").textContent = username;
+		document.getElementById("username-welcome").textContent = username;
+	</script>
 
 </body>
+
 </html>

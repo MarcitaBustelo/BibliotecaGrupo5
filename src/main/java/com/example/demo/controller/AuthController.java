@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,12 +24,26 @@ public class AuthController {
 	private UserService userService;
 
 	@GetMapping("/")
-	public String home() {
+	public String home(Model model, Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()
+				&& !"anonymousUser".equals(authentication.getPrincipal())) {
+			model.addAttribute("authenticated", true);
+			model.addAttribute("username", authentication.getName());
+		} else {
+			model.addAttribute("authenticated", false);
+		}
 		return "welcome";
 	}
 
 	@GetMapping("/about")
-	public String aboutUs() {
+	public String about(Model model, Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()
+				&& !"anonymousUser".equals(authentication.getPrincipal())) {
+			model.addAttribute("authenticated", true);
+			model.addAttribute("username", authentication.getName());
+		} else {
+			model.addAttribute("authenticated", false);
+		}
 		return "about";
 	}
 

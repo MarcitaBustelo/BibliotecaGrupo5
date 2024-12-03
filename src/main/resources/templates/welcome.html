@@ -20,29 +20,32 @@
 		.navbar {
 			display: flex;
 			justify-content: flex-end;
+			align-items: center;
 			background: rgba(62, 39, 35, 0.9);
 			padding: 15px 30px;
 		}
 
-		.navbar a {
+		.auth-buttons {
+			display: flex;
+			gap: 10px;
+		}
+
+		.auth-buttons a {
 			text-decoration: none;
 			color: #ffffff;
-			margin-left: 15px;
 			padding: 10px 20px;
 			border-radius: 5px;
-			background-color: #3e2723;
-			transition: background-color 0.3s ease, color 0.3s ease;
-			font-weight: bold;
-		}
-
-		.navbar a:hover {
 			background-color: #6d4c41;
-			color: #ffffff;
+			font-weight: bold;
+			transition: background-color 0.3s ease;
 		}
 
-		.navbar .user-dropdown {
+		.auth-buttons a:hover {
+			background-color: #3e2723;
+		}
+
+		.user-dropdown {
 			position: relative;
-			display: inline-block;
 			color: #ffffff;
 			cursor: pointer;
 			padding: 10px 20px;
@@ -129,6 +132,15 @@
 		}
 
 		@media (max-width: 768px) {
+			.navbar {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.auth-buttons a {
+				margin-top: 10px;
+			}
+
 			.content h1 {
 				font-size: 2.8rem;
 			}
@@ -137,41 +149,22 @@
 				font-size: 1.2rem;
 				width: 85%;
 			}
-
-			.navbar {
-				flex-direction: column;
-				align-items: center;
-			}
-
-			.navbar a {
-				margin-top: 10px;
-				margin-left: 0;
-			}
-
-			.tab-menu {
-				flex-direction: column;
-			}
-
-			.tab-menu a {
-				margin-top: 10px;
-			}
 		}
 	</style>
 </head>
 
 <body>
 	<div class="navbar">
-		<div th:if="${#authentication == null || !#authentication.authenticated}">
-			<a href="/registerForm">Register</a>
-			<a href="/login">Login</a>
-		</div>
-
-		<div th:if="${#authentication != null && #authentication.authenticated}" class="user-dropdown">
-			<span th:text="${#authentication.name}"></span>
+		<div th:if="${authenticated}" class="user-dropdown">
+			<span th:text="${username}"></span>
 			<div class="dropdown-content">
 				<a href="/logout">Logout</a>
 				<a href="/user/profile">Ver mis datos</a>
 			</div>
+		</div>
+		<div th:if="${!authenticated}" class="auth-buttons">
+			<a href="/registerForm">Register</a>
+			<a href="/login">Login</a>
 		</div>
 	</div>
 

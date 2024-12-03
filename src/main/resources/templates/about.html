@@ -1,15 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Hola</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Library - Information</title>
+	<style>
+		body {
+			margin: 0;
+			font-family: 'Roboto', sans-serif;
+			background-color: #d7ccc8;
+			color: #2e2e2e;
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+		}
+
+		.navbar {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			background: rgba(62, 39, 35, 0.9);
+			padding: 15px 30px;
+		}
+
+		.auth-buttons {
+			display: flex;
+			gap: 10px;
+		}
+
+		.auth-buttons a {
+			text-decoration: none;
+			color: #ffffff;
+			padding: 10px 20px;
+			border-radius: 5px;
+			background-color: #6d4c41;
+			font-weight: bold;
+			transition: background-color 0.3s ease;
+		}
+
+		.auth-buttons a:hover {
+			background-color: #3e2723;
+		}
+
+		.user-dropdown {
+			position: relative;
+			color: #ffffff;
+			cursor: pointer;
+			padding: 10px 20px;
+			border-radius: 5px;
+			background-color: #3e2723;
+			font-weight: bold;
+		}
+
+		.user-dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			right: 0;
+			background-color: #3e2723;
+			min-width: 150px;
+			box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+			z-index: 1;
+			border-radius: 5px;
+		}
+
+		.dropdown-content a {
+			color: #ffffff;
+			padding: 10px;
+			text-decoration: none;
+			display: block;
+		}
+
+		.dropdown-content a:hover {
+			background-color: #6d4c41;
+		}
+
+		.tab-menu {
+			display: flex;
+			justify-content: center;
+			background: rgba(93, 64, 55, 0.9);
+			padding: 10px 0;
+			margin: 0;
+		}
+
+		.tab-menu a {
+			text-decoration: none;
+			color: #ffffff;
+			margin: 0 15px;
+			padding: 10px 20px;
+			border-radius: 5px;
+			background-color: transparent;
+			transition: background-color 0.3s ease, color 0.3s ease;
+			font-weight: bold;
+		}
+
+		.tab-menu a:hover {
+			background-color: #3e2723;
+			color: #ffffff;
+		}
+
+		.content {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			padding: 50px;
+			margin: 20px auto;
+			background: rgba(62, 39, 35, 0.8);
+			border-radius: 15px;
+			box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+			width: 80%;
+		}
+
+		.content-info {
+			flex: 1;
+			margin-right: 30px;
+		}
+
+		.content-info h1 {
+			font-size: 2.8rem;
+			margin-bottom: 20px;
+			color: #f5f5f5;
+		}
+
+		.content-info p,
+		.content-info a {
+			font-size: 1.3rem;
+			margin-bottom: 15px;
+			color: #e0e0e0;
+			text-decoration: none;
+		}
+
+		.content-map {
+			flex: 1;
+		}
+
+		.content-map iframe {
+			width: 100%;
+			height: 350px;
+			border: none;
+			border-radius: 10px;
+		}
+
+		@media (max-width: 768px) {
+			.navbar {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.auth-buttons a {
+				margin-top: 10px;
+			}
+
+			.content {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.content-info {
+				margin-right: 0;
+				margin-bottom: 20px;
+			}
+
+			.content-map iframe {
+				height: 300px;
+			}
+		}
+	</style>
 </head>
+
 <body>
+	<div class="navbar">
+		<div th:if="${authenticated}" class="user-dropdown">
+			<span th:text="${username}"></span>
+			<div class="dropdown-content">
+				<a href="/logout">Logout</a>
+				<a href="/user/profile">Ver mis datos</a>
+			</div>
+		</div>
+		<div th:if="${!authenticated}" class="auth-buttons">
+			<a href="/registerForm">Register</a>
+			<a href="/login">Login</a>
+		</div>
+	</div>
+
+	<div class="tab-menu">
+		<a href="/">Home</a>
+		<a href="/listBooks">Books</a>
+		<a href="/about">About Us</a>
+	</div>
+
 	<div class="content">
-		<h1>Welcome to the Library</h1>
-		<p>Discover a world of knowledge and adventure on every page. Dive
-			into the vast collection of books and resources we offer. Start your
-			journey now!</p>
+		<div class="content-info">
+			<h1>Library 5</h1>
+			<p><strong>Phone:</strong> +34 956 25 00 00</p>
+			<p><strong>Email:</strong> <a href="mailto:bibliotecasalesianos@gmail.com">bibliotecasalesianos@gmail.com</a></p>
+			<p><strong>Address:</strong> Salesianos Cádiz, Av. María Auxiliadora, 7, 11009 Cádiz</p>
+		</div>
+		<div class="content-map">
+			<iframe 
+				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3189.1481336218996!2d-6.276563524297112!3d36.514402054515875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0dcf425be68d11%3A0x4205ae233858b097!2sSalesianos%20C%C3%A1diz%20%7C%20Colegio%20San%20Ignacio!5e0!3m2!1sen!2ses!4v1697638819633!5m2!1sen!2ses" 
+				loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+			</iframe>
+		</div>
 	</div>
 </body>
+
 </html>
