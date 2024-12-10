@@ -4,38 +4,39 @@
 <head th:replace="~{fragments :: head}"></head>
 
 <body>
-	<header>
-		<div th:replace="~{fragments :: navbar}"></div>
-	</header>
-	<main>
-		<div class="card d-flex align-content-center align-items-center mt-5">
-			<div class="card-body" style="width: 50em;">
-				<h4 class="card-title text-center">Login</h4>
-				<div class="alert alert-info" th:if="${logout != null}">Logout
-					sucessful!</div>
-				<div class="alert alert-danger" th:if="${error != null}">There's
-					no user with those credentials</div>
-				<form th:action="@{/login}" th:object="${user}" method="post">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}">
-					<div class="mb-3">
-						<label for="email" class="form-control">Email</label> <input
-							type="email" name="email" id="email" class="form-control"
-							placeholder="Type your email..." th:field="*{email}" />
-					</div>
-					<div class="mb-3">
-						<label for="password" class="form-label">Password</label> <input
-							type="password" name="password" id="password"
-							class="form-control" placeholder="Type your password..."
-							th:field="*{password}" />
-					</div>
-					<div class="mb-3">
-						<button class="btn btn-primary" type="submit" th:href="@{/login}">Login</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</main>
+    <header>
+        <div th:replace="~{fragments :: navbar}"></div>
+    </header>
+    <main class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg rounded" style="max-width: 400px; width: 100%;">
+            <div class="card-body p-4">
+                <h4 class="card-title text-center text-brown">Login</h4>
+
+                <!-- Mensajes de error y éxito -->
+                <div class="alert alert-info" th:if="${logout != null}">Logout successful!</div>
+                <div class="alert alert-danger" th:if="${error != null}">There's no user with those credentials</div>
+
+                <!-- Formulario de login -->
+                <form th:action="@{/login}" th:object="${user}" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Type your email..." th:field="*{email}" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Type your password..." th:field="*{password}" />
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-brown w-100" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 
 </html>

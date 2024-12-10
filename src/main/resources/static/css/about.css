@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Georgia', serif;
+    background-color: #fdf6e3;
+    color: #5d4037;
+}
+
+/* Header */
+header {
+    background-color: #8d6e63;
+    color: #ffffff;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1.5em;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Content */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.content-info {
+    background-color: #d7ccc8;
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.content-info h1 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    color: #3e2723;
+}
+
+.content-info p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.content-info a {
+    color: #6d4c41;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.content-info a:hover {
+    color: #3e2723;
+    text-decoration: underline;
+}
+
+/* Map Section */
+.content-map iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+    .content {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    .content-info, .content-map {
+        width: 45%;
+    }
+}

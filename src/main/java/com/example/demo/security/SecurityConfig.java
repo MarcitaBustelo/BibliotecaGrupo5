@@ -21,7 +21,9 @@ public class SecurityConfig {
 				.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/vendor/**",
 						"/fonts/**", "/webjars/**")
 				.permitAll().anyRequest().authenticated())
-				.formLogin((form) -> form.loginPage("/login").defaultSuccessUrl("/").permitAll())
+				.formLogin((form) -> form.loginPage("/login")
+						.usernameParameter("email")
+						.defaultSuccessUrl("/login").permitAll())
 				.logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll());
 
 		return http.build();
