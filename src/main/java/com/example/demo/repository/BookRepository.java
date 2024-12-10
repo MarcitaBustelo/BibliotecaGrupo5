@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.Book;
 
 @Repository("bookRepository")
-public interface BookRepository extends JpaRepository<Book, Serializable>{
+public interface BookRepository extends JpaRepository<Book, Serializable> {
+
+	Book findById(long id);
 
 }

@@ -1,233 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Library - Books</title>
-	<style>
-		body {
-			margin: 0;
-			font-family: 'Roboto', sans-serif;
-			background-color: #d7ccc8;
-			color: #2e2e2e;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			height: 100vh;
-		}
-
-		.navbar {
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			background: rgba(62, 39, 35, 0.9);
-			padding: 15px 30px;
-		}
-
-		.navbar a {
-			text-decoration: none;
-			color: #ffffff;
-			margin-left: 15px;
-			padding: 10px 20px;
-			border-radius: 5px;
-			background-color: #3e2723;
-			transition: background-color 0.3s ease, color 0.3s ease;
-			font-weight: bold;
-		}
-
-		.navbar a:hover {
-			background-color: #6d4c41;
-			color: #ffffff;
-		}
-
-		.user-dropdown {
-			position: relative;
-			color: #ffffff;
-			cursor: pointer;
-			padding: 10px 20px;
-			border-radius: 5px;
-			background-color: #3e2723;
-			font-weight: bold;
-		}
-
-		.user-dropdown:hover .dropdown-content {
-			display: block;
-		}
-
-		.dropdown-content {
-			display: none;
-			position: absolute;
-			right: 0;
-			background-color: #3e2723;
-			min-width: 150px;
-			box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-			z-index: 1;
-			border-radius: 5px;
-		}
-
-		.dropdown-content a {
-			color: #ffffff;
-			padding: 10px;
-			text-decoration: none;
-			display: block;
-		}
-
-		.dropdown-content a:hover {
-			background-color: #6d4c41;
-		}
-
-		.tab-menu {
-			display: flex;
-			justify-content: center;
-			background: rgba(93, 64, 55, 0.9);
-			padding: 10px 0;
-			margin: 0;
-		}
-
-		.tab-menu a {
-			text-decoration: none;
-			color: #ffffff;
-			margin: 0 15px;
-			padding: 10px 20px;
-			border-radius: 5px;
-			background-color: transparent;
-			transition: background-color 0.3s ease, color 0.3s ease;
-			font-weight: bold;
-		}
-
-		.tab-menu a:hover {
-			background-color: #3e2723;
-			color: #ffffff;
-		}
-
-		.content {
-			text-align: center;
-			margin: auto;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			backdrop-filter: blur(8px);
-			background: rgba(62, 39, 35, 0.8);
-			padding: 50px;
-			border-radius: 15px;
-			box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-			margin-top: 20px;
-		}
-
-		.content h1 {
-			font-size: 3.8rem;
-			margin-bottom: 20px;
-			color: #f5f5f5;
-		}
-
-		.content table {
-			width: 80%;
-			margin: 30px 0;
-			border-collapse: collapse;
-			background-color: #ffffff;
-			border-radius: 10px;
-			box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-		}
-
-		.content th,
-		.content td {
-			padding: 15px;
-			text-align: left;
-			border-bottom: 1px solid #ddd;
-		}
-
-		.content th {
-			background-color: #3e2723;
-			color: #ffffff;
-		}
-
-		.content tr:hover {
-			background-color: #f1f1f1;
-		}
-
-		.content p {
-			font-size: 1.5rem;
-			margin-top: 10px;
-			width: 70%;
-			line-height: 1.8;
-			color: #e0e0e0;
-		}
-
-		@media (max-width: 768px) {
-			.content h1 {
-				font-size: 2.8rem;
-			}
-
-			.content p {
-				font-size: 1.2rem;
-				width: 85%;
-			}
-
-			.navbar {
-				flex-direction: column;
-				align-items: center;
-			}
-
-			.navbar a {
-				margin-top: 10px;
-				margin-left: 0;
-			}
-
-			.tab-menu {
-				flex-direction: column;
-			}
-
-			.tab-menu a {
-				margin-top: 10px;
-			}
-		}
-	</style>
-</head>
+<head th:replace="~{fragments :: head}"></head>
 
 <body>
-	<div class="navbar">
-		<div th:if="${authenticated}" class="user-dropdown">
-			<span th:text="${username}"></span>
-			<div class="dropdown-content">
-				<a href="/logout">Logout</a>
-				<a href="/user/profile">View Profile</a>
-			</div>
-		</div>
-		<div th:if="${!authenticated}">
-			<a href="/registerForm">Register</a>
-			<a href="/loginForm">Login</a>
-		</div>
-	</div>
-	<div class="tab-menu">
-		<a href="/">Home</a>
-		<a href="/listBooks">Books</a>
-		<a href="/about">About Us</a>
-	</div>
-	<div class="content">
-		<h1>Books Available in the Library</h1>
-		<p>Explore the collection of books we have. From classic novels to modern masterpieces, find your next great
-			read!</p>
+    <header>
+        <div th:replace="~{fragments :: navbar}"></div>
+    </header>
+    <main>
+        <div class="container mt-4">
+            <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+            <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+            <div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+            <div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
 
-		<table>
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Author</th>
-					<th>Genre</th>
-					<th>Year Published</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="book : ${books}">
-					<td th:text="${book.title}"></td>
-					<td th:text="${book.author}"></td>
-					<td th:text="${book.genre}"></td>
-					<td th:text="${book.yearPublished}"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+            <h3>Book List</h3>
+            <a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add Book</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody th:each="libro : ${books}">
+                    <tr>
+                        <td th:text="${libro.titulo}">Title</td>
+                        <td th:text="${libro.autor}">Author</td>
+                        <td>
+                            <a th:href="@{/books/updateBook(id=${libro.id})}" class="btn btn-warning btn-sm">Edit</a>
+                            <a th:href="@{/books/deleteBook(id=${libro.id})}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 </body>
 
 </html>

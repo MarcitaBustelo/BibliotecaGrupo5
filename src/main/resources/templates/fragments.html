@@ -1,0 +1,32 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
+	<a class="ps-2 navbar-brand" href="/users" sec:authorize="hasRole('ROLE_ADMIN')">Users</a> <a
+		class="ps-2 navbar-brand" th:href="@{/books/listBooks}">Books</a>
+	<a class="ps-2 navbar-brand" href="/">Home</a>
+	<a class="ps-2 navbar-brand" href="/about">About us</a>
+
+	<div class="ms-auto" sec:authorize="!isAuthenticated()">
+		<a class="navbar-brand d-inline" th:href="@{/login}">Login</a> <a class="navbar-brand d-inline"
+			th:href="@{/register}">Register</a>
+	</div>
+
+	<div class="ms-auto me-3" sec:authorize="isAuthenticated()">
+		<div class="btn-group">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown">
+				<span sec:authentication="name"></span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-end">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit" class="dropdown-item">Logout</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</nav>
+
+<head th:fragment="head">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+	<script rel="stylesheet" th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</head>

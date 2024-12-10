@@ -1,23 +1,40 @@
 package com.example.demo.models;
 
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 public class UserModel {
 
 	private long id;
+
+	@NotEmpty(message = "Name must not be empty")
 	private String name;
+
+	@NotEmpty(message = "Lastname must not be empty")
 	private String lastname;
+
+	@NotEmpty(message = "Email must not be empty")
+	@Email
 	private String email;
+
+	@NotEmpty(message = "Password must not be empty")
 	private String password;
+
+	private String rePassword;
+
 	private String role;
 
-	public UserModel(long id, String name, String lastname, String email, String password, String role) {
+	public UserModel(long id, @NotEmpty(message = "Name must not be empty") String name,
+			@NotEmpty(message = "Lastname must not be empty") String lastname,
+			@NotEmpty(message = "Email must not be empty") @Email String email,
+			@NotEmpty(message = "Password must not be empty") String password, String rePassword, String role) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.lastname = lastname;
 		this.email = email;
 		this.password = password;
+		this.rePassword = rePassword;
 		this.role = role;
 	}
 
@@ -71,6 +88,14 @@ public class UserModel {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getRePassword() {
+		return rePassword;
+	}
+
+	public void setRePassword(String rePassword) {
+		this.rePassword = rePassword;
 	}
 
 	@Override

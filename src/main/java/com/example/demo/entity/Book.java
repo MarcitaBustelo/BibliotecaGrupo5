@@ -98,8 +98,5 @@ public class Book {
 		return "Book [id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", genre=" + genre
 				+ ", yearPublished=" + yearPublished + "]";
 	}
-	
-	
-	
-	
+
 }

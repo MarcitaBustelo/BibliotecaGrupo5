@@ -11,7 +11,12 @@ import com.example.demo.models.BookModel;
 public interface BookService {
 
 	List<BookModel> listAllBooks();
+
 	Book addBook(BookModel books);
+
 	int removeBook(int id);
-	Book updateCourse(BookModel book);
+
+	Book updateBook(BookModel book);
+
+	Book findById(long id);
 }

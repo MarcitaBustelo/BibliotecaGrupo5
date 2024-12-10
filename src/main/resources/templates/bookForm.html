@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head}"></head>
+
+<body>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+	<main>
+		<div class="d-flex justify-content-center align-items-center mt-5">
+			<div class="card" style="width: 50em;">
+				<div class="card-body">
+					<h4 class="card-title" th:text="${id == null ? 'Add Book' : 'Edit Book'}"></h4>
+					<form th:action="@{/books/addBook}" th:object="${libro}" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> <input type="hidden"
+							name="id" th:field="*{id}">
+						<!-- 							 <input type="hidden" name="id_user" th:field="*{id_user}"> -->
+						<div class="mb-3">
+							<label class="form-label" for="titulo">Title</label> <input class="form-control" type="text"
+								id="titulo" name="titulo" th:field="*{titulo}" placeholder="Type title..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="autor">Author</label> <input class="form-control" type="text"
+								id="autor" name="autor" th:field="*{autor}" placeholder="Type author..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
+						</div>
+						<div class="mb-3">
+							<button class="btn btn-primary d-inline" type="submit">Save</button>
+							<a class="btn btn-warning" th:href="@{/books/listBooks}">Return</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>
