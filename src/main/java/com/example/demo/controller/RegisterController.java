@@ -33,15 +33,15 @@ public class RegisterController {
 	}
 
 	@PostMapping("/send")
-    public String sendForm(@Valid @ModelAttribute("user") UserModel userModel, BindingResult bResult, RedirectAttributes flash) {
-        
-         userService.validateRegister(userModel, bResult);
+	public String sendForm(@Valid @ModelAttribute("user") UserModel userModel, BindingResult bResult,
+			RedirectAttributes flash) {
+		userService.validateRegister(userModel, bResult);
 
-         if(bResult.hasErrors())
-            return REGISTER_FORM;
-         
-        flash.addFlashAttribute("success", "You've been registered successfully!");
-        userService.register(userModel);
-        return "redirect:/";
-    }
+		if (bResult.hasErrors())
+			return REGISTER_FORM;
+
+		flash.addFlashAttribute("success", "You've been registered successfully!");
+		userService.register(userModel);
+		return "redirect:/";
+	}
 }

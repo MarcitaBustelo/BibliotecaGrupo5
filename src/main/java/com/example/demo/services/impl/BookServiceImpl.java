@@ -2,66 +2,59 @@ package com.example.demo.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.converter.BookConverter;
 import com.example.demo.entity.Book;
-import com.example.demo.entity.User;
 import com.example.demo.models.BookModel;
 import com.example.demo.repository.BookRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BookService;
 
-@Service("libroService")
+@Service("bookService")
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-	@Qualifier("libroRepository")
-	private BookRepository libroRepository;
+	@Qualifier("bookRepository")
+	private BookRepository bookRepository;
 
 	@Autowired
-	@Qualifier("userRepository")
-	private BookRepository userRepository;
-
-	@Autowired
-	@Qualifier("libroConverter")
-	private BookConverter libroConverter;
+	@Qualifier("bookConverter")
+	private BookConverter bookConverter;
 
 	@Override
 	public List<BookModel> listAllBooks() {
 		List<BookModel> libros = new ArrayList<BookModel>();
-		for (Book libro : libroRepository.findAll())
-			libros.add(libroConverter.entity2model(libro));
+		for (Book libro : bookRepository.findAll())
+			libros.add(bookConverter.entity2model(libro));
 		return libros;
 
 	}
 
 	@Override
 	public Book addBook(BookModel libro) {
-		Book lib = libroConverter.model2entity(libro);
-		return libroRepository.save(lib);
+		Book lib = bookConverter.model2entity(libro);
+		return bookRepository.save(lib);
 	}
 
 	@Override
 	public int removeBook(int id) {
-		libroRepository.deleteById(id);
+		bookRepository.deleteById(id);
 		return 0;
 	}
 
 	@Override
 	public Book updateBook(BookModel libroModel) {
-		Book libro = libroConverter.model2entity(libroModel);
-		return libroRepository.save(libro);
+		Book libro = bookConverter.model2entity(libroModel);
+		return bookRepository.save(libro);
 	}
 
 	@Override
 	public Book findById(long id) {
-		Book book = libroRepository.findById(id);
+		Book book = bookRepository.findById(id);
 		return book;
 	}
 

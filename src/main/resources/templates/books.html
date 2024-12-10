@@ -4,39 +4,50 @@
 <head th:replace="~{fragments :: head}"></head>
 
 <body>
-    <header>
-        <div th:replace="~{fragments :: navbar}"></div>
-    </header>
-    <main>
-        <div class="container mt-4">
-            <div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
-            <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
-            <div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
-            <div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+	<main>
+		<div class="container mt-4">
+			<div class="alert alert-success" th:if="${success != null}"
+				th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error != null}"
+				th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning != null}"
+				th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info != null}"
+				th:text="${info}"></div>
 
-            <h3>Book List</h3>
-            <a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add Book</a>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody th:each="libro : ${books}">
-                    <tr>
-                        <td th:text="${libro.titulo}">Title</td>
-                        <td th:text="${libro.autor}">Author</td>
-                        <td>
-                            <a th:href="@{/books/updateBook(id=${libro.id})}" class="btn btn-warning btn-sm">Edit</a>
-                            <a th:href="@{/books/deleteBook(id=${libro.id})}" class="btn btn-danger btn-sm">Delete</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
+			<h3>Book List</h3>
+			<a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add
+				Book</a>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Author</th>
+						<th>Genre</th>
+						<th>Year Published</th>
+						<th>Image</th>
+					</tr>
+				</thead>
+				<tbody th:each="book : ${books}">
+					<tr>
+						<td th:text="${book.title}">Title</td>
+						<td th:text="${book.author}">Author</td>
+						<td th:text="${book.genre}">Genre</td>
+						<td th:text="${book.yearPublished}">Year Published</td>
+						<td th:text="${book.image}">Image</td>
+
+						<td><a th:href="@{/books/updateBook(id=${book.id})}"
+							class="btn btn-warning btn-sm">Edit</a> <a
+							th:href="@{/books/deleteBook(id=${book.id})}"
+							class="btn btn-danger btn-sm">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
 </body>
 
 </html>

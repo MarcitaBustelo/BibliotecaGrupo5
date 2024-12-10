@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	public User toUserEntity(UserModel userModel) {
-        ModelMapper mapper = new ModelMapper();
-        return mapper.map(userModel, User.class);
-    }
+		ModelMapper mapper = new ModelMapper();
+		return mapper.map(userModel, User.class);
+	}
 }

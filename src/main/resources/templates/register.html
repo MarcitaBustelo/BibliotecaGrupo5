@@ -12,47 +12,47 @@
 			<div class="card" style="width: 50em;">
 				<div class="card-body">
 					<h4 class="card-title">Registration form</h4>
-					<form th:action="@{/register/send}" th:object="${user}" method="post">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+					<form th:action="@{/register/send}" th:object="${user}"
+						method="post">
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}">
 						<div class="mb-3">
-							<label class="form-label" for="username">Username</label>
-							<input class="form-control" type="text" id="username" name="username" th:field="*{username}"
-								placeholder="Type your username..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
-							</div>
+							<label class="form-label" for="name">Name</label> <input
+								class="form-control" type="text" id="name" name="name"
+								th:field="*{name}" placeholder="Type your name..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('name')}"
+								th:errors="*{name}"></div>
 						</div>
 						<div class="mb-3">
-							<label class="form-label" for="password">Password</label>
-							<input class="form-control" type="password" id="password" name="password"
-								th:field="*{password}" placeholder="Type your password..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-							</div>
+							<label class="form-label" for="lastname">Lastname</label> <input
+								class="form-control" type="text" id="lastname" name="lastname"
+								th:field="*{lastname}" placeholder="Type your lastname">
+							<div class="text-danger" th:if="${#fields.hasErrors('lastname')}"
+								th:errors="*{lastname}"></div>
 						</div>
 						<div class="mb-3">
-							<label class="form-label" for="repassword">Password</label>
-							<input class="form-control" type="password" id="repassword" name="repassword"
-								th:field="*{rePassword}" placeholder="Type again your password..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('rePassword')}"
+							<label class="form-label" for="email">Email</label> <input
+								class="form-control" type="email" id="email" name="email"
+								th:field="*{email}" placeholder="Type your email..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('email')}"
+								th:errors="*{email}"></div>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="password">Password</label> <input
+								class="form-control" type="password" id="password"
+								name="password" th:field="*{password}"
+								placeholder="Type your password..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('password')}"
+								th:errors="*{password}"></div>
+						</div>
+						<div class="mb-3">
+							<label class="form-label" for="repassword">Confirm
+								Password</label> <input class="form-control" type="password"
+								id="repassword" name="repassword" th:field="*{rePassword}"
+								placeholder="Type again your password..." required>
+							<div class="text-danger"
+								th:if="${#fields.hasErrors('rePassword')}"
 								th:errors="*{rePassword}"></div>
-						</div>
-						<div class="mb-3">
-							<label class="form-label" for="email">Email</label>
-							<input class="form-control" type="email" id="email" name="email" th:field="*{email}"
-								placeholder="Type your email..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-						</div>
-						<div class="mb-3">
-							<label class="form-label" for="name">Name</label>
-							<input class="form-control" type="text" id="name" name="name" th:field="*{name}"
-								placeholder="Type your name..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-						</div>
-						<div class="mb-3">
-							<label class="form-label" for="surname">Surname</label>
-							<input class="form-control" type="text" id="surname" name="surname" th:field="*{surname}"
-								placeholder="Type your surname">
-							<div class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">
-							</div>
 						</div>
 						<div class="mb-3">
 							<button class="btn btn-primary d-inline" type="submit">Register</button>
