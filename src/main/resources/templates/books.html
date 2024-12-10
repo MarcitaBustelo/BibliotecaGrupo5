@@ -19,8 +19,10 @@
 				th:text="${info}"></div>
 
 			<h3>Book List</h3>
-			<a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add
-				Book</a>
+			<div class="ms-auto me-3" sec:authorize="isAuthenticated()">
+				<a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add
+					Book</a>
+			</div>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -29,7 +31,9 @@
 						<th>Genre</th>
 						<th>Year Published</th>
 						<th>Image</th>
-					</tr>
+						<div class="ms-auto me-3" sec:authorize="isAuthenticated()">
+						<th>Actions</th>
+						</div>
 				</thead>
 				<tbody th:each="book : ${books}">
 					<tr>
@@ -38,11 +42,12 @@
 						<td th:text="${book.genre}">Genre</td>
 						<td th:text="${book.yearPublished}">Year Published</td>
 						<td th:text="${book.image}">Image</td>
-
+						<div class="ms-auto me-3" sec:authorize="isAuthenticated()">
 						<td><a th:href="@{/books/updateBook(id=${book.id})}"
 							class="btn btn-warning btn-sm">Edit</a> <a
 							th:href="@{/books/deleteBook(id=${book.id})}"
 							class="btn btn-danger btn-sm">Delete</a></td>
+						</div>
 					</tr>
 				</tbody>
 			</table>
