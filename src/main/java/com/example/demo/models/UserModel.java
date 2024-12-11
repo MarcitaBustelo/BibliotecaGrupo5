@@ -23,11 +23,17 @@ public class UserModel {
 	private String rePassword;
 
 	private String role;
+	
+	private boolean activated;
+
+
+	
 
 	public UserModel(long id, @NotEmpty(message = "Name must not be empty") String name,
 			@NotEmpty(message = "Lastname must not be empty") String lastname,
 			@NotEmpty(message = "Email must not be empty") @Email String email,
-			@NotEmpty(message = "Password must not be empty") String password, String rePassword, String role) {
+			@NotEmpty(message = "Password must not be empty") String password, String rePassword, String role,
+			boolean activated) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -36,6 +42,7 @@ public class UserModel {
 		this.password = password;
 		this.rePassword = rePassword;
 		this.role = role;
+		this.activated = activated;
 	}
 
 	public UserModel() {
@@ -96,6 +103,14 @@ public class UserModel {
 
 	public void setRePassword(String rePassword) {
 		this.rePassword = rePassword;
+	}
+	
+	public boolean isActivated() {
+		return activated;
+	}
+
+	public void setActivated(boolean activated) {
+		this.activated = activated;
 	}
 
 	@Override

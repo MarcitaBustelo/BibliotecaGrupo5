@@ -25,6 +25,8 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	private String role;
+	
+	private boolean activated;
 
 	@OneToMany(mappedBy = "user")
 	private List<Reservation> reservations;
@@ -32,7 +34,7 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Loan> loans;
 
-	public User(long id, String name, String lastname, String email, String password, String role) {
+	public User(long id, String name, String lastname, String email, String password, String role, boolean activated) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,6 +42,8 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.activated = activated;
+
 	}
 
 	public User() {
@@ -92,6 +96,14 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public boolean getActivated() {
+		return activated;
+	}
+
+	public void setActivated(boolean activated) {
+		this.activated = activated;
 	}
 
 	@Override

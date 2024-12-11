@@ -8,6 +8,8 @@
 		<div th:replace="~{fragments :: navbar}"></div>
 	</header>
 	<main class="hero-section">
+		<div class="alert alert-success text-center" th:if="${success!=null}"
+			th:text="${success}"></div>
 		<h1>Marsana's library</h1>
 	</main>
 </body>
