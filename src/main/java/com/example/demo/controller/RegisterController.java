@@ -42,6 +42,6 @@ public class RegisterController {
 
 		flash.addFlashAttribute("success", "You've been registered successfully!");
 		userService.register(userModel);
-		return "redirect:/";
+		return "redirect:/login";
 	}
 }
