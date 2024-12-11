@@ -36,14 +36,14 @@ header {
 .content-info {
 	background-color: #d7ccc8;
 	border-radius: 10px;
-	padding: 30px;
+	padding: 50px;
 	/* Aumenta el padding interno del contenedor de info */
-	width: 90%;
+	width: 120%;
 	/* Aumenta el ancho base */
 	max-width: 800px;
 	/* Aumenta el ancho máximo */
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 	/* Aumenta el espacio inferior */
 	text-align: center;
 }
