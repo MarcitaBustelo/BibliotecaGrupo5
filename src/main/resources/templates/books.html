@@ -17,7 +17,6 @@
 				th:text="${warning}"></div>
 			<div class="alert alert-info" th:if="${info != null}"
 				th:text="${info}"></div>
-
 			<h3>Book List</h3>
 			<div class="ms-auto me-3" sec:authorize="hasRole('ROLE_ADMIN')">
 				<a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add
