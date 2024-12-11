@@ -40,7 +40,7 @@ public class BookController {
 	@GetMapping("/deleteBook")
 	public String deleteCourse(@RequestParam("id") int id) {
 		bookService.removeBook(id);
-		return "redirect:/books/listBooks";
+		return "redirect:/admin/bookADMIN";
 	}
 
 	@GetMapping("/updateBook")
@@ -60,7 +60,7 @@ public class BookController {
 	public String addBook(@ModelAttribute("books") BookModel bookModel, RedirectAttributes flash) {
 	    bookService.addBook(bookModel);
 	    flash.addFlashAttribute("success", "Book has been added");
-	    return "redirect:/books/listBooks";
+		return "redirect:/admin/bookADMIN";
 	}
 
 }

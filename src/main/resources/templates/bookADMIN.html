@@ -19,10 +19,10 @@
 				th:text="${info}"></div>
 
 			<h3>Book List</h3>
-			<div class="ms-auto me-3" sec:authorize="hasRole('ROLE_ADMIN')">
-				<a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add
-					Book</a>
+			<div class="ms-auto me-3">
+				<a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add Book</a>
 			</div>
+
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -31,9 +31,8 @@
 						<th>Author</th>
 						<th>Genre</th>
 						<th>Year Published</th>
-						<div class="ms-auto me-3" sec:authorize="isAuthenticated()">
 						<th>Actions</th>
-						</div>
+					</tr>
 				</thead>
 				<tbody th:each="book : ${books}">
 					<tr>
@@ -42,20 +41,27 @@
 						<td th:text="${book.author}">Author</td>
 						<td th:text="${book.genre}">Genre</td>
 						<td th:text="${book.yearPublished}">Year Published</td>
-						<div class="ms-auto me-3" sec:authorize="hasRole('ROLE_ADMIN')">
-						<td><a th:href="@{/books/updateBook(id=${book.id})}"
-							class="btn btn-warning btn-sm">Edit</a> <a
-							th:href="@{/books/deleteBook(id=${book.id})}"
-							class="btn btn-danger btn-sm">Delete</a></td>
-						</div>
-
-						<div class="ms-auto me-3" sec:authorize="hasRole('ROLE_USER')">
-							<td><a class="btn btn-warning btn-sm">Loan</a> <a
-								class="btn btn-danger btn-sm">Reservation</a></td>
-						</div>
+						<td>
+							<a th:href="@{/books/updateBook(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
+							<a th:href="@{/books/deleteBook(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
+
+			<!-- Paginación -->
+			<div class="d-flex justify-content-between">
+				<div>
+					<!-- Botón Previous -->
+					<a th:href="@{/books/bookList(page=${currentPage - 1})}" class="btn btn-secondary"
+					   th:if="${currentPage > 0}">Previous</a>
+				</div>
+				<div>
+					<!-- Botón Next -->
+					<a th:href="@{/books/bookList(page=${currentPage + 1})}" class="btn btn-secondary"
+					   th:if="${currentPage < totalPages - 1}">Next</a>
+				</div>
+			</div>
 		</div>
 	</main>
 </body>

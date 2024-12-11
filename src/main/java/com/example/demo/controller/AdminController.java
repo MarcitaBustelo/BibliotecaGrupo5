@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.User;
 import com.example.demo.models.BookModel;
-import com.example.demo.models.UserModel;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BookService;
 import com.example.demo.service.UserService;
 
@@ -31,6 +31,9 @@ public class AdminController {
 	private UserService userService;
 	
 	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
 	private BookService bookService;
 
 	@GetMapping("/listUsers")
@@ -43,16 +46,16 @@ public class AdminController {
 	}
 
 	@GetMapping("/deleteUsers")
-	public String deleteCourse(@RequestParam("id") int id) {
+	public String deleteUser(@RequestParam("id") int id) {
 		userService.delete(id);
-		return "redirect:/users/listUsers";
+		return "redirect:/admin/listUsers";
 	}
 
 	@GetMapping("/updateUsers")
-	public String showEditLibroForm(@RequestParam("id") int id, Model model) {
+	public String showEditUser(@RequestParam("id") int id, Model model) {
 		User user = userService.findById(id);
 		model.addAttribute("users", user);
-		return "redirect:/users/listUsers";
+		return "redirect:/admin/listUsers";
 	}
 
 	@GetMapping("/bookADMIN")
@@ -61,5 +64,13 @@ public class AdminController {
 		List<BookModel> books = bookService.listAllBooks();
 		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
 		return mav;
+	}
+	
+	@GetMapping("/toggleActivation")
+	public String toggleActivation(@RequestParam int id) {
+	    User user = userService.findById(id);
+	    user.setActivated(!user.getActivated());
+	    userRepository.save(user);
+	    return "redirect:/admin/listUsers";
 	}
 }
