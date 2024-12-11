@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments :: head}"></head>
+
+<body>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+
+	<main class="account-page">
+		<div class="account-container">
+			<h1 class="account-title" th:text="${user.name + ' ' + user.lastname}"></h1>
+			<p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+		</div>
+
+		<div class="account-actions">
+			<a class="btn-update-pass" th:href="@{/update-password}">Editar cuenta</a>
+		</div>
+	</main>
+</body>
+
+</html>

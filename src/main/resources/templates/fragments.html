@@ -1,5 +1,5 @@
 <nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
-	<a class="ps-2 navbar-brand" href="/users" sec:authorize="hasRole('ROLE_ADMIN')">Users</a> <a
+	<a class="ps-2 navbar-brand" href="/admin/listUsers" sec:authorize="hasRole('ROLE_ADMIN')">Users</a> <a
 		class="ps-2 navbar-brand" th:href="@{/books/listBooks}">Books</a> <a class="ps-2 navbar-brand" href="/">Home</a>
 	<a class="ps-2 navbar-brand" href="/about">About us</a>
 
@@ -17,7 +17,7 @@
 				<form th:action="@{/logout}" method="post">
 					<button type="submit" class="dropdown-item">Logout</button>
 				</form>
-				<form th:action="@{/logout}" method="post">
+				<form th:action="@{/myaccount}" method="get">
 					<button type="submit" class="dropdown-item">My account</button>
 				</form>
 			</div>
@@ -33,6 +33,7 @@
 	<link rel="stylesheet" th:href="@{/css/about.css}">
 	<link rel="stylesheet" th:href="@{/css/login.css}">
 	<link rel="stylesheet" th:href="@{/css/welcome.css}" />
+	<link rel="stylesheet" th:href="@{/css/myaccount.css}" />
 
 	<!-- Bootstrap Bundle JS -->
 	<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
