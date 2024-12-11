@@ -2,82 +2,99 @@
 
 /* General Reset */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Georgia', serif;
-    background-color: #fdf6e3;
-    color: #5d4037;
+	margin: 0;
+	padding: 0;
+	font-family: 'Georgia', serif;
+	background-color: #fdf6e3;
+	color: #5d4037;
+	font-size: 18px;
+	/* Aumenta el tamaño base de la fuente */
 }
 
 /* Header */
 header {
-    background-color: #8d6e63;
-    color: #ffffff;
-    padding: 15px 20px;
-    text-align: center;
-    font-size: 1.5em;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	background-color: #8d6e63;
+	color: #ffffff;
+	padding: 25px 30px;
+	/* Aumenta el padding del header */
+	text-align: center;
+	font-size: 2em;
+	/* Aumenta el tamaño de fuente del header */
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Main Content */
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 40px;
+	/* Aumenta el padding del contenedor principal */
 }
 
 .content-info {
-    background-color: #d7ccc8;
-    border-radius: 10px;
-    padding: 20px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    text-align: center;
+	background-color: #d7ccc8;
+	border-radius: 10px;
+	padding: 30px;
+	/* Aumenta el padding interno del contenedor de info */
+	width: 90%;
+	/* Aumenta el ancho base */
+	max-width: 800px;
+	/* Aumenta el ancho máximo */
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	margin-bottom: 30px;
+	/* Aumenta el espacio inferior */
+	text-align: center;
 }
 
 .content-info h1 {
-    font-size: 2em;
-    margin-bottom: 15px;
-    color: #3e2723;
+	font-size: 3em;
+	/* Aumenta el tamaño de la cabecera */
+	margin-bottom: 20px;
+	color: #3e2723;
 }
 
 .content-info p {
-    margin: 10px 0;
-    line-height: 1.6;
+	margin: 15px 0;
+	line-height: 1.8;
+	/* Aumenta la altura de línea para mejor legibilidad */
+	font-size: 1.2em;
+	/* Aumenta el tamaño de fuente en los párrafos */
 }
 
 .content-info a {
-    color: #6d4c41;
-    text-decoration: none;
-    font-weight: bold;
+	color: #6d4c41;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1.1em;
+	/* Aumenta el tamaño de fuente en los enlaces */
 }
 
 .content-info a:hover {
-    color: #3e2723;
-    text-decoration: underline;
+	color: #3e2723;
+	text-decoration: underline;
 }
 
 /* Map Section */
 .content-map iframe {
-    width: 100%;
-    height: 300px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	height: 400px;
+	/* Aumenta la altura del mapa */
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Media Queries for Responsiveness */
 @media (min-width: 768px) {
-    .content {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    
-    .content-info, .content-map {
-        width: 45%;
-    }
+	.content {
+		flex-direction: row;
+		justify-content: space-around;
+	}
+
+	.content-info,
+	.content-map {
+		width: 45%;
+	}
 }

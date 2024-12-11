@@ -2,84 +2,92 @@
 
 /* General Styles */
 body {
-    background-color: #fdf6e3;
-    font-family: 'Georgia', serif;
-    color: #5d4037;
-    margin: 0;
-    padding: 0;
+	background-color: #fdf6e3;
+	font-family: 'Georgia', serif;
+	color: #5d4037;
+	margin: 0;
+	padding: 0;
 }
 
 h4 {
-    color: #3e2723;
-    font-size: 1.8rem;
-    margin-bottom: 20px;
+	color: #3e2723;
+	font-size: 1.8rem;
+	margin-bottom: 20px;
 }
 
 /* Card Styles */
 .card {
-    background-color: #d7ccc8;
-    border: none;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
+	background-color: #d7ccc8;
+	border: none;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+	border-radius: 12px;
 }
 
 /* Input Styles */
 .form-control {
-    border: 1px solid #6d4c41;
-    border-radius: 8px;
-    padding: 10px;
-    background-color: #fff4e1;
+	border: 1px solid #6d4c41;
+	border-radius: 8px;
+	padding: 10px;
+	background-color: #fff4e1;
 }
 
 .form-control:focus {
-    border-color: #3e2723;
-    background-color: #fdf6e3;
+	border-color: #3e2723;
+	background-color: #fdf6e3;
 }
 
 /* Button Styles */
 .btn-brown {
-    background-color: #6d4c41;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    padding: 10px;
+	background-color: #6d4c41;
+	color: white;
+	font-weight: bold;
+	border-radius: 8px;
+	padding: 10px;
 }
 
 .btn-brown:hover {
-    background-color: #5d4037;
+	background-color: #5d4037;
 }
 
 /* Alert Styles */
 .alert-info {
-    background-color: #d1c4b1;
-    color: #3e2723;
+	background-color: #d1c4b1;
+	color: #3e2723;
 }
 
 .alert-danger {
-    background-color: #f44336;
-    color: #ffffff;
+	background-color: #f44336;
+	color: #ffffff;
 }
 
-/* Centering the form */
+/* Centering the form but moving it up */
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+	display: flex;
+	justify-content: center;
+	/* Centra horizontalmente */
+	/* align-items: flex-start;  Opcional, por defecto es flex-start si no se define */
+	padding-top: 50px;
+	/* Ajusta este valor a tu gusto */
+	/* height: 100vh;  Removido */
+}
+
+.card {
+	transform: translateY(-80px);
+	/* Ajusta este valor para subirla más o menos */
 }
 
 .card-body {
-    padding: 30px;
+	padding: 30px;
 }
 
 .text-brown {
-    color: #3e2723;
+	color: #3e2723;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-    .card {
-        width: 90%;
-        padding: 20px;
-    }
+	.card {
+		width: 90%;
+		padding: 20px;
+	}
 }

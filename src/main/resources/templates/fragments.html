@@ -1,20 +1,16 @@
-<nav th:fragment="navbar"
-	class="navbar navbar-expand-md navbar-dark bg-dark">
-	<a class="ps-2 navbar-brand" href="/users"
-		sec:authorize="hasRole('ROLE_ADMIN')">Users</a> <a
-		class="ps-2 navbar-brand" th:href="@{/books/listBooks}">Books</a> <a
-		class="ps-2 navbar-brand" href="/">Home</a> <a
-		class="ps-2 navbar-brand" href="/about">About us</a>
+<nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
+	<a class="ps-2 navbar-brand" href="/users" sec:authorize="hasRole('ROLE_ADMIN')">Users</a> <a
+		class="ps-2 navbar-brand" th:href="@{/books/listBooks}">Books</a> <a class="ps-2 navbar-brand" href="/">Home</a>
+	<a class="ps-2 navbar-brand" href="/about">About us</a>
 
 	<div class="ms-auto" sec:authorize="!isAuthenticated()">
-		<a class="navbar-brand d-inline" th:href="@{/login}">Login</a> <a
-			class="navbar-brand d-inline" th:href="@{/register}">Register</a>
+		<a class="navbar-brand d-inline" th:href="@{/login}">Login</a> <a class="navbar-brand d-inline"
+			th:href="@{/register}">Register</a>
 	</div>
 
 	<div class="ms-auto me-3" sec:authorize="isAuthenticated()">
 		<div class="btn-group">
-			<button class="btn btn-secondary dropdown-toggle" type="button"
-				id="triggerId" data-bs-toggle="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown">
 				<span sec:authentication="name"></span>
 			</button>
 			<div class="dropdown-menu dropdown-menu-end">
@@ -30,16 +26,14 @@
 </nav>
 
 <head th:fragment="head">
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<link rel="stylesheet"
-	th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
-<link rel="stylesheet" th:href="@{/css/styles.css}">
-<link rel="stylesheet" th:href="@{/css/about.css}">
-<link rel="stylesheet" th:href="@{/css/login.css}">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<link rel="stylesheet" th:href="@{/css/about.css}">
+	<link rel="stylesheet" th:href="@{/css/login.css}">
+	<link rel="stylesheet" th:href="@{/css/welcome.css}" />
 
-
-<!-- Bootstrap Bundle JS -->
-<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+	<!-- Bootstrap Bundle JS -->
+	<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 </head>
