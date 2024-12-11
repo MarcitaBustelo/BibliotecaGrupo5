@@ -66,12 +66,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public void edit(UserModel userModel) {
-		User user = userRepository.findById(userModel.getId()).orElse(null);
+	public void edit(User user) {
+		User u = userRepository.findById(user.getId()).orElse(null);
 
 		if (user != null) {
-			user.setEmail(userModel.getEmail());
-			userRepository.save(user);
+			user.setEmail(user.getEmail());
+			userRepository.save(u);
 		}
 	}
 

@@ -13,7 +13,7 @@ public interface UserService {
 
 	void delete(int id);
 
-	void edit(UserModel userModel);
+	void edit(User user);
 
 	List<User> getAllUsers();
 

@@ -25,7 +25,7 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 	private String role;
-	
+
 	private boolean activated;
 
 	@OneToMany(mappedBy = "user")
@@ -97,7 +97,7 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
+
 	public boolean getActivated() {
 		return activated;
 	}

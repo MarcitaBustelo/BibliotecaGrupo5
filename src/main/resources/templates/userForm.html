@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Edit account</title>
+	<div th:insert="~{fragments :: head}"></div>
+	<link rel="stylesheet" href="css/editUser.css">
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+
+
+
+	<main <h1>Edit your account</h1>
+
+		<form th:action="@{/updateUser}" method="post" th:object="${users}" style="text-align:left; margin-top:30px;">
+			<div style="margin-bottom:20px;">
+				<label for="name" style="display:block; margin-bottom:5px; font-weight:bold;">Name:</label>
+				<input type="text" id="name" th:field="*{name}" class="form-control" required>
+			</div>
+
+			<div style="margin-bottom:20px;">
+				<label for="lastname" style="display:block; margin-bottom:5px; font-weight:bold;">Last Name:</label>
+				<input type="text" id="lastname" th:field="*{lastname}" class="form-control" required>
+			</div>
+
+			<div>
+				<button type="submit">Save changes</button>
+			</div>
+		</form>
+
+	</main>
+
+</body>
+
+</html>
