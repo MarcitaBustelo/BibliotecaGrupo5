@@ -34,7 +34,6 @@ public class BookController {
 		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
 		List<BookModel> books = bookService.listAllBooks();
 		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
-
 		return mav;
 	}
 	
@@ -58,10 +57,10 @@ public class BookController {
 	}
 
 	@PostMapping("/addBook")
-	public String addBook(@ModelAttribute("books") BookModel libroModel, RedirectAttributes flash) {
-		bookService.addBook(libroModel);
-		flash.addFlashAttribute("success", "Book has been added");
-		return "redirect:/books/listBooks";
+	public String addBook(@ModelAttribute("books") BookModel bookModel, RedirectAttributes flash) {
+	    bookService.addBook(bookModel);
+	    flash.addFlashAttribute("success", "Book has been added");
+	    return "redirect:/books/listBooks";
 	}
 
 }

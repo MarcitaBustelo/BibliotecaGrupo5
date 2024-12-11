@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -12,26 +13,26 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Book {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(unique = true, nullable = false)
 	private String title;
-	
+
 	private String image;
 	private String author;
 	private String genre;
-	private Date yearPublished;
-	
-	@OneToMany(mappedBy="book")
+	private LocalDate yearPublished;
+
+	@OneToMany(mappedBy = "book")
 	private List<Reservation> reservations;
-	
-	@OneToMany(mappedBy="book")
+
+	@OneToMany(mappedBy = "book")
 	private List<Loan> loans;
-	
-	public Book(long id, String title, String image, String author, String genre, Date yearPublished) {
+
+	public Book(long id, String title, String image, String author, String genre, LocalDate yearPublished) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -85,11 +86,11 @@ public class Book {
 		this.genre = genre;
 	}
 
-	public Date getYearPublished() {
+	public LocalDate getYearPublished() {
 		return yearPublished;
 	}
 
-	public void setYearPublished(Date yearPublished) {
+	public void setYearPublished(LocalDate yearPublished) {
 		this.yearPublished = yearPublished;
 	}
 

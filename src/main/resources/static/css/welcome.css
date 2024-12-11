@@ -8,21 +8,16 @@ body {
 	box-sizing: border-box;
 }
 
-/* Asegúrate de que no haya padding que empuje el contenido hacia abajo */
 header,
 main {
 	margin: 0;
 	padding: 0;
 }
 
-/* Ajusta el hero-section para que empiece justo después del header */
 .hero-section {
 	background: url("/images/fondo.png") no-repeat center center fixed;
 	background-size: cover;
-	/* Usar calc para ocupar todo el viewport menos la altura del navbar 
-       Si sabes la altura exacta del navbar, por ejemplo 60px, úsalo: */
 	min-height: calc(100vh - 60px);
-
 	display: flex;
 	justify-content: center;
 	align-items: center;

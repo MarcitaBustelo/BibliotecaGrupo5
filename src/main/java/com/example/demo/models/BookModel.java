@@ -1,14 +1,14 @@
 package com.example.demo.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class BookModel {
 
 	private long id;
 	private String title, image, author, genre;
-	private Date yearPublished;
+	private LocalDate yearPublished;
 
-	public BookModel(long id, String title, String image, String author, String genre, Date yearPublished) {
+	public BookModel(long id, String title, String image, String author, String genre, LocalDate yearPublished) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -62,11 +62,11 @@ public class BookModel {
 		this.genre = genre;
 	}
 
-	public Date getYearPublished() {
+	public LocalDate getYearPublished() {
 		return yearPublished;
 	}
 
-	public void setYearPublished(Date yearPublished) {
+	public void setYearPublished(LocalDate yearPublished) {
 		this.yearPublished = yearPublished;
 	}
 

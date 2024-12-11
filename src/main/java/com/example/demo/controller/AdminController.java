@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.User;
+import com.example.demo.models.BookModel;
 import com.example.demo.models.UserModel;
+import com.example.demo.service.BookService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -22,19 +24,24 @@ public class AdminController {
 
 	private static final String USERS_VIEW = "users";
 	private static final String USERS_FORM = "userForm";
+	private static final String BOOKS_VIEW = "bookADMIN";
+
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BookService bookService;
 
-	//ADMIN
 	@GetMapping("/listUsers")
 	public ModelAndView listUsers(Authentication authentication) {
 		ModelAndView mav = new ModelAndView(USERS_VIEW);
 		List<User> users = userService.getAllUsers();
-		mav.addObject("users", (users != null) ? users : new ArrayList<UserModel>());
+		List<User> filteredUsers = users.stream().filter(user -> !user.getRole().equals("ROLE_ADMIN")).toList();
+		mav.addObject("users", (filteredUsers != null) ? filteredUsers : new ArrayList<>());
 		return mav;
 	}
-	
+
 	@GetMapping("/deleteUsers")
 	public String deleteCourse(@RequestParam("id") int id) {
 		userService.delete(id);
@@ -46,5 +53,13 @@ public class AdminController {
 		User user = userService.findById(id);
 		model.addAttribute("users", user);
 		return "redirect:/users/listUsers";
+	}
+
+	@GetMapping("/bookADMIN")
+	public ModelAndView listBooksADMIN(Authentication authentication) {
+		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
+		List<BookModel> books = bookService.listAllBooks();
+		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
+		return mav;
 	}
 }
