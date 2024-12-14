@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-/* General Styles */
 body {
 	background-color: #fdf6e3;
 	font-family: 'Georgia', serif;
@@ -15,7 +14,6 @@ h4 {
 	margin-bottom: 20px;
 }
 
-/* Card Styles */
 .card {
 	background-color: #d7ccc8;
 	border: none;
@@ -23,7 +21,6 @@ h4 {
 	border-radius: 12px;
 }
 
-/* Input Styles */
 .form-control {
 	border: 1px solid #6d4c41;
 	border-radius: 8px;
@@ -36,7 +33,6 @@ h4 {
 	background-color: #fdf6e3;
 }
 
-/* Button Styles */
 .btn-brown {
 	background-color: #6d4c41;
 	color: white;
@@ -49,7 +45,6 @@ h4 {
 	background-color: #5d4037;
 }
 
-/* Alert Styles */
 .alert-info {
 	background-color: #d1c4b1;
 	color: #3e2723;
@@ -60,20 +55,14 @@ h4 {
 	color: #ffffff;
 }
 
-/* Centering the form but moving it up */
 main {
 	display: flex;
 	justify-content: center;
-	/* Centra horizontalmente */
-	/* align-items: flex-start;  Opcional, por defecto es flex-start si no se define */
 	padding-top: 50px;
-	/* Ajusta este valor a tu gusto */
-	/* height: 100vh;  Removido */
 }
 
 .card {
 	transform: translateY(-80px);
-	/* Ajusta este valor para subirla más o menos */
 }
 
 .card-body {
@@ -84,7 +73,6 @@ main {
 	color: #3e2723;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
 	.card {
 		width: 90%;

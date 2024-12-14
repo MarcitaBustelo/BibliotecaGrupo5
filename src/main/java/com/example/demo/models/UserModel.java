@@ -26,9 +26,6 @@ public class UserModel {
 	
 	private boolean activated;
 
-
-	
-
 	public UserModel(long id, @NotEmpty(message = "Name must not be empty") String name,
 			@NotEmpty(message = "Lastname must not be empty") String lastname,
 			@NotEmpty(message = "Email must not be empty") @Email String email,
