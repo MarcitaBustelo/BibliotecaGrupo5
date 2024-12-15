@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Books</title>
-	<link rel="stylesheet" th:href="@{/css/bookADMIN.css}">
+	<title>Book Management</title>
+	<link rel="stylesheet" th:href="@{/css/bookADMIN.css}" />
 	<div th:insert="~{fragments :: head}"></div>
 </head>
 
@@ -11,64 +11,69 @@
 	<header>
 		<div th:replace="~{fragments :: navbar}"></div>
 	</header>
-	<main>
-		<div class="container mt-4">
-			<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
-			<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
-			<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
-			<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	<main class="container mt-4">
+		<h3>Book List</h3>
+		<!-- Mensajes de Éxito/Error -->
+		<div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
-			<h3>Book List</h3>
-			<div class="ms-auto me-3">
-				<a th:href="@{/books/bookForm}" class="btn btn-primary mb-2">Add Book</a>
-			</div>
+		<!-- Botón para Añadir Libro -->
+		<div class="text-end mb-3">
+			<a th:href="@{/books/bookForm}" class="btn btn-primary">Add Book</a>
+		</div>
 
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th>Image</th>
-						<th>Title</th>
-						<th>Author</th>
-						<th>Genre</th>
-						<th>Year Published</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody th:each="book : ${books}">
-					<tr>
-						<td>
-							<img th:src="@{'/photos/' + ${book.image}}" alt=""
-								style="height: 80px; width: 80px; object-fit: cover;">
+		<!-- Tabla de Libros -->
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Image</th>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Genre</th>
+					<th>Year Published</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book : ${books}">
+					<td>
+						<img th:src="@{'/photos/' + ${book.image}}" alt="Book Image"
+							style="height: 80px; width: 80px; object-fit: cover;">
+					</td>
+					<td th:text="${book.title}">Title</td>
+					<td th:text="${book.author}">Author</td>
+					<td th:text="${book.genre}">Genre</td>
+					<td th:text="${book.yearPublished}">Year Published</td>
+					<td>
+						<a th:href="@{/books/bookForm(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
+						<a th:href="@{/books/deleteBook(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
-						</td>
-						<td th:text="${book.title}">Title</td>
-						<td th:text="${book.author}">Author</td>
-						<td th:text="${book.genre}">Genre</td>
-						<td th:text="${book.yearPublished}">Year Published</td>
-						<td>
-							<a th:href="@{/books/bookForm(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
-							<a th:href="@{/books/deleteBook(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<ul class="pagination">
-				<li th:classappend="${currentPage == 1} ? 'disabled'">
-					<a th:href="@{/admin/bookADMIN(page=${currentPage - 1})}">Prev</a>
+		<!-- Paginación -->
+		<nav aria-label="Page navigation">
+			<ul class="pagination justify-content-center">
+				<!-- Botón Anterior -->
+				<li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+					<a class="page-link" th:href="@{/admin/bookADMIN(page=${currentPage - 2})}"
+						tabindex="-1">Previous</a>
 				</li>
 
-				<!--				<li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">-->
-				<!--					<a th:href="@{/admin/bookADMIN(page=${i})}" th:text="${i}"></a>-->
-				<!--				</li>-->
+				<!-- Números de Página -->
+				<li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+					th:classappend="${i == currentPage} ? 'active'">
+					<a class="page-link" th:href="@{/admin/bookADMIN(page=${i - 1})}" th:text="${i}"></a>
+				</li>
 
-				<li th:classappend="${currentPage == totalPages} ? 'disabled'">
-					<a th:href="@{/admin/bookADMIN(page=${currentPage + 1})}">Next</a>
+				<!-- Botón Siguiente -->
+				<li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+					<a class="page-link" th:href="@{/admin/bookADMIN(page=${currentPage})}">Next</a>
 				</li>
 			</ul>
+		</nav>
 
-		</div>
-		</div>
 	</main>
 </body>
 

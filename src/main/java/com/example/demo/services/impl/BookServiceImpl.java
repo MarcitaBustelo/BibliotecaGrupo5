@@ -6,13 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.converter.BookConverter;
 import com.example.demo.entity.Book;
-import com.example.demo.models.BookModel;
 import com.example.demo.repository.BookRepository;
 import com.example.demo.service.BookService;
 
@@ -38,8 +36,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book addBook(Book libro) {
-		Book lib = libro;
-		return bookRepository.save(lib);
+		return bookRepository.save(libro);
 	}
 
 	@Override
@@ -49,8 +46,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book updateBook(Book libroModel) {
-		Book libro = libroModel;
+	public Book updateBook(Book libro) {
 		return bookRepository.save(libro);
 	}
 
@@ -60,8 +56,7 @@ public class BookServiceImpl implements BookService {
 		return book;
 	}
 
-	public Page<Book> getBooksPaginated(int page, int size) {
-		Pageable pageable = PageRequest.of(page - 1, size); // PageRequest usa base 0
+	public Page<Book> getBooksPaginated(Pageable pageable) {
 		return bookRepository.findAll(pageable);
 	}
 

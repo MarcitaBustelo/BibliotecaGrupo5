@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,9 +61,11 @@ public class AdminController {
 	}
 
 	@GetMapping("/bookADMIN")
-	public String listBooks(@RequestParam(defaultValue = "1") int page, Model model) {
+	public String listBooks(@RequestParam(defaultValue = "0") int page, Model model) {
 
-		Page<Book> booksPage = bookService.getBooksPaginated(page, 10);
+	    int pageSize = 5; 
+	    Pageable pageable = PageRequest.of(page, pageSize);
+		Page<Book> booksPage = bookService.getBooksPaginated(pageable);
 
 	model.addAttribute("books", booksPage.getContent());
 		model.addAttribute("currentPage", booksPage.getNumber() + 1);
