@@ -14,10 +14,10 @@
 		<div class="d-flex justify-content-center align-items-center mt-5">
 			<div class="card" style="width: 50em;">
 				<div class="card-body">
-					<h4 class="card-title" th:text="${books.id == null ? 'Add Book' : 'Edit Book'}"></h4>
+					<h4 class="card-title" th:text="${books.id == 0 ? 'Add Book' : 'Edit Book'}"></h4>
 					<!-- Formulario corregido -->
-					<form th:action="@{${books.id == null ? '/books/addBook' : '/books/updateBook'}}"
-						th:object="${books}" method="post" enctype="multipart/form-data">
+					<form th:action="@{${books.id == 0 ? '/books/addBook' : '/books/updateBook'}}" th:object="${books}"
+						method="post" enctype="multipart/form-data">
 
 						<!-- Campo oculto para el ID -->
 						<input type="hidden" th:field="*{id}">
@@ -63,6 +63,7 @@
 							<label class="form-label" for="file">Upload Image</label>
 							<input class="form-control" type="file" id="file" name="file"
 								th:required="${books.id == null}">
+
 						</div>
 
 						<!-- Botones -->

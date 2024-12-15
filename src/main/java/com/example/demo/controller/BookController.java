@@ -45,7 +45,15 @@ public class BookController {
 
 	@GetMapping("/deleteBook")
 	public String deleteCourse(@RequestParam("id") int id) {
-		bookService.removeBook(id);
+		Book book = bookService.findById(id);
+		if (book != null) {
+			try {
+				storageService.delete(book.getImage());
+			} catch (Exception e) {
+				System.err.println("Error al eliminar la imagen: " + e.getMessage());
+			}
+			bookService.removeBook(id);
+		}
 		return "redirect:/admin/bookADMIN";
 	}
 

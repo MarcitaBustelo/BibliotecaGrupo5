@@ -63,7 +63,7 @@ public class AdminController {
 
 		Page<Book> booksPage = bookService.getBooksPaginated(page, 10);
 
-		model.addAttribute("books", booksPage.getContent());
+	model.addAttribute("books", booksPage.getContent());
 		model.addAttribute("currentPage", booksPage.getNumber() + 1);
 		model.addAttribute("totalPages", booksPage.getTotalPages());
 		model.addAttribute("totalItems", booksPage.getTotalElements());
