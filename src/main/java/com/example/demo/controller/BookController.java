@@ -97,31 +97,27 @@ public class BookController {
 	public String updateBook(@ModelAttribute("books") Book updatedBook, @RequestParam("file") MultipartFile file,
 			RedirectAttributes flash) {
 		try {
-			// Verificar si el libro existe en la base de datos
 			Book existingBook = bookService.findById(updatedBook.getId());
 			if (existingBook == null) {
 				flash.addFlashAttribute("error", "Book not found.");
 				return "redirect:/admin/bookADMIN";
 			}
 
-			// Actualizar campos del libro existente
 			existingBook.setTitle(updatedBook.getTitle());
 			existingBook.setAuthor(updatedBook.getAuthor());
 			existingBook.setGenre(updatedBook.getGenre());
 			existingBook.setYearPublished(updatedBook.getYearPublished());
 
-			// Actualizar imagen si se proporciona una nueva
 			if (!file.isEmpty()) {
 				try {
 					String filename = storageService.store(file, updatedBook.getId());
-					existingBook.setImage(filename); // Actualizar con el nuevo nombre de archivo
+					existingBook.setImage(filename);
 				} catch (Exception e) {
 					flash.addFlashAttribute("error", "Error updating image file.");
 					return "redirect:/admin/bookADMIN";
 				}
 			}
 
-			// Guardar el libro actualizado
 			bookService.updateBook(existingBook);
 
 			flash.addFlashAttribute("success", "Book has been successfully updated!");

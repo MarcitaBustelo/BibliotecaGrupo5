@@ -1,9 +1,22 @@
 @charset "UTF-8";
 
+body {
+	font-family: Arial, sans-serif;
+	background-color: #fdf7e3;
+}
+
+.container {
+	max-width: 95%;
+	margin: 0 auto;
+	padding: 20px;
+}
+
 th {
 	background-color: #8b5e3c;
 	color: #fff8f0;
 	text-transform: uppercase;
+	text-align: center;
+	padding: 12px;
 }
 
 tr:nth-child(even) {
@@ -14,53 +27,48 @@ tr:hover {
 	background-color: #e8d4b8;
 }
 
+td {
+	text-align: center;
+	padding: 12px;
+}
+
 td img {
 	border-radius: 50%;
-	/* imagenes redondas */
 	width: 80px;
 	height: 80px;
 	object-fit: cover;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-button,
 .btn {
 	border: none;
 	border-radius: 5px;
 	padding: 8px 12px;
-	font-size: 12px;
-	cursor: pointer;
+	font-size: 14px;
 	font-weight: bold;
+	cursor: pointer;
+	text-align: center;
 }
 
-.btn-edit {
-	background-color: #d4a373;
-	color: #fff8f0;
-}
-
-.btn-edit:hover {
-	background-color: #c4895b;
-}
-
-.btn-delete {
-	background-color: #b22222;
+.btn-warning {
+	background-color: #f0ad4e;
 	color: #fff;
 }
 
-.btn-delete:hover {
-	background-color: #8b0000;
+.btn-danger {
+	background-color: #d9534f;
+	color: #fff;
 }
 
-.btn-add {
+.btn-primary {
 	background-color: #5c3c1d;
-	color: #fff8f0;
-	text-decoration: none;
-	padding: 10px 15px;
-	border-radius: 5px;
+	color: #fff;
 }
 
-.btn-add:hover {
+.btn-primary:hover {
 	background-color: #8b5e3c;
+	transform: scale(1.05);
+	transition: 0.3s ease;
 }
 
 .pagination {
@@ -68,14 +76,18 @@ button,
 	justify-content: center;
 	align-items: center;
 	list-style: none;
-	padding: 10px 0;
-	margin: 20px 0;
+	margin-top: 20px;
+	padding: 0;
+	width: 100%;
+}
+
+.pagination .page-item {
+	margin: 0 5px;
 }
 
 .pagination a {
 	text-decoration: none;
-	padding: 8px 15px;
-	margin: 0 5px;
+	padding: 8px 12px;
 	border-radius: 5px;
 	background-color: #5c3c1d;
 	color: #fff8f0;
@@ -86,20 +98,17 @@ button,
 
 .pagination a:hover {
 	background-color: #8b5e3c;
-	/* Marrón intermedio */
 	transform: scale(1.05);
 }
 
 .pagination .disabled a {
 	background-color: #d2b48c;
 	color: #f8f0e3;
-	cursor: not-allowed;
+	pointer-events: none;
 	box-shadow: none;
-	transform: none;
 }
 
 .pagination .active a {
 	background-color: #d4a373;
-	color: #fff8f0;
-	transform: scale(1.05);
+	color: #fff;
 }
