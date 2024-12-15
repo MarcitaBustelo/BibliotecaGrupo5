@@ -1,0 +1,142 @@
+@charset "UTF-8";
+
+/* General page styles */
+body {
+	background-color: #fdf8f1;
+	/* Fondo suave en tono beige */
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+}
+
+main {
+	margin-top: 70px;
+	/* Añade margen superior */
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-top: 100px;
+	/* Espacio extra dentro del contenedor */
+	margin-top: 70px;
+	/* Separa el contenedor de la cabecera */
+}
+
+h3 {
+	text-align: center;
+	margin-bottom: 30px;
+	color: #5c3c1d;
+	/* Marrón oscuro */
+}
+
+/* Card styles */
+.card {
+	border: 1px solid #d2b48c;
+	/* Borde marrón claro */
+	border-radius: 12px;
+	/* Bordes redondeados */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	/* Sombra suave */
+	overflow: hidden;
+	/* Oculta desbordamientos */
+	background-color: #fff8f0;
+	/* Fondo suave */
+	transition: transform 0.3s ease-in-out;
+	margin: 10px auto;
+	/* Espacio entre tarjetas */
+	padding: 10px;
+	/* Espacio interno */
+}
+
+.card:hover {
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+	/* Sombra más pronunciada */
+}
+
+.card img {
+	display: block;
+	margin: 10px auto;
+	/* Centra la imagen dentro de la tarjeta */
+	border-radius: 50%;
+	/* Imágenes redondas */
+	width: 120px;
+	/* Tamaño de la imagen */
+	height: 120px;
+	object-fit: cover;
+	/* Evita que la imagen se deforme */
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Card body styles */
+.card-body {
+	text-align: center;
+	/* Centra el contenido */
+	padding: 15px;
+}
+
+.card-title {
+	font-size: 1.25rem;
+	color: #5c3c1d;
+	/* Marrón oscuro */
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.card ul {
+	padding: 0;
+	margin: 10px 0;
+	list-style: none;
+	/* Elimina los bullets */
+}
+
+.card ul li {
+	margin-bottom: 5px;
+	font-size: 0.9rem;
+	color: #8b5e3c;
+	/* Marrón medio */
+}
+
+.card ul li strong {
+	color: #5c3c1d;
+	/* Marrón oscuro */
+}
+
+.btn-warning,
+.btn-danger {
+	margin: 5px;
+	padding: 8px 12px;
+	font-size: 0.9rem;
+	border-radius: 8px;
+	/* Bordes redondeados */
+	text-transform: uppercase;
+	font-weight: bold;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.btn-warning:hover {
+	background-color: #d4a373;
+	/* Tono marrón claro */
+	color: #fff;
+}
+
+.btn-danger:hover {
+	background-color: #b22222;
+	/* Rojo oscuro */
+	color: #fff;
+}
+
+/* Separation between rows of books */
+.row {
+	margin-bottom: 30px;
+	/* Espacio entre filas */
+	margin-top: 10px;
+}
+
+/* Book container row spacing */
+.col {
+	padding: 10px;
+	/* Espacio alrededor de cada libro */
+	margin-bottom: 20px;
+	/* Separación vertical entre tarjetas */
+}

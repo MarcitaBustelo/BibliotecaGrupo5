@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments :: head}"></head>
+<head>
+	<title>Books</title>
+	<link rel="stylesheet" th:href="@{/css/bookADMIN.css}">
+	<div th:insert="~{fragments :: head}"></div>
+</head>
 
 <body>
 	<header>
@@ -42,7 +46,7 @@
 						<td th:text="${book.genre}">Genre</td>
 						<td th:text="${book.yearPublished}">Year Published</td>
 						<td>
-							<a th:href="@{/books/updateBook(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
+							<a th:href="@{/books/bookForm(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
 							<a th:href="@{/books/deleteBook(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
 						</td>
 					</tr>
@@ -54,9 +58,9 @@
 					<a th:href="@{/admin/bookADMIN(page=${currentPage - 1})}">Prev</a>
 				</li>
 
-<!--				<li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">-->
-<!--					<a th:href="@{/admin/bookADMIN(page=${i})}" th:text="${i}"></a>-->
-<!--				</li>-->
+				<!--				<li th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active'">-->
+				<!--					<a th:href="@{/admin/bookADMIN(page=${i})}" th:text="${i}"></a>-->
+				<!--				</li>-->
 
 				<li th:classappend="${currentPage == totalPages} ? 'disabled'">
 					<a th:href="@{/admin/bookADMIN(page=${currentPage + 1})}">Next</a>

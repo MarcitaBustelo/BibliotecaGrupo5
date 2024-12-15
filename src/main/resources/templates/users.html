@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Users</title>
-<div th:insert="~{fragments :: head}"></div>
+	<title>Users</title>
+	<link rel="stylesheet" th:href="@{/css/userADMIN.css}" />
+	<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
@@ -12,14 +13,10 @@
 	</header>
 	<main>
 		<div class="container mt-4">
-			<div class="alert alert-success" th:if="${success != null}"
-				th:text="${success}"></div>
-			<div class="alert alert-danger" th:if="${error != null}"
-				th:text="${error}"></div>
-			<div class="alert alert-warning" th:if="${warning != null}"
-				th:text="${warning}"></div>
-			<div class="alert alert-info" th:if="${info != null}"
-				th:text="${info}"></div>
+			<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
 
 			<h3>User List</h3>
 			<table class="table table-bordered">
@@ -38,11 +35,10 @@
 						<td th:text="${user.lastname}">Lastname</td>
 						<td th:text="${user.email}">Email</td>
 						<td><a th:href="@{/admin/toggleActivation(id=${user.id})}"
-							th:classappend="${user.activated} ? 'btn-success' : 'btn-danger'"
-							th:text="${user.activated} ? 'Deactivate' : 'Activate'"
-							class="btn btn-sm"></a></td>
-						<td><a th:href="@{/admin/deleteUsers(id=${user.id})}"
-							class="btn btn-danger btn-sm">Delete</a></td>
+								th:classappend="${user.activated} ? 'btn-success' : 'btn-danger'"
+								th:text="${user.activated} ? 'Deactivate' : 'Activate'" class="btn btn-sm"></a></td>
+						<td><a th:href="@{/admin/deleteUsers(id=${user.id})}" class="btn btn-danger btn-sm">Delete</a>
+						</td>
 
 					</tr>
 				</tbody>

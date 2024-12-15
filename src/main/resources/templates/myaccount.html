@@ -3,6 +3,7 @@
 
 <head>
 	<title>My account</title>
+	<link rel="stylesheet" th:href="@{/css/myaccount.css}" />
 	<div th:insert="~{fragments :: head}"></div>
 </head>
 
@@ -19,7 +20,10 @@
 
 		<div class="account-actions">
 			<a class="btn-update-pass" th:href="@{/updateUser}">Edit name</a>
-			<a class="btn-update-pass" th:href="@{/updatePassword}">Change password</a>
+			<a class="btn-update-pass" th:href="@{/changePassword}">Change password</a>
+		</div>
+		<div class="alert alert-info" th:if="${param.success}">
+			Password updated successfully.
 		</div>
 	</main>
 </body>

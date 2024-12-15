@@ -71,3 +71,35 @@ button,
 	padding: 10px 0;
 	margin: 20px 0;
 }
+
+.pagination a {
+	text-decoration: none;
+	padding: 8px 15px;
+	margin: 0 5px;
+	border-radius: 5px;
+	background-color: #5c3c1d;
+	color: #fff8f0;
+	font-weight: bold;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination a:hover {
+	background-color: #8b5e3c;
+	/* Marrón intermedio */
+	transform: scale(1.05);
+}
+
+.pagination .disabled a {
+	background-color: #d2b48c;
+	color: #f8f0e3;
+	cursor: not-allowed;
+	box-shadow: none;
+	transform: none;
+}
+
+.pagination .active a {
+	background-color: #d4a373;
+	color: #fff8f0;
+	transform: scale(1.05);
+}

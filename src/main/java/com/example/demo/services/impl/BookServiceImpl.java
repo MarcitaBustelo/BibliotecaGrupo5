@@ -28,17 +28,17 @@ public class BookServiceImpl implements BookService {
 	private BookConverter bookConverter;
 
 	@Override
-	public List<BookModel> listAllBooks() {
-		List<BookModel> libros = new ArrayList<BookModel>();
+	public List<Book> listAllBooks() {
+		List<Book> libros = new ArrayList<Book>();
 		for (Book libro : bookRepository.findAll())
-			libros.add(bookConverter.entity2model(libro));
+			libros.add(libro);
 		return libros;
 
 	}
 
 	@Override
-	public Book addBook(BookModel libro) {
-		Book lib = bookConverter.model2entity(libro);
+	public Book addBook(Book libro) {
+		Book lib = libro;
 		return bookRepository.save(lib);
 	}
 
@@ -49,8 +49,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book updateBook(BookModel libroModel) {
-		Book libro = bookConverter.model2entity(libroModel);
+	public Book updateBook(Book libroModel) {
+		Book libro = libroModel;
 		return bookRepository.save(libro);
 	}
 

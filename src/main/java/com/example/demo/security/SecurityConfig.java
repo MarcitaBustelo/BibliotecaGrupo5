@@ -20,7 +20,7 @@ public class SecurityConfig {
 				(requests) -> requests.requestMatchers("/", "/books/**", "/register/**", "/about/**", "/photos/**")
 						.permitAll().requestMatchers("/users").hasRole("ADMIN")
 						.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/vendor/**",
-								"/fonts/**", "/webjars/**", "/photos/**")
+								"/fonts/**", "/webjars/**", "/photos/**", "/changePassword")
 						.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/login").usernameParameter("email").defaultSuccessUrl("/", true)
 						.permitAll())
@@ -33,4 +33,5 @@ public class SecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 }

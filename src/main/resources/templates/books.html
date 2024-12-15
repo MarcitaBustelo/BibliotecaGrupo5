@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments :: head}"></head>
+<head>
+	<title>Books</title>
+	<link rel="stylesheet" th:href="@{/css/bookUSER.css}" />
+	<div th:insert="~{fragments :: head}"></div>
+</head>
 
 <body>
 	<header>
@@ -14,13 +18,11 @@
 			<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
 			<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
 
-			<h3 class="text-center mb-4">Book List</h3>
 			<div class="row row-cols-1 row-cols-md-3 g-4">
 				<tbody th:each="book : ${books}">
 					<div class="col">
-						<div class="card text-bg-light" style="max-width: 18rem;">
-							<img th:src="@{'/photos/' + ${book.image}}" alt=""
-								style="height: 80px; width: 80px; object-fit: cover;">
+						<div class="card text-bg-light">
+							<img th:src="@{'/photos/' + ${book.image}}" alt="">
 
 							<div class="card-body">
 								<h5 class="card-title text-center" th:text="${book.title}">Book Title</h5>

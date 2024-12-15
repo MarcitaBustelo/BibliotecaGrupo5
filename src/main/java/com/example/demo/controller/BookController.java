@@ -37,7 +37,7 @@ public class BookController {
 	@GetMapping("/listBooks")
 	public ModelAndView listBooks(Authentication authentication) {
 		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
-		List<BookModel> books = bookService.listAllBooks();
+		List<Book> books = bookService.listAllBooks();
 		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
 
 		return mav;
@@ -49,39 +49,79 @@ public class BookController {
 		return "redirect:/admin/bookADMIN";
 	}
 
-	@GetMapping("/updateBook")
-	public String showEditLibroForm(@RequestParam("id") int id, Model model) {
-		Book book = bookService.findById(id);
+	@GetMapping("/bookForm")
+	public String showBookForm(@RequestParam(value = "id", required = false) Long id, Model model) {
+		Book book;
+
+		if (id != null) {
+			book = bookService.findById(id);
+		} else {
+			book = new Book();
+		}
+
 		model.addAttribute("books", book);
 		return BOOKS_FORM;
 	}
 
-	@GetMapping("/bookForm")
-	public String formBook(Model model) {
-		model.addAttribute("books", new BookModel());
-		return BOOKS_FORM;
-	}
-
 	@PostMapping("/addBook")
-	public String addBook(@ModelAttribute("books") BookModel bookModel, @RequestParam("file") MultipartFile file,
+	public String addBook(@ModelAttribute("books") Book book, @RequestParam("file") MultipartFile file,
 			RedirectAttributes flash) {
-		if (bookModel.getId() == 0) {
+		if (book.getId() == 0) {
 			if (!file.isEmpty()) {
 				try {
-					String filename = storageService.store(file, bookModel.getId());
-					bookModel.setImage(filename); // Guarda solo el nombre del archivo en la base de datos
+					String filename = storageService.store(file, book.getId());
+					book.setImage(filename); // Guarda solo el nombre del archivo en la base de datos
 				} catch (Exception e) {
 					flash.addFlashAttribute("error", "Error saving image file.");
 					return "redirect:/admin/bookADMIN";
 				}
 			}
-			bookService.addBook(bookModel);
+			bookService.addBook(book);
 			flash.addFlashAttribute("success", "Book has been successfully added!");
 			return "redirect:/admin/bookADMIN";
 		} else {
 			flash.addFlashAttribute("error", "An error occurred while adding the book.");
 			return "redirect:/admin/bookADMIN";
 		}
+	}
+
+	@PostMapping("/updateBook")
+	public String updateBook(@ModelAttribute("books") Book updatedBook, @RequestParam("file") MultipartFile file,
+			RedirectAttributes flash) {
+		try {
+			// Verificar si el libro existe en la base de datos
+			Book existingBook = bookService.findById(updatedBook.getId());
+			if (existingBook == null) {
+				flash.addFlashAttribute("error", "Book not found.");
+				return "redirect:/admin/bookADMIN";
+			}
+
+			// Actualizar campos del libro existente
+			existingBook.setTitle(updatedBook.getTitle());
+			existingBook.setAuthor(updatedBook.getAuthor());
+			existingBook.setGenre(updatedBook.getGenre());
+			existingBook.setYearPublished(updatedBook.getYearPublished());
+
+			// Actualizar imagen si se proporciona una nueva
+			if (!file.isEmpty()) {
+				try {
+					String filename = storageService.store(file, updatedBook.getId());
+					existingBook.setImage(filename); // Actualizar con el nuevo nombre de archivo
+				} catch (Exception e) {
+					flash.addFlashAttribute("error", "Error updating image file.");
+					return "redirect:/admin/bookADMIN";
+				}
+			}
+
+			// Guardar el libro actualizado
+			bookService.updateBook(existingBook);
+
+			flash.addFlashAttribute("success", "Book has been successfully updated!");
+		} catch (Exception e) {
+			flash.addFlashAttribute("error", "An error occurred while updating the book.");
+		}
+
+		return "redirect:/admin/bookADMIN";
 	}
 
 }
