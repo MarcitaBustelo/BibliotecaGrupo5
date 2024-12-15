@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Book form</title>
+	<title>Book Form</title>
 	<div th:insert="~{fragments :: head}"></div>
 </head>
 
@@ -14,48 +14,44 @@
 		<div class="d-flex justify-content-center align-items-center mt-5">
 			<div class="card" style="width: 50em;">
 				<div class="card-body">
-					<h4 class="card-title"
-						th:text="${id == null ? 'Add Book' : 'Edit Book'}"></h4>
-					<form th:action="@{/books/addBook}" th:object="${books}" method="post">
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}"> <input type="hidden" name="id"
-							th:field="*{id}">
+					<h4 class="card-title" th:text="${id == null ? 'Add Book' : 'Edit Book'}"></h4>
+					<form th:action="@{/books/addBook}" th:object="${books}" method="post"
+						enctype="multipart/form-data">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						<input type="hidden" name="id" th:field="*{id}">
+
 						<div class="mb-3">
-							<label class="form-label" for="title">Title</label> <input
-								class="form-control" type="text" id="title" name="title"
-								th:field="*{title}" placeholder="Type title..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('title')}"
-								th:errors="*{title}"></div>
+							<label class="form-label" for="title">Title</label>
+							<input class="form-control" type="text" id="title" name="title" th:field="*{title}"
+								placeholder="Type title..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
 						</div>
+
 						<div class="mb-3">
-							<label class="form-label" for="author">Author</label> <input
-								class="form-control" type="text" id="author" name="author"
-								th:field="*{author}" placeholder="Type author..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('author')}"
-								th:errors="*{author}"></div>
+							<label class="form-label" for="author">Author</label>
+							<input class="form-control" type="text" id="author" name="author" th:field="*{author}"
+								placeholder="Type author..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
 						</div>
+
 						<div class="mb-3">
-							<label class="form-label" for="genre">Genre</label> <input
-								class="form-control" type="text" id="genre" name="genre"
-								th:field="*{genre}" placeholder="Type genre..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('genre')}"
-								th:errors="*{genre}"></div>
+							<label class="form-label" for="genre">Genre</label>
+							<input class="form-control" type="text" id="genre" name="genre" th:field="*{genre}"
+								placeholder="Type genre..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
 						</div>
+
 						<div class="mb-3">
-							<label class="form-label" for="yearPublished">Year
-								Published</label> <input class="form-control" type="date"
-								id="yearPublished" name="yearPublished"
+							<label class="form-label" for="yearPublished">Year Published</label>
+							<input class="form-control" type="date" id="yearPublished" name="yearPublished"
 								th:field="*{yearPublished}" required>
-							<div class="text-danger"
-								th:if="${#fields.hasErrors('yearPublished')}"
+							<div class="text-danger" th:if="${#fields.hasErrors('yearPublished')}"
 								th:errors="*{yearPublished}"></div>
 						</div>
+
 						<div class="mb-3">
-							<label class="form-label" for="image">Image</label> <input
-								class="form-control" type="text" id="image" name="image"
-								th:field="*{image}" placeholder="Type image..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('image')}"
-								th:errors="*{image}"></div>
+							<label class="form-label" for="file">Upload Image</label>
+							<input class="form-control" type="file" id="file" name="file" required>
 						</div>
 
 						<div class="mb-3">

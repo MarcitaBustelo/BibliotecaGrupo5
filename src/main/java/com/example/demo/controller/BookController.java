@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Book;
 import com.example.demo.models.BookModel;
 import com.example.demo.service.BookService;
+import com.example.demo.storage.StorageService;
 
 @Controller
 @RequestMapping("/books")
@@ -29,14 +31,18 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
+	@Autowired
+	private StorageService storageService;
+
 	@GetMapping("/listBooks")
 	public ModelAndView listBooks(Authentication authentication) {
 		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
 		List<BookModel> books = bookService.listAllBooks();
 		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
+
 		return mav;
 	}
-	
+
 	@GetMapping("/deleteBook")
 	public String deleteCourse(@RequestParam("id") int id) {
 		bookService.removeBook(id);
@@ -49,7 +55,7 @@ public class BookController {
 		model.addAttribute("books", book);
 		return BOOKS_FORM;
 	}
-	
+
 	@GetMapping("/bookForm")
 	public String formBook(Model model) {
 		model.addAttribute("books", new BookModel());
@@ -57,10 +63,25 @@ public class BookController {
 	}
 
 	@PostMapping("/addBook")
-	public String addBook(@ModelAttribute("books") BookModel bookModel, RedirectAttributes flash) {
-	    bookService.addBook(bookModel);
-	    flash.addFlashAttribute("success", "Book has been added");
-		return "redirect:/admin/bookADMIN";
+	public String addBook(@ModelAttribute("books") BookModel bookModel, @RequestParam("file") MultipartFile file,
+			RedirectAttributes flash) {
+		if (bookModel.getId() == 0) {
+			if (!file.isEmpty()) {
+				try {
+					String filename = storageService.store(file, bookModel.getId());
+					bookModel.setImage(filename); // Guarda solo el nombre del archivo en la base de datos
+				} catch (Exception e) {
+					flash.addFlashAttribute("error", "Error saving image file.");
+					return "redirect:/admin/bookADMIN";
+				}
+			}
+			bookService.addBook(bookModel);
+			flash.addFlashAttribute("success", "Book has been successfully added!");
+			return "redirect:/admin/bookADMIN";
+		} else {
+			flash.addFlashAttribute("error", "An error occurred while adding the book.");
+			return "redirect:/admin/bookADMIN";
+		}
 	}
 
 }

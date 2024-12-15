@@ -5,13 +5,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.converter.BookConverter;
 import com.example.demo.entity.Book;
 import com.example.demo.models.BookModel;
 import com.example.demo.repository.BookRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BookService;
 
 @Service("bookService")
@@ -56,6 +58,11 @@ public class BookServiceImpl implements BookService {
 	public Book findById(long id) {
 		Book book = bookRepository.findById(id);
 		return book;
+	}
+
+	public Page<Book> getBooksPaginated(int page, int size) {
+		Pageable pageable = PageRequest.of(page - 1, size); // PageRequest usa base 0
+		return bookRepository.findAll(pageable);
 	}
 
 }

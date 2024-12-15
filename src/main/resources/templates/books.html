@@ -9,41 +9,34 @@
 	</header>
 	<main>
 		<div class="container mt-4">
-			<div class="alert alert-success" th:if="${success != null}"
-				th:text="${success}"></div>
-			<div class="alert alert-danger" th:if="${error != null}"
-				th:text="${error}"></div>
-			<div class="alert alert-warning" th:if="${warning != null}"
-				th:text="${warning}"></div>
-			<div class="alert alert-info" th:if="${info != null}"
-				th:text="${info}"></div>
+			<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
 
 			<h3 class="text-center mb-4">Book List</h3>
 			<div class="row row-cols-1 row-cols-md-3 g-4">
 				<tbody th:each="book : ${books}">
 					<div class="col">
 						<div class="card text-bg-light" style="max-width: 18rem;">
-							<img th:src="@{${book.image}}" class="card-img-top"
-								alt="Book Image">
+							<img th:src="@{'/photos/' + ${book.image}}" alt=""
+								style="height: 80px; width: 80px; object-fit: cover;">
+
 							<div class="card-body">
-								<h5 class="card-title text-center" th:text="${book.title}">Book
-									Title</h5>
-
+								<h5 class="card-title text-center" th:text="${book.title}">Book Title</h5>
 								<ul class="list-unstyled">
-									<li><strong>Author:</strong> <span
-										th:text="${book.author}">Book Author</span></li>
-									<li><strong>Genre:</strong> <span th:text="${book.genre}">Book
-											Genre</span></li>
-									<li><strong>Year Published:</strong> <span
-										th:text="${book.yearPublished}">Year Published</span></li>
+									<li><strong>Author:</strong> <span th:text="${book.author}">Book Author</span></li>
+									<li><strong>Genre:</strong> <span th:text="${book.genre}">Book Genre</span></li>
+									<li><strong>Year Published:</strong> <span th:text="${book.yearPublished}">Year
+											Published</span></li>
 								</ul>
-
 								<div sec:authorize="hasRole('ROLE_USER')">
-									<a class="btn btn-warning btn-sm">Loan</a> <a
-										class="btn btn-danger btn-sm">Reservation</a>
+									<a class="btn btn-warning btn-sm">Loan</a>
+									<a class="btn btn-danger btn-sm">Reservation</a>
 								</div>
 							</div>
 						</div>
+
 					</div>
 			</div>
 			</tbody>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.entity.Book;
 import com.example.demo.entity.User;
-import com.example.demo.models.BookModel;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BookService;
 import com.example.demo.service.UserService;
@@ -26,13 +27,12 @@ public class AdminController {
 	private static final String USERS_FORM = "userForm";
 	private static final String BOOKS_VIEW = "bookADMIN";
 
-
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private BookService bookService;
 
@@ -59,18 +59,23 @@ public class AdminController {
 	}
 
 	@GetMapping("/bookADMIN")
-	public ModelAndView listBooksADMIN(Authentication authentication) {
-		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
-		List<BookModel> books = bookService.listAllBooks();
-		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
-		return mav;
+	public String listBooks(@RequestParam(defaultValue = "1") int page, Model model) {
+
+		Page<Book> booksPage = bookService.getBooksPaginated(page, 10);
+
+		model.addAttribute("books", booksPage.getContent());
+		model.addAttribute("currentPage", booksPage.getNumber() + 1);
+		model.addAttribute("totalPages", booksPage.getTotalPages());
+		model.addAttribute("totalItems", booksPage.getTotalElements());
+
+		return BOOKS_VIEW;
 	}
-	
+
 	@GetMapping("/toggleActivation")
 	public String toggleActivation(@RequestParam int id) {
-	    User user = userService.findById(id);
-	    user.setActivated(!user.getActivated());
-	    userRepository.save(user);
-	    return "redirect:/admin/listUsers";
+		User user = userService.findById(id);
+		user.setActivated(!user.getActivated());
+		userRepository.save(user);
+		return "redirect:/admin/listUsers";
 	}
 }
