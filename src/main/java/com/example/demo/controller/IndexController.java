@@ -13,6 +13,7 @@ public class IndexController {
 	public String index() {
 		return INDEX;
 	}
+	
 
 	@GetMapping("/about")
 	public String about() {
