@@ -56,6 +56,18 @@ public class BookServiceImpl implements BookService {
 		return book;
 	}
 
+	public Page<Book> searchBooksByTitle(String title, Pageable pageable) {
+		return bookRepository.findByTitleContainingIgnoreCase(title, pageable);
+	}
+
+	public Page<Book> getBooksOrderedAlphabetically(Pageable pageable) {
+		return bookRepository.findAllByOrderByTitleAsc(pageable);
+	}
+
+	public Page<Book> getBooksOrderedByDate(Pageable pageable) {
+		return bookRepository.findAllByOrderByYearPublishedDesc(pageable);
+	}
+
 	public Page<Book> getBooksPaginated(Pageable pageable) {
 		return bookRepository.findAll(pageable);
 	}

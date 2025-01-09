@@ -15,58 +15,58 @@
 		<div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
 		<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
-		<div class="text-end mb-3">
+		<!-- Contenedor para el botón de añadir libro -->
+		<div class="d-flex justify-content-end mb-3">
 			<a th:href="@{/books/bookForm}" class="btn btn-primary">Add Book</a>
 		</div>
 
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Image</th>
-					<th>Title</th>
-					<th>Author</th>
-					<th>Genre</th>
-					<th>Year Published</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="book : ${books}">
-					<td>
-						<img th:src="@{'/photos/' + ${book.image}}" alt="Book Image"
-							style="height: 80px; width: 80px; object-fit: cover;">
-					</td>
-					<td th:text="${book.title}">Title</td>
-					<td th:text="${book.author}">Author</td>
-					<td th:text="${book.genre}">Genre</td>
-					<td th:text="${book.yearPublished}">Year Published</td>
-					<td>
-						<a th:href="@{/books/bookForm(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
-						<a th:href="@{/books/deleteBook(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<!-- Tabla de libros -->
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Image</th>
+						<th>Title</th>
+						<th>Author</th>
+						<th>Genre</th>
+						<th>Year Published</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="book : ${books}">
+						<td>
+							<img th:src="@{'/photos/' + ${book.image}}" alt="Book Image"
+								style="height: 80px; width: 80px; object-fit: cover;">
+						</td>
+						<td th:text="${book.title}">Title</td>
+						<td th:text="${book.author}">Author</td>
+						<td th:text="${book.genre}">Genre</td>
+						<td th:text="${book.yearPublished}">Year Published</td>
+						<td>
+							<a th:href="@{/books/bookForm(id=${book.id})}" class="btn btn-warning btn-sm">Edit</a>
+							<a th:href="@{/books/deleteBook(id=${book.id})}" class="btn btn-danger btn-sm">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-		<nav aria-label="Page navigation">
+		<!-- Paginación -->
+		<nav class="mt-3" aria-label="Page navigation">
 			<ul class="pagination justify-content-center">
-				<!-- Botón Anterior -->
 				<li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
-					<a class="page-link" th:href="@{/admin/bookADMIN(page=${currentPage - 2})}"
-						tabindex="-1">Previous</a>
+					<a class="page-link" th:href="@{/admin/bookADMIN(page=${currentPage - 2})}">Previous</a>
 				</li>
-
 				<li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
 					th:classappend="${i == currentPage} ? 'active'">
 					<a class="page-link" th:href="@{/admin/bookADMIN(page=${i - 1})}" th:text="${i}"></a>
 				</li>
-
 				<li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
 					<a class="page-link" th:href="@{/admin/bookADMIN(page=${currentPage})}">Next</a>
 				</li>
 			</ul>
 		</nav>
-
 	</main>
 </body>
 

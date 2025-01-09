@@ -71,6 +71,17 @@ td img {
 	transition: 0.3s ease;
 }
 
+/* Botón alineado a la derecha */
+.d-flex.justify-content-end {
+	margin-bottom: 20px;
+}
+
+/* Tabla responsive */
+.table-responsive {
+	overflow-x: auto;
+}
+
+/* Paginación */
 .pagination {
 	display: flex;
 	justify-content: center;

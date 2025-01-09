@@ -22,4 +22,10 @@ public interface BookService {
 	Book findById(long id);
 
 	Page<Book> getBooksPaginated(Pageable pageable);
+
+	Page<Book> searchBooksByTitle(String title, Pageable pageable);
+
+	Page<Book> getBooksOrderedAlphabetically(Pageable pageable);
+
+	Page<Book> getBooksOrderedByDate(Pageable pageable);
 }

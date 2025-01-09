@@ -10,18 +10,56 @@ body {
 }
 
 main {
-	margin-top: 70px;
-	/* Añade margen superior */
+	margin-top: 300%;
+	/* Aumenta el espacio superior para separar del header */
 }
+
+/* Espaciado entre el formulario de filtro y el buscador */
+form {
+	margin-bottom: 10px;
+}
+
+
+form.row {
+	max-width: 500%;
+	/* Ancho máximo del contenedor */
+	width: 60%;
+	/* Ancho que ocupa todo el espacio disponible */
+	margin: 0 auto;
+	/* Centra el contenedor */
+}
+
+/* Asegura que el dropdown y el input tengan el mismo tamaño */
+.form-select,
+.form-control {
+	height: 40px;
+	border-radius: 5px;
+}
+
+/* Botón de búsqueda */
+.btn-primary {
+	height: 40px;
+	line-height: 1.5;
+}
+
 
 .container {
 	max-width: 1200px;
 	margin: 0 auto;
-	padding-top: 100px;
-	/* Espacio extra dentro del contenedor */
-	margin-top: 70px;
-	/* Separa el contenedor de la cabecera */
+	padding: 20px;
 }
+
+form.row {
+	margin-bottom: 20px;
+	/* Espacio entre el filtro y los libros */
+}
+
+.row-cols-1 .col {
+	margin-bottom: 20px;
+	/* Espacio entre las tarjetas */
+}
+
+
 
 h3 {
 	text-align: center;
@@ -135,8 +173,18 @@ h3 {
 
 /* Book container row spacing */
 .col {
-	padding: 10px;
+	padding: 40px;
 	/* Espacio alrededor de cada libro */
 	margin-bottom: 20px;
 	/* Separación vertical entre tarjetas */
+}
+
+/* Pagination styles */
+.pagination {
+	margin-top: 30px;
+	/* Espacio entre los libros y la paginación */
+	margin-bottom: 50px;
+	/* Espacio inferior */
+	justify-content: center;
+	/* Centrar los botones de paginación */
 }

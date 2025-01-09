@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Book;
-import com.example.demo.models.BookModel;
 import com.example.demo.service.BookService;
 import com.example.demo.storage.StorageService;
 
@@ -34,11 +32,42 @@ public class BookController {
 	@Autowired
 	private StorageService storageService;
 
+//	@GetMapping("/listBooks")
+//	public ModelAndView listBooks(Authentication authentication) {
+//		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
+//		List<Book> books = bookService.listAllBooks();
+//		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
+//
+//		return mav;
+//	}
+//	
 	@GetMapping("/listBooks")
-	public ModelAndView listBooks(Authentication authentication) {
+	public ModelAndView listBooks(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "") String search, @RequestParam(defaultValue = "all") String filter) {
+
 		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
-		List<Book> books = bookService.listAllBooks();
-		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
+
+		int pageSize = 3;
+		Pageable pageable = PageRequest.of(page, pageSize);
+
+		// Filtrado y búsqueda
+		Page<Book> booksPage;
+		if (!search.isEmpty()) {
+			booksPage = bookService.searchBooksByTitle(search, pageable);
+		} else if (filter.equals("alphabetical")) {
+			booksPage = bookService.getBooksOrderedAlphabetically(pageable);
+		} else if (filter.equals("date")) {
+			booksPage = bookService.getBooksOrderedByDate(pageable);
+		} else {
+			booksPage = bookService.getBooksPaginated(pageable);
+		}
+
+		mav.addObject("books", booksPage.getContent());
+		mav.addObject("currentPage", page + 1);
+		mav.addObject("totalPages", booksPage.getTotalPages());
+		mav.addObject("totalItems", booksPage.getTotalElements());
+		mav.addObject("search", search);
+		mav.addObject("filter", filter);
 
 		return mav;
 	}
