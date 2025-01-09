@@ -24,14 +24,16 @@ public class Book {
 	private String author;
 	private String genre;
 	private LocalDate yearPublished;
-
+	private boolean isAvailable;
+	
 	@OneToMany(mappedBy = "book")
 	private List<Reservation> reservations;
 
 	@OneToMany(mappedBy = "book")
 	private List<Loan> loans;
 
-	public Book(long id, String title, String image, String author, String genre, LocalDate yearPublished) {
+	public Book(long id, String title, String image, String author, String genre, LocalDate yearPublished,
+			boolean isAvailable, List<Reservation> reservations, List<Loan> loans) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -39,6 +41,9 @@ public class Book {
 		this.author = author;
 		this.genre = genre;
 		this.yearPublished = yearPublished;
+		this.isAvailable = isAvailable;
+		this.reservations = reservations;
+		this.loans = loans;
 	}
 
 	public Book() {
@@ -92,11 +97,20 @@ public class Book {
 	public void setYearPublished(LocalDate yearPublished) {
 		this.yearPublished = yearPublished;
 	}
+	
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void isAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
 
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", title=" + title + ", image=" + image + ", author=" + author + ", genre=" + genre
-				+ ", yearPublished=" + yearPublished + "]";
+				+ ", yearPublished=" + yearPublished + ", isAvailable=" + isAvailable + ", reservations=" + reservations
+				+ ", loans=" + loans + "]";
 	}
 
 }

@@ -7,8 +7,10 @@ public class BookModel {
 	private long id;
 	private String title, image, author, genre;
 	private LocalDate yearPublished;
-
-	public BookModel(long id, String title, String image, String author, String genre, LocalDate yearPublished) {
+	private boolean isAvailable;
+	
+	public BookModel(long id, String title, String image, String author, String genre, LocalDate yearPublished,
+			boolean isAvaliable) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -16,6 +18,7 @@ public class BookModel {
 		this.author = author;
 		this.genre = genre;
 		this.yearPublished = yearPublished;
+		this.isAvailable = isAvaliable;
 	}
 
 	public BookModel() {
@@ -68,6 +71,14 @@ public class BookModel {
 
 	public void setYearPublished(LocalDate yearPublished) {
 		this.yearPublished = yearPublished;
+	}
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 
 	@Override
