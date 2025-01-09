@@ -20,17 +20,12 @@ import com.example.demo.service.LoanService;
 public class LoanController {
 
     @Qualifier("loanService")
-    private final LoanService loanService;
+    private LoanService loanService;
 
     @Autowired
     @Qualifier("bookRepository")
-    private final BookRepository bookRepository;
+    private BookRepository bookRepository;
 
-    @Autowired
-    public LoanController(LoanService loanService, BookRepository bookRepository) {
-        this.loanService = loanService;
-        this.bookRepository = bookRepository;
-    }
 
     @PostMapping("/loanBook/{id}")
     public String loanBook(@RequestParam("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
