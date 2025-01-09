@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,13 @@ public class LoanController {
     @Qualifier("bookRepository")
     private BookRepository bookRepository;
 
+    private static final String USER_LOANS = "userLoans";
+
+	@GetMapping("/")
+	public String userLoans() {
+		return USER_LOANS;
+	}
+	
 
     @PostMapping("/loanBook/{id}")
     public String loanBook(@RequestParam("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {

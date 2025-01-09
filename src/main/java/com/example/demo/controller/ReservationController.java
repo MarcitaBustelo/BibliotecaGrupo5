@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,13 @@ public class ReservationController {
     @Autowired
     private BookRepository bookRepository;
 
+    private static final String USER_RESERVATIONS = "userReservations";
+
+	@GetMapping("/")
+	public String userReservations() {
+		return USER_RESERVATIONS;
+	}
+	
     // Reservar un libro
     @PostMapping("/reserve/{id}")
     public String reserveBook(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
