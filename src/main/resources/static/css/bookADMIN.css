@@ -1,38 +1,56 @@
 @charset "UTF-8";
 
+/* General body styles */
 body {
 	font-family: Arial, sans-serif;
 	background-color: #fdf7e3;
 }
 
+/* Container for proper layout */
 .container {
 	max-width: 95%;
 	margin: 0 auto;
 	padding: 20px;
 }
 
-th {
+/* Table styles */
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	font-size: 16px;
+	table-layout: fixed
+		/* Incrementa el tamaño del texto */
+}
+
+.table th {
 	background-color: #8b5e3c;
 	color: #fff8f0;
 	text-transform: uppercase;
 	text-align: center;
-	padding: 12px;
+	padding: 15px;
+	/* Más espacio en las celdas */
 }
 
-tr:nth-child(even) {
+.table td {
+	text-align: center;
+	padding: 15px;
+	/* Más espacio en las celdas */
+}
+
+.table-responsive {
+	overflow-x: auto;
+}
+
+.table tr:nth-child(even) {
 	background-color: #f8e4c4;
 }
 
-tr:hover {
+.table tr:hover {
 	background-color: #e8d4b8;
 }
 
-td {
-	text-align: center;
-	padding: 12px;
-}
-
-td img {
+.table td img {
 	border-radius: 50%;
 	width: 80px;
 	height: 80px;
@@ -40,6 +58,7 @@ td img {
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+/* Button styles */
 .btn {
 	border: none;
 	border-radius: 5px;
@@ -71,25 +90,22 @@ td img {
 	transition: 0.3s ease;
 }
 
-/* Botón alineado a la derecha */
-.d-flex.justify-content-end {
+/* Button container styles */
+.container-button {
+	text-align: center;
 	margin-bottom: 20px;
+	padding: 2%;
 }
 
-/* Tabla responsive */
-.table-responsive {
-	overflow-x: auto;
-}
+/* Pagination styles */
 
-/* Paginación */
 .pagination {
 	display: flex;
 	justify-content: center;
+	/* Centra la paginación */
 	align-items: center;
 	list-style: none;
-	margin-top: 20px;
-	padding: 0;
-	width: 100%;
+	margin-top: 580px;
 }
 
 .pagination .page-item {
@@ -98,7 +114,7 @@ td img {
 
 .pagination a {
 	text-decoration: none;
-	padding: 8px 12px;
+	padding: 10px 15px;
 	border-radius: 5px;
 	background-color: #5c3c1d;
 	color: #fff8f0;

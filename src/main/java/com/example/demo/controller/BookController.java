@@ -32,15 +32,6 @@ public class BookController {
 	@Autowired
 	private StorageService storageService;
 
-//	@GetMapping("/listBooks")
-//	public ModelAndView listBooks(Authentication authentication) {
-//		ModelAndView mav = new ModelAndView(BOOKS_VIEW);
-//		List<Book> books = bookService.listAllBooks();
-//		mav.addObject("books", (books != null) ? books : new ArrayList<BookModel>());
-//
-//		return mav;
-//	}
-//	
 	@GetMapping("/listBooks")
 	public ModelAndView listBooks(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "") String search, @RequestParam(defaultValue = "all") String filter) {
@@ -49,6 +40,12 @@ public class BookController {
 
 		int pageSize = 3;
 		Pageable pageable = PageRequest.of(page, pageSize);
+
+		// para vaciar la búsqueda si el filtro cambia (preguntar a felix mañana si es
+		// mejor)
+		if (!filter.equals("all") && search != null && !search.isEmpty()) {
+			search = "";
+		}
 
 		// Filtrado y búsqueda
 		Page<Book> booksPage;
