@@ -46,8 +46,6 @@ public class ReservationController {
 		User usu = new User();
 
 		for (User u : userService.getAllUsers()) {
-			System.out.println(u.getEmail());
-			System.out.println(principal.getName());
 			if (u.getEmail().equals(principal.getName())) {
 				usu = u;
 			}

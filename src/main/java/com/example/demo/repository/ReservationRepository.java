@@ -11,9 +11,10 @@ import com.example.demo.entity.Reservation;
 import com.example.demo.entity.User;
 
 @Repository("reservationRepository")
-public interface ReservationRepository extends JpaRepository<Reservation, Serializable>{
+public interface ReservationRepository extends JpaRepository<Reservation, Serializable> {
 
 	List<Reservation> findByBook(Book book);
-    List<Reservation> findByUser(User user);
+
+	List<Reservation> findByUser(User user);
 
 }
