@@ -1,15 +1,18 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.Book;
@@ -39,7 +42,7 @@ public class ReservationController {
 		return USER_RESERVATIONS;
 	}
 
-	@GetMapping("/userReservations")
+	@GetMapping("/userReservation")
 	public String userReservations(Principal principal, Model model) {
 		// Obtener el nombre del usuario autenticado
 
@@ -58,6 +61,27 @@ public class ReservationController {
 		model.addAttribute("reservations", reservations);
 
 		return USER_RESERVATIONS;
+	}
+
+	@GetMapping("/adminReservations")
+	public String adminReservations(
+			@RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+			@RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
+			Model model) {
+
+		List<Reservation> reservations;
+
+		if (fromDate != null && toDate != null) {
+			reservations = reservationService.findReservationsBetween(fromDate, toDate);
+		} else {
+			reservations = reservationService.listAllReservations();
+		}
+
+		model.addAttribute("reservations", reservations);
+		model.addAttribute("fromDate", fromDate);
+		model.addAttribute("toDate", toDate);
+
+		return "adminReservations";
 	}
 
 	// Reservar un libro

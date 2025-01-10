@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Serial
 	List<Reservation> findByBook(Book book);
 
 	List<Reservation> findByUser(User user);
+	
+    List<Reservation> findByReservationBetween(Date fromDate, Date toDate);
+
 
 }

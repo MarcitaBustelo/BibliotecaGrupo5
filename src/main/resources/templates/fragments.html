@@ -1,8 +1,12 @@
 <nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
-	<a class="ps-2 navbar-brand" href="/admin/listUsers" sec:authorize="hasRole('ROLE_ADMIN')">Users</a> <a
-		class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/bookADMIN}">Books</a> <a
-		class="ps-2 navbar-brand" sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/books/listBooks}">Books</a>
-	<a class="ps-2 navbar-brand" href="/">Home</a> <a class="ps-2 navbar-brand" href="/about">About us</a>
+	<a class="ps-2 navbar-brand" href="/admin/listUsers" sec:authorize="hasRole('ROLE_ADMIN')">Users</a>
+	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/bookADMIN}">Books</a>
+	<a class="ps-2 navbar-brand" sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/books/listBooks}">Books</a>
+	<a class="ps-2 navbar-brand" sec:authorize="!hasRole('ROLE_ADMIN')" href="/">Home</a>
+	<a class="ps-2 navbar-brand" href="/about" sec:authorize="!hasRole('ROLE_ADMIN')">About us</a>
+	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/loan/adminLoans}">Loans</a>
+	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/reservation/adminReservation}">Reservations</a>
+
 
 	<div class="ms-auto" sec:authorize="!isAuthenticated()">
 		<a class="navbar-brand d-inline" th:href="@{/login}">Login</a> <a class="navbar-brand d-inline"
@@ -21,10 +25,10 @@
 				<form th:action="@{/myaccount}" method="get">
 					<button type="submit" class="dropdown-item">My account</button>
 				</form>
-				<form th:action="@{/reservation/userReservations}" method="get">
+				<form th:action="@{/reservation/userReservations}" method="get" sec:authorize="hasRole('ROLE_USER')">
 					<button type="submit" class="dropdown-item">Reservations</button>
 				</form>
-				<form th:action="@{/loan/userLoans}" method="get">
+				<form th:action="@{/loan/userLoans}" method="get" sec:authorize="hasRole('ROLE_USER')">
 					<button type="submit" class="dropdown-item">Loans</button>
 				</form>
 			</div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Reservations - Admin</title>
+</head>
+
+<body>
+	<h1>Reservations from users</h1>
+
+	<form method="get" th:action="@{/reservation/adminReservations}">
+		<label for="fromDate">From:</label>
+		<input type="date" id="fromDate" name="fromDate" th:value="${fromDate}">
+
+		<label for="toDate">To:</label>
+		<input type="date" id="toDate" name="toDate" th:value="${toDate}">
+
+		<button type="submit">Filter</button>
+	</form>
+
+	<table border="1">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>User</th>
+				<th>Book</th>
+				<th>Reservation date</th>
+				<th>Status</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="reservation : ${reservations}">
+				<td th:text="${reservation.id}"></td>
+				<td th:text="${reservation.user.email}"></td>
+				<td th:text="${reservation.book.title}"></td>
+				<td th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}"></td>
+				<td th:text="${reservation.status}"></td>
+
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -17,4 +18,6 @@ public interface ReservationService {
 	List<Reservation> findReservationsByUser(User user);
 
 	List<Reservation> listAllReservations();
+
+	List<Reservation> findReservationsBetween(Date fromDate, Date toDate);
 }

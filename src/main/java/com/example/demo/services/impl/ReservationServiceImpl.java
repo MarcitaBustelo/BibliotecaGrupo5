@@ -34,11 +34,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public List<Reservation> listAllReservations() {
-		List<Reservation> reservations = new ArrayList<Reservation>();
-		for (Reservation reservation : reservationRepository.findAll())
-			reservations.add(reservation);
-		return reservations;
-
+		return reservationRepository.findAll();
 	}
 
 	@Override
@@ -77,13 +73,20 @@ public class ReservationServiceImpl implements ReservationService {
 		List<Reservation> resers = listAllReservations();
 		List<Reservation> userRes = new ArrayList<>();
 
-			for (Reservation re : resers) {
-				if (user == re.getId_User()) {
-					userRes.add(re);
-				}
-			
+		for (Reservation re : resers) {
+			if (user == re.getId_User()) {
+				userRes.add(re);
+			}
+
 		}
 
 		return userRes;
 	}
+
+	@Override
+	public List<Reservation> findReservationsBetween(Date fromDate, Date toDate) {
+		return reservationRepository.findByReservationBetween(fromDate, toDate);
+
+	}
+
 }
