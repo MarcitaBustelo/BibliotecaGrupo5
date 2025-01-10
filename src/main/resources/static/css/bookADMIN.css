@@ -2,140 +2,149 @@
 
 /* General body styles */
 body {
-	font-family: Arial, sans-serif;
-	background-color: #fdf7e3;
+    font-family: Arial, sans-serif;
+    background-color: #fdf7e3;
 }
 
 /* Container for proper layout */
 .container {
-	max-width: 95%;
-	margin: 0 auto;
-	padding: 20px;
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Success message styles */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Table styles */
 .table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-bottom: 20px;
-	font-size: 16px;
-	table-layout: fixed
-		/* Incrementa el tamaño del texto */
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 16px;
+    table-layout: fixed;
 }
 
 .table th {
-	background-color: #8b5e3c;
-	color: #fff8f0;
-	text-transform: uppercase;
-	text-align: center;
-	padding: 15px;
-	/* Más espacio en las celdas */
+    background-color: #8b5e3c;
+    color: #fff8f0;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 15px;
 }
 
 .table td {
-	text-align: center;
-	padding: 15px;
-	/* Más espacio en las celdas */
+    text-align: center;
+    padding: 15px;
 }
 
 .table-responsive {
-	overflow-x: auto;
+    overflow-x: auto;
 }
 
 .table tr:nth-child(even) {
-	background-color: #f8e4c4;
+    background-color: #f8e4c4;
 }
 
 .table tr:hover {
-	background-color: #e8d4b8;
+    background-color: #e8d4b8;
 }
 
 .table td img {
-	border-radius: 50%;
-	width: 80px;
-	height: 80px;
-	object-fit: cover;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Button styles */
 .btn {
-	border: none;
-	border-radius: 5px;
-	padding: 8px 12px;
-	font-size: 14px;
-	font-weight: bold;
-	cursor: pointer;
-	text-align: center;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
 }
 
 .btn-warning {
-	background-color: #f0ad4e;
-	color: #fff;
+    background-color: #f0ad4e;
+    color: #fff;
 }
 
 .btn-danger {
-	background-color: #d9534f;
-	color: #fff;
+    background-color: #d9534f;
+    color: #fff;
 }
 
 .btn-primary {
-	background-color: #5c3c1d;
-	color: #fff;
+    background-color: #5c3c1d;
+    color: #fff;
 }
 
 .btn-primary:hover {
-	background-color: #8b5e3c;
-	transform: scale(1.05);
-	transition: 0.3s ease;
+    background-color: #8b5e3c;
+    transform: scale(1.05);
+    transition: 0.3s ease;
 }
 
 /* Button container styles */
 .container-button {
-	text-align: center;
-	margin-bottom: 20px;
-	padding: 2%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 2%;
 }
 
 /* Pagination styles */
-
 .pagination {
-	display: flex;
-	justify-content: center;
-	/* Centra la paginación */
-	align-items: center;
-	list-style: none;
-	margin-top: 580px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin-top: 20px;
 }
 
 .pagination .page-item {
-	margin: 0 5px;
+    margin: 0 5px;
 }
 
 .pagination a {
-	text-decoration: none;
-	padding: 10px 15px;
-	border-radius: 5px;
-	background-color: #5c3c1d;
-	color: #fff8f0;
-	font-weight: bold;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #5c3c1d;
+    color: #fff8f0;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .pagination a:hover {
-	background-color: #8b5e3c;
-	transform: scale(1.05);
+    background-color: #8b5e3c;
+    transform: scale(1.05);
 }
 
 .pagination .disabled a {
-	background-color: #d2b48c;
-	color: #f8f0e3;
-	pointer-events: none;
-	box-shadow: none;
+    background-color: #d2b48c;
+    color: #f8f0e3;
+    pointer-events: none;
+    box-shadow: none;
 }
 
 .pagination .active a {
-	background-color: #d4a373;
-	color: #fff;
+    background-color: #d4a373;
+    color: #fff;
 }
