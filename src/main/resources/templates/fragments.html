@@ -26,7 +26,7 @@
 				<form th:action="@{/myaccount}" method="get">
 					<button type="submit" class="dropdown-item">My account</button>
 				</form>
-				<form th:action="@{/reservation/userReservations}" method="get" sec:authorize="hasRole('ROLE_USER')">
+				<form th:action="@{/reservation/userReservation}" method="get" sec:authorize="hasRole('ROLE_USER')">
 					<button type="submit" class="dropdown-item">Reservations</button>
 				</form>
 				<form th:action="@{/loan/userLoans}" method="get" sec:authorize="hasRole('ROLE_USER')">
