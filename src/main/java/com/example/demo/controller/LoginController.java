@@ -19,7 +19,7 @@ public class LoginController {
 	@Autowired
 	@Qualifier("userService")
 	UserServiceImpl userService;
-	
+
 	@Autowired
 	@Qualifier("userRepository")
 	UserRepository userRepository;
@@ -28,22 +28,13 @@ public class LoginController {
 
 	@GetMapping("")
 	public String tryLogin(Model model, @RequestParam(value = "error", required = false) String error,
-	                       @RequestParam(value = "logout", required = false) String logout,
-	                       @RequestParam(value = "email", required = false) String email) {
-	    model.addAttribute("error", error);
-	    model.addAttribute("logout", logout);
-	    model.addAttribute("user", new User());
+			@RequestParam(value = "logout", required = false) String logout,
+			@RequestParam(value = "email", required = false) String email) {
+		model.addAttribute("logout", logout);
+		model.addAttribute("user", new User());
+		model.addAttribute("error", error);
 
-	    if (email != null) {
-	        User user = userRepository.findByEmail(email);
-	        
-	        if (user != null && !user.getActivated()) {
-	            model.addAttribute("error", "Your account is not activated. Cannot login.");
-	            return LOGIN_VIEW;
-	        }
-	    }
-
-	    return LOGIN_VIEW;
+		return LOGIN_VIEW;
 	}
 
 }

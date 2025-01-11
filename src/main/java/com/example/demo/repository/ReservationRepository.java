@@ -17,8 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Serial
 	List<Reservation> findByBook(Book book);
 
 	List<Reservation> findByUser(User user);
-	
-    List<Reservation> findByReservationBetween(Date fromDate, Date toDate);
 
+	List<Reservation> findByReservationBetween(Date fromDate, Date toDate);
 
 }

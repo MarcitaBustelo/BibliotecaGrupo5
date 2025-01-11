@@ -64,23 +64,28 @@ public class ReservationController {
 	}
 
 	@GetMapping("/adminReservations")
-	public String adminReservations(
-			@RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-			@RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate,
-			Model model) {
+	public String adminReservations(@RequestParam(value = "fromDate", required = false) String fromDate,
+			@RequestParam(value = "toDate", required = false) String toDate, Model model) {
 
 		List<Reservation> reservations;
 
-		if (fromDate != null && toDate != null) {
-			reservations = reservationService.findReservationsBetween(fromDate, toDate);
-		} else {
+		try {
+			Date startDate = (fromDate != null) ? Date.valueOf(fromDate) : null;
+			Date endDate = (toDate != null) ? Date.valueOf(toDate) : null;
+
+			if (startDate != null && endDate != null) {
+				reservations = reservationService.findReservationsBetween(startDate, endDate);
+			} else {
+				reservations = reservationService.listAllReservations();
+			}
+
+			model.addAttribute("fromDate", fromDate);
+			model.addAttribute("toDate", toDate);
+		} catch (Exception e) {
 			reservations = reservationService.listAllReservations();
 		}
 
 		model.addAttribute("reservations", reservations);
-		model.addAttribute("fromDate", fromDate);
-		model.addAttribute("toDate", toDate);
-
 		return "adminReservations";
 	}
 

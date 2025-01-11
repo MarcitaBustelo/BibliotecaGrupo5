@@ -2,44 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Reservations - Admin</title>
+	<title>Book Management</title>
+	<link rel="stylesheet" th:href="@{/css/reservationLoanAdmin.css}" />
+	<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
-	<h1>Reservations from users</h1>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+	<div class="table-container">
+		<h1>Reservations from users</h1>
 
-	<form method="get" th:action="@{/reservation/adminReservations}">
-		<label for="fromDate">From:</label>
-		<input type="date" id="fromDate" name="fromDate" th:value="${fromDate}">
+		<!-- Formulario estilizado -->
+		<div class="filter-container">
+			<form method="get" action="/reservation/adminReservations" style="display: flex; gap: 15px;">
+				<div>
+					<label for="fromDate">From:</label>
+					<input type="date" id="fromDate" name="fromDate">
+				</div>
+				<div>
+					<label for="toDate">To:</label>
+					<input type="date" id="toDate" name="toDate">
+				</div>
+				<div>
+					<button type="submit" class="btn">Filter</button>
+				</div>
+			</form>
+		</div>
 
-		<label for="toDate">To:</label>
-		<input type="date" id="toDate" name="toDate" th:value="${toDate}">
+		<!-- Tabla de reservas -->
+		<table class="table">
+			<thead>
+				<tr>
+					<th>User</th>
+					<th>Book</th>
+					<th>Reservation date</th>
+					<th>Status</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="reservation : ${reservations}">
+					<td th:text="${reservation.Id_User.email}"></td>
+					<td th:text="${reservation.Id_Book.title}"></td>
+					<td th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}"></td>
+					<td th:text="${reservation.status}"></td>
+					<td>
+						<button class="btn btn-danger">Delete</button>
+					</td>
 
-		<button type="submit">Filter</button>
-	</form>
-
-	<table border="1">
-		<thead>
-			<tr>
-				<th>id</th>
-				<th>User</th>
-				<th>Book</th>
-				<th>Reservation date</th>
-				<th>Status</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="reservation : ${reservations}">
-				<td th:text="${reservation.id}"></td>
-				<td th:text="${reservation.user.email}"></td>
-				<td th:text="${reservation.book.title}"></td>
-				<td th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}"></td>
-				<td th:text="${reservation.status}"></td>
-
-			</tr>
-		</tbody>
-	</table>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 
 </html>
