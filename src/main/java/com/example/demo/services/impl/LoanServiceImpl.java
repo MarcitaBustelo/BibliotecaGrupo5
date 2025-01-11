@@ -4,18 +4,20 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Book;
 import com.example.demo.entity.Loan;
-import com.example.demo.entity.Reservation;
 import com.example.demo.entity.User;
 import com.example.demo.repository.BookRepository;
 import com.example.demo.repository.LoanRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.LoanService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class LoanServiceImpl implements LoanService {
@@ -92,4 +94,27 @@ public class LoanServiceImpl implements LoanService {
 			loans.add(loan);
 		return loans;
 	}
+
+	@Override
+	public void deleteLoan(Long id) {
+	    Optional<Loan> loan = loanRepository.findById(id);
+
+	    if (loan.isPresent()) {
+	        Book book = loan.get().getBook();
+	        book.isAvailable(true);
+	        bookRepository.save(book);
+
+	        loanRepository.deleteById(id);
+	    } else {
+	        throw new EntityNotFoundException("Loan with id " + id + " not found");
+	    }
+	}
+
+	@Override
+	public int countLoansByUser(String email) {
+		User user = userRepository.findByEmail(email);
+	    return loanRepository.countByUser(user.getEmail());
+
+	}
+
 }

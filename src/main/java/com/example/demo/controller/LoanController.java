@@ -43,7 +43,6 @@ public class LoanController {
 
 	@GetMapping("/userLoans")
 	public String userLoans(Principal principal, Model model) {
-		// Obtener el nombre del usuario autenticado
 
 		User usu = new User();
 
@@ -53,10 +52,8 @@ public class LoanController {
 			}
 		}
 
-		// Filtrar alquileres asociados al usuario
 		List<Loan> loans = loanService.findLoansByUser(usu);
 
-		// Pasar los alquileres a la vista
 		model.addAttribute("loans", loans);
 
 		return USER_LOANS;
@@ -64,33 +61,37 @@ public class LoanController {
 
 	@PostMapping("/loanBook/{id}")
 	public String loanBook(@RequestParam("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
-		try {
-			Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+	    try {
+	        Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
-			if (!book.isAvailable()) {
-				throw new IllegalStateException("Book is not available for loan");
-			}
+	        if (!book.isAvailable()) {
+	            throw new IllegalStateException("Book is not available for loan");
+	        }
 
-			loanService.loanBook(book.getId(), principal.getName());
-			redirectAttributes.addFlashAttribute("success", "Book loaned successfully!");
-		} catch (IllegalArgumentException | IllegalStateException e) {
-			redirectAttributes.addFlashAttribute("error", e.getMessage());
-		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("error", "An unexpected error occurred. Please try again later.");
-		}
-		return "redirect:/books/listBooks";
+	        int userLoanCount = loanService.countLoansByUser(principal.getName());
+	        if (userLoanCount >= 5) {
+	            throw new IllegalStateException("You cannot loan more than 5 books at the same time");
+	        }
+
+	        loanService.loanBook(book.getId(), principal.getName());
+	        redirectAttributes.addFlashAttribute("success", "Book loaned successfully!");
+	    } catch (IllegalArgumentException | IllegalStateException e) {
+	        redirectAttributes.addFlashAttribute("error", e.getMessage());
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("error", "An unexpected error occurred. Please try again later.");
+	    }
+	    return "redirect:/books/listBooks";
 	}
+
 
 	@PostMapping("/return/{id}")
 	public String returnBook(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
 		try {
-			Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
-
-			loanService.returnBook(book.getId(), principal.getName());
-			redirectAttributes.addFlashAttribute("success", "Book returned successfully!");
+			loanService.deleteLoan(id);
+			redirectAttributes.addFlashAttribute("success", "Book has been returned successfully!");
 		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("error", e.getMessage());
+			redirectAttributes.addFlashAttribute("error", "Error returning book: " + e.getMessage());
 		}
-		return "redirect:/books";
+		return "redirect:/loan/userLoans";
 	}
 }

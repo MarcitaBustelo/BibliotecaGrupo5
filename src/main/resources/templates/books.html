@@ -2,31 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Books</title>
-	<link rel="stylesheet" th:href="@{/css/bookUSER.css}" />
-	<div th:insert="~{fragments :: head}"></div>
+<title>Books</title>
+<link rel="stylesheet" th:href="@{/css/bookUSER.css}" />
+<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
 	<header>
 		<div th:replace="~{fragments :: navbar}"></div>
 	</header>
+
+	<div class="alert alert-success" th:if="${success}"
+		th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
 	<main>
 		<!-- Contenedor principal -->
 		<div class="container mt-4">
 			<!-- Contenedor para filtro y búsqueda -->
 			<form method="get" action="/books/listBooks" class="row g-3 mb-4">
 				<div class="col-md-6">
-					<select class="form-select" name="filter" onchange="this.form.submit()">
+					<select class="form-select" name="filter"
+						onchange="this.form.submit()">
 						<option value="all" th:selected="${filter == 'all'}">All</option>
-						<option value="alphabetical" th:selected="${filter == 'alphabetical'}">Order Alphabetically
-						</option>
-						<option value="date" th:selected="${filter == 'date'}">Order by Date</option>
+						<option value="alphabetical"
+							th:selected="${filter == 'alphabetical'}">Order
+							Alphabetically</option>
+						<option value="date" th:selected="${filter == 'date'}">Order
+							by Date</option>
 					</select>
 				</div>
 				<div class="col-md-6 d-flex">
-					<input type="text" class="form-control" name="search" th:value="${search}"
-						placeholder="Search by title">
+					<input type="text" class="form-control" name="search"
+						th:value="${search}" placeholder="Search by title">
 					<button type="submit" class="btn btn-primary ms-2">Search</button>
 				</div>
 			</form>
@@ -37,25 +45,34 @@
 					<div class="card text-bg-light">
 						<img th:src="@{'/photos/' + ${book.image}}" alt="Book Image">
 						<div class="card-body">
-							<h5 class="card-title text-center" th:text="${book.title}">Book Title</h5>
+							<h5 class="card-title text-center" th:text="${book.title}">Book
+								Title</h5>
 							<ul class="list-unstyled">
-								<li><strong>Author:</strong> <span th:text="${book.author}">Book Author</span></li>
-								<li><strong>Genre:</strong> <span th:text="${book.genre}">Book Genre</span></li>
-								<li><strong>Year Published:</strong> <span th:text="${book.yearPublished}">Year
-										Published</span></li>
+								<li><strong>Author:</strong> <span th:text="${book.author}">Book
+										Author</span></li>
+								<li><strong>Genre:</strong> <span th:text="${book.genre}">Book
+										Genre</span></li>
+								<li><strong>Year Published:</strong> <span
+									th:text="${book.yearPublished}">Year Published</span></li>
+								<li><strong></strong> <span
+									th:text="${book.isAvailable ? 'Available' : 'Not Available'}"></span>
+								</li>
+
 							</ul>
 							<div sec:authorize="hasRole('ROLE_USER')">
-								<form th:action="@{/loan/loanBook/{id}(id=${book.id})}" method="post" class="d-inline">
-									<input type="hidden" name="id" th:value="${book.id}" />
-									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+								<form th:action="@{/loan/loanBook/{id}(id=${book.id})}"
+									method="post" class="d-inline">
+									<input type="hidden" name="id" th:value="${book.id}" /> <input
+										type="hidden" th:name="${_csrf.parameterName}"
+										th:value="${_csrf.token}" />
 									<button type="submit" class="btn btn-warning btn-sm"
 										th:disabled="${!book.available}">Loan</button>
 								</form>
-								<form th:action="@{/reservation/reserve/{id}(id=${book.id})}" method="post"
-									class="d-inline">
-									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-									<button type="submit" class="btn btn-danger btn-sm"
-										th:disabled="${!book.available}">Reservation</button>
+								<form th:action="@{/reservation/reserve/{id}(id=${book.id})}"
+									method="post" class="d-inline">
+									<input type="hidden" th:name="${_csrf.parameterName}"
+										th:value="${_csrf.token}" />
+									<button type="submit" class="btn btn-danger btn-sm">Reserve</button>
 								</form>
 							</div>
 						</div>
@@ -66,20 +83,21 @@
 			<!-- Bloque de paginación -->
 			<nav th:if="${currentPage != null}" aria-label="Page navigation">
 				<ul class="pagination justify-content-center mt-4">
-					<li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
-						<a class="page-link"
-							th:href="@{/books/listBooks(page=${currentPage - 2}, filter=${filter}, search=${search})}"
-							tabindex="-1">Previous</a>
-					</li>
-					<li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
-						th:classappend="${i == currentPage} ? 'active'">
-						<a class="page-link"
-							th:href="@{/books/listBooks(page=${i - 1}, filter=${filter}, search=${search})}"
-							th:text="${i}"></a>
-					</li>
-					<li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
-						<a class="page-link"
-							th:href="@{/books/listBooks(page=${currentPage}, filter=${filter}, search=${search})}">Next</a>
+					<li class="page-item"
+						th:classappend="${currentPage <= 1} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/books/listBooks(page=${currentPage - 2}, filter=${filter}, search=${search})}"
+						tabindex="-1">Previous</a></li>
+					<li class="page-item"
+						th:each="i : ${#numbers.sequence(1, totalPages)}"
+						th:classappend="${i == currentPage} ? 'active'"><a
+						class="page-link"
+						th:href="@{/books/listBooks(page=${i - 1}, filter=${filter}, search=${search})}"
+						th:text="${i}"></a></li>
+					<li class="page-item"
+						th:classappend="${currentPage >= totalPages} ? 'disabled'"><a
+						class="page-link"
+						th:href="@{/books/listBooks(page=${currentPage}, filter=${filter}, search=${search})}">Next</a>
 					</li>
 				</ul>
 			</nav>

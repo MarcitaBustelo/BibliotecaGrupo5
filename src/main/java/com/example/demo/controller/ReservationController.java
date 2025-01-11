@@ -106,15 +106,13 @@ public class ReservationController {
 	@PostMapping("/cancel/{id}")
 	public String cancelReservation(@PathVariable("id") Long id, Principal principal,
 			RedirectAttributes redirectAttributes) {
-		Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
-
 		try {
-			reservationService.cancelReservation(book.getId(), principal.getName());
-			redirectAttributes.addFlashAttribute("success", "Reservation canceled successfully!");
+			reservationService.deleteReservation(id);
+			redirectAttributes.addFlashAttribute("success", "Reservation deleted successfully!");
 		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("error", e.getMessage());
+			redirectAttributes.addFlashAttribute("error", "Error deleting reservation: " + e.getMessage());
 		}
-		return "redirect:/books";
+		return "redirect:/reservation/userReservation";
 	}
 
 	@PostMapping("/delete/{id}")
@@ -125,7 +123,7 @@ public class ReservationController {
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("error", "Error deleting reservation: " + e.getMessage());
 		}
-		return "redirect:/reservation/adminReservations"; // Redirige a la lista de reservas
+		return "redirect:/reservation/adminReservations";
 	}
 
 }

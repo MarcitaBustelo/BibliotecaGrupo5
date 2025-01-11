@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>User Loans</title>
-	<div th:insert="~{fragments :: head}"></div>
+<title>User Loans</title>
+<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
@@ -13,10 +13,11 @@
 
 	<main class="container mt-4">
 
-		<h3> My loans </h3>
+		<h3>My loans</h3>
 
 
-		<div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+		<div class="alert alert-success" th:if="${success}"
+			th:text="${success}"></div>
 		<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
 		<div class="table-responsive">
@@ -36,11 +37,15 @@
 						<td th:text="${loan.book.title}">Book Title</td>
 						<td th:text="${loan.book.author}">Author</td>
 						<td th:text="${loan.book.genre}">Genre</td>
-						<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}">Initial Date</td>
-						<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}">Due Date</td>
+						<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}">Initial
+							Date</td>
+						<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}">Due
+							Date</td>
 						<td>
-							<form th:action="@{/loan/return/{id}(id=${loan.id})}" method="post">
-								<button type="submit" class="btn btn-danger btn-sm">Return</button>
+							<form th:action="@{/loan/return/{id}(id=${loan.id})}"
+								method="post">
+								<button type="submit" class="btn btn-danger"
+									onclick="return confirm('Are you sure you want to return this book?');">Return</button>
 							</form>
 						</td>
 					</tr>

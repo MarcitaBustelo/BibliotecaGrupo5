@@ -18,4 +18,8 @@ public interface LoanService {
 
 	List<Loan> listAllLoans();
 
+	void deleteLoan(Long id);
+	
+	int countLoansByUser(String username);
+
 }

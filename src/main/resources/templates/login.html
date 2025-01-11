@@ -2,46 +2,55 @@
 <html lang="en">
 
 <head>
-	<title>Login</title>
-	<link rel="stylesheet" href="/css/login.css">
-	<div th:insert="~{fragments :: head}"></div>
+<title>Login</title>
+<link rel="stylesheet" href="/css/login.css">
+<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
 	<header>
 		<div th:replace="~{fragments :: navbar}"></div>
 	</header>
+	<div class="alert alert-success" th:if="${success}"
+		th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
 	<main class="d-flex justify-content-center align-items-center vh-100">
-		<div class="card shadow-lg rounded" style="max-width: 400px; width: 100%;">
+		<div class="card shadow-lg rounded"
+			style="max-width: 400px; width: 100%;">
 			<div class="card-body p-4">
 				<h4 class="card-title text-center text-brown">Login</h4>
 
 				<!-- Mensajes de error y éxito -->
-				<div class="alert alert-info" th:if="${logout != null}">Logout successful!</div>
+				<div class="alert alert-info" th:if="${logout != null}">Logout
+					successful!</div>
 				<div class="alert alert-danger" th:if="${error != null}">
 					<div class="alert alert-danger" th:if="${error != null}">
-						<span th:if="${error == 'Invalid username or password.'}">Invalid username or password.</span>
-						<span th:if="${error == 'Your account is not activated.'}">Your account is not activated. Please
-							contact support.</span>
-						<span th:if="${error == 'Login failed. Please try again.'}">Login failed. Please try
-							again.</span>
+						<span th:if="${error == 'Invalid username or password.'}">Invalid
+							username or password.</span> <span
+							th:if="${error == 'Your account is not activated.'}">Your
+							account is not activated. Please contact support.</span> <span
+							th:if="${error == 'Login failed. Please try again.'}">Login
+							failed. Please try again.</span>
 					</div>
 				</div>
 
 				<!-- Formulario de login -->
 				<form th:action="@{/login}" th:object="${user}" method="post">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}">
 
 					<div class="mb-3">
-						<label for="email" class="form-label">Email</label>
-						<input type="email" name="email" id="email" class="form-control"
+						<label for="email" class="form-label">Email</label> <input
+							type="email" name="email" id="email" class="form-control"
 							placeholder="Type your email..." th:field="*{email}" />
 					</div>
 
 					<div class="mb-3">
-						<label for="password" class="form-label">Password</label>
-						<input type="password" name="password" id="password" class="form-control"
-							placeholder="Type your password..." th:field="*{password}" />
+						<label for="password" class="form-label">Password</label> <input
+							type="password" name="password" id="password"
+							class="form-control" placeholder="Type your password..."
+							th:field="*{password}" />
 					</div>
 
 					<div class="mb-3">
