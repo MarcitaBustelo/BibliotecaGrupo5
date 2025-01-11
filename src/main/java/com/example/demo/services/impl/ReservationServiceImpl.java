@@ -89,4 +89,8 @@ public class ReservationServiceImpl implements ReservationService {
 
 	}
 
+	public void deleteReservation(Long id) {
+		reservationRepository.deleteById(id);
+	}
+
 }

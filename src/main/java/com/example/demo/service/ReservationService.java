@@ -20,4 +20,7 @@ public interface ReservationService {
 	List<Reservation> listAllReservations();
 
 	List<Reservation> findReservationsBetween(Date fromDate, Date toDate);
+
+	void deleteReservation(Long id);
+
 }

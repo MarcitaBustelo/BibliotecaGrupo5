@@ -116,4 +116,16 @@ public class ReservationController {
 		}
 		return "redirect:/books";
 	}
+
+	@PostMapping("/delete/{id}")
+	public String deleteReservation(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+		try {
+			reservationService.deleteReservation(id);
+			redirectAttributes.addFlashAttribute("success", "Reservation deleted successfully!");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("error", "Error deleting reservation: " + e.getMessage());
+		}
+		return "redirect:/reservation/adminReservations"; // Redirige a la lista de reservas
+	}
+
 }

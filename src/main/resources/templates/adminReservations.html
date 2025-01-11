@@ -49,7 +49,11 @@
 					<td th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}"></td>
 					<td th:text="${reservation.status}"></td>
 					<td>
-						<button class="btn btn-danger">Delete</button>
+						<form th:action="@{/reservation/delete/{id}(id=${reservation.id})}" method="post"
+							style="display: inline;">
+							<button type="submit" class="btn btn-danger"
+								onclick="return confirm('Are you sure you want to delete this reservation?');">Delete</button>
+						</form>
 					</td>
 
 				</tr>
