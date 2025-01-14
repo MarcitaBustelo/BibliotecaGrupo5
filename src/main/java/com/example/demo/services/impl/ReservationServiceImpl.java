@@ -33,9 +33,9 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
-	 private JavaMailSender emailSender;
+	private JavaMailSender emailSender;
 
 	@Override
 	public List<Reservation> listAllReservations() {
@@ -91,16 +91,16 @@ public class ReservationServiceImpl implements ReservationService {
 	public void deleteReservation(Long id) {
 		reservationRepository.deleteById(id);
 	}
-	
+
 	// Enviar correo de confirmación
 	public void sendEmail(Long bookId, String email) {
 		User user = userRepository.findByEmail(email);
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
 		SimpleMailMessage message = new SimpleMailMessage();
-	    message.setTo(user.getEmail());
-	    message.setSubject("Reserva de libro creada");
-	    message.setText("Has reservado el libro " + book.getTitle());
-	    emailSender.send(message);
+		message.setTo(user.getEmail());
+		message.setSubject("Reserva de libro creada");
+		message.setText("Has reservado el libro " + book.getTitle());
+		emailSender.send(message);
 	}
 
 }

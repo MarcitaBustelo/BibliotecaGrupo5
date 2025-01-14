@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+/* Contenedor de reportes */
+.reports-container {
+	margin: 0 auto;
+	padding: 20px;
+	width: 90%;
+	background-color: #fff8f0;
+	border-radius: 8px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Fondo general */
+.reports-container body {
+	background-color: #f4e6d6;
+	color: #5a3e2b;
+	font-family: 'Arial', sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+/* Encabezados */
+.reports-container h2 {
+	text-align: center;
+	margin-top: 20px;
+	color: #5a3e2b;
+	font-size: 1.8em;
+}
+
+/* Párrafo de total users */
+.reports-container p {
+	text-align: left;
+	font-size: 1.2em;
+	margin-top: 40px;
+	margin-left: 20px;
+	font-weight: bold;
+	color: #5a3e2b;
+}
+
+/* Tablas */
+.reports-container table {
+	width: 90%;
+	margin: 20px auto;
+	border-collapse: collapse;
+	background-color: #fff8f0;
+	border: 1px solid #a1887f;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+	margin-bottom: 40px;
+}
+
+.reports-container table th,
+.reports-container table td {
+	padding: 12px;
+	text-align: center;
+	border: 1px solid #a1887f;
+}
+
+.reports-container table th {
+	background-color: #6d4c41;
+	color: #fff;
+	font-weight: bold;
+}
+
+.reports-container table tr:nth-child(even) {
+	background-color: #f9f2ec;
+}
+
+.reports-container table tr:hover {
+	background-color: #e0d4c3;
+}
+
+/* Formulario */
+.reports-container form {
+	margin: 20px auto;
+	text-align: center;
+	background-color: #fff8f0;
+	padding: 15px;
+	border: 1px solid #a1887f;
+	border-radius: 8px;
+	width: fit-content;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reports-container form label {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-right: 10px;
+	color: #6d4c41;
+}
+
+.reports-container form select {
+	padding: 8px;
+	font-size: 1em;
+	border: 1px solid #a1887f;
+	border-radius: 4px;
+	background-color: #fff8f0;
+	color: #5a3e2b;
+	cursor: pointer;
+}
+
+.reports-container form select:focus {
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sombreados para elementos flotantes */
+.reports-container form button:hover {
+	background-color: #5a3e2b;
+}
+
+/* Tablas responsive */
+@media (max-width: 768px) {
+	.reports-container table {
+		width: 100%;
+	}
+
+	.reports-container form {
+		width: 90%;
+	}
+}

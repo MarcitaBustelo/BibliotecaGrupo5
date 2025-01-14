@@ -7,6 +7,7 @@
 	<!--	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/loan/adminLoans}">Loans</a>-->
 	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')"
 		th:href="@{/reservation/adminReservations}">Reservations</a>
+	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/reports}">Reports</a>
 
 
 	<div class="ms-auto" sec:authorize="!isAuthenticated()">

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Admin reports</title>
+	<link rel="stylesheet" th:href="@{/css/reports.css}" />
+	<div th:insert="~{fragments :: head}"></div>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+	<div class="reports-container">
+		<!-- Número total de usuarios registrados -->
+		<p>Total Users: <span th:text="${totalUserCount-1}"></span></p>
+
+		<!-- Lista de libros más prestados -->
+		<h2>Most Borrowed Books</h2>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Borrow Count</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book : ${mostBorrowedBooks}">
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.borrowCount}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- Historial de préstamos de un usuario -->
+		<h2>User Loan History</h2>
+		<form method="get" action="/admin/reports">
+			<label for="userId">Select User:</label>
+			<select id="userId" name="userId" onchange="this.form.submit()">
+				<option value="" disabled th:if="${userId == null}" selected>Select a user</option>
+				<!-- Combobox lleno dinámicamente -->
+				<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}"
+					th:selected="${user.id == userId}"></option>
+			</select>
+		</form>
+
+		<table border="1" th:if="${userLoanHistory != null}">
+			<thead>
+				<tr>
+					<th>Book Title</th>
+					<th>Reservation Date</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="reservation : ${userLoanHistory}">
+					<td th:text="${reservation.Id_Book.title}"></td>
+					<td th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}"></td>
+					<td th:text="${reservation.status}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

@@ -111,4 +111,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		ModelMapper mapper = new ModelMapper();
 		return mapper.map(userModel, User.class);
 	}
+
+	// Método para obtener el número total de usuarios registrados
+	public long getUserCount() {
+		return userRepository.count();
+	}
 }

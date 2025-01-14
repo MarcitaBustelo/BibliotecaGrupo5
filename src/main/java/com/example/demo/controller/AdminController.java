@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Book;
+import com.example.demo.entity.Reservation;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BookService;
+import com.example.demo.service.ReportService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -37,6 +40,9 @@ public class AdminController {
 
 	@Autowired
 	private BookService bookService;
+
+	@Autowired
+	private ReportService reportService;
 
 	@GetMapping("/listUsers")
 	public ModelAndView listUsers(Authentication authentication) {
@@ -63,11 +69,11 @@ public class AdminController {
 	@GetMapping("/bookADMIN")
 	public String listBooks(@RequestParam(defaultValue = "0") int page, Model model) {
 
-	    int pageSize = 5; 
-	    Pageable pageable = PageRequest.of(page, pageSize);
+		int pageSize = 5;
+		Pageable pageable = PageRequest.of(page, pageSize);
 		Page<Book> booksPage = bookService.getBooksPaginated(pageable);
 
-	model.addAttribute("books", booksPage.getContent());
+		model.addAttribute("books", booksPage.getContent());
 		model.addAttribute("currentPage", booksPage.getNumber() + 1);
 		model.addAttribute("totalPages", booksPage.getTotalPages());
 		model.addAttribute("totalItems", booksPage.getTotalElements());
@@ -82,4 +88,32 @@ public class AdminController {
 		userRepository.save(user);
 		return "redirect:/admin/listUsers";
 	}
+
+	@GetMapping("/reports")
+	public String getAdminReports(@RequestParam(value = "userId", required = false) Long userId, Model model) {
+		// Lista de libros más prestados
+		List<Map<String, Object>> mostBorrowedBooks = reportService.getMostBorrowedBooks();
+		model.addAttribute("mostBorrowedBooks", mostBorrowedBooks);
+
+		// Lista de usuarios (excluyendo al administrador)
+		List<User> users = userService.getAllUsers().stream().filter(user -> !user.getRole().equals("ROLE_ADMIN"))
+				.toList();
+		model.addAttribute("users", users);
+
+		// Historial de préstamos de un usuario específico
+		if (userId != null) {
+			List<Reservation> userLoanHistory = reportService.getUserLoanHistory(userId);
+			model.addAttribute("userLoanHistory", userLoanHistory);
+		}
+
+		// Número total de usuarios registrados
+		long totalUserCount = reportService.getTotalUserCount();
+		model.addAttribute("totalUserCount", totalUserCount);
+
+		// Asegurar que el usuario seleccionado se envía al modelo
+		model.addAttribute("userId", userId);
+
+		return "reports";
+	}
+
 }

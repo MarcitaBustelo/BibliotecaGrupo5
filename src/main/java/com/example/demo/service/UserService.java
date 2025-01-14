@@ -19,4 +19,6 @@ public interface UserService {
 
 	List<UserModel> getAllUsersModel();
 
+	long getUserCount();
+
 }
