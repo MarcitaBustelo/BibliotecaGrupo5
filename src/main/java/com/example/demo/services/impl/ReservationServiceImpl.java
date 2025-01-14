@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Book;
@@ -31,6 +33,9 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	 private JavaMailSender emailSender;
 
 	@Override
 	public List<Reservation> listAllReservations() {
@@ -41,17 +46,11 @@ public class ReservationServiceImpl implements ReservationService {
 	public void reserveBook(Long bookId, String email) {
 		User user = userRepository.findByEmail(email);
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
-
-		if (!book.isAvailable()) {
-			throw new IllegalArgumentException("The book is not available for reservation.");
-		}
-
 		Reservation reservation = new Reservation();
 		reservation.setId_User(user);
 		reservation.setId_Book(book);
 		reservation.setStatus("pending");
 		reservation.setReservation(Date.valueOf(LocalDate.now()));
-
 		reservationRepository.save(reservation);
 	}
 
@@ -91,6 +90,17 @@ public class ReservationServiceImpl implements ReservationService {
 
 	public void deleteReservation(Long id) {
 		reservationRepository.deleteById(id);
+	}
+	
+	// Enviar correo de confirmación
+	public void sendEmail(Long bookId, String email) {
+		User user = userRepository.findByEmail(email);
+		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+		SimpleMailMessage message = new SimpleMailMessage();
+	    message.setTo(user.getEmail());
+	    message.setSubject("Reserva de libro creada");
+	    message.setText("Has reservado el libro " + book.getTitle());
+	    emailSender.send(message);
 	}
 
 }

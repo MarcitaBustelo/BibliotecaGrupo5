@@ -44,7 +44,6 @@ public class ReservationController {
 
 	@GetMapping("/userReservation")
 	public String userReservations(Principal principal, Model model) {
-		// Obtener el nombre del usuario autenticado
 
 		User usu = new User();
 
@@ -54,10 +53,8 @@ public class ReservationController {
 			}
 		}
 
-		// Filtrar reservas asociadas al usuario
 		List<Reservation> reservations = reservationService.findReservationsByUser(usu);
 
-		// Pasar las reservas a la vista
 		model.addAttribute("reservations", reservations);
 
 		return USER_RESERVATIONS;
@@ -89,7 +86,6 @@ public class ReservationController {
 		return "adminReservations";
 	}
 
-	// Reservar un libro
 	@PostMapping("/reserve/{id}")
 	public String reserveBook(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
 		Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
