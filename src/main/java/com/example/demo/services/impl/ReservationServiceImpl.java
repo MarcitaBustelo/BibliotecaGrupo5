@@ -91,16 +91,43 @@ public class ReservationServiceImpl implements ReservationService {
 	public void deleteReservation(Long id) {
 		reservationRepository.deleteById(id);
 	}
-
+	
 	// Enviar correo de confirmación
-	public void sendEmail(Long bookId, String email) {
-		User user = userRepository.findByEmail(email);
-		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(user.getEmail());
-		message.setSubject("Reserva de libro creada");
-		message.setText("Has reservado el libro " + book.getTitle());
-		emailSender.send(message);
+		public void sendEmail(Long bookId, String email) {
+			User user = userRepository.findByEmail(email);
+			Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(user.getEmail());
+			message.setSubject(book.getTitle() + " is now available");
+			message.setText(
+			    "The book '" + book.getTitle() + "' is now available. Order it on our website now.\n\n" +
+			    "Click here to view the books: http://localhost:8081/books/listBooks"
+			);
+
+			emailSender.send(message);
+		}
+
+	@Override
+	public void handleLoanRemoval(Long bookId) {
+	    Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+
+	    List<Reservation> reservations = reservationRepository.findById_BookOrderByReservationAsc(book.getId());
+
+	    if (reservations.isEmpty()) {
+	        return;
+	    }
+
+	    Reservation firstReservation = reservations.get(0);
+	    User user = firstReservation.getId_User();
+
+	    sendEmail(bookId, user.getEmail());
+
+	    firstReservation.setStatus("notified");
+	    reservationRepository.save(firstReservation);		
 	}
 
+	
+
+	
 }

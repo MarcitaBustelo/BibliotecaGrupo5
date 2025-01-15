@@ -23,4 +23,8 @@ public interface ReservationService {
 
 	void deleteReservation(Long id);
 
+	void handleLoanRemoval(Long bookId);
+	
+	void sendEmail(Long bookId, String email);
+
 }

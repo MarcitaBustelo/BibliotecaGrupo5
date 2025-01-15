@@ -30,4 +30,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Serial
 
 	@Query("SELECT r FROM Reservation r WHERE r.user.id = :userId")
 	List<Reservation> findReservationsByUserId(@Param("userId") Long userId);
+
+	@Query("SELECT r FROM Reservation r WHERE r.book.id = :bookId ORDER BY r.reservation ASC")
+	List<Reservation> findById_BookOrderByReservationAsc(@Param("bookId") Long bookId);
 }

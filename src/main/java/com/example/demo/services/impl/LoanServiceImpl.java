@@ -16,6 +16,7 @@ import com.example.demo.repository.BookRepository;
 import com.example.demo.repository.LoanRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.LoanService;
+import com.example.demo.service.ReservationService;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -30,6 +31,10 @@ public class LoanServiceImpl implements LoanService {
 
 	@Autowired
 	private BookRepository bookRepository;
+	
+	@Autowired
+	private ReservationService reservationService;
+	
 
 	@Override
 	public void loanBook(Long bookId, String email) {
@@ -98,9 +103,10 @@ public class LoanServiceImpl implements LoanService {
 	@Override
 	public void deleteLoan(Long id) {
 	    Optional<Loan> loan = loanRepository.findById(id);
-
+	    Book book = loan.get().getBook();
+	    
 	    if (loan.isPresent()) {
-	        Book book = loan.get().getBook();
+	        
 	        book.isAvailable(true);
 	        bookRepository.save(book);
 
@@ -108,6 +114,7 @@ public class LoanServiceImpl implements LoanService {
 	    } else {
 	        throw new EntityNotFoundException("Loan with id " + id + " not found");
 	    }
+	    reservationService.handleLoanRemoval(book.getId());
 	}
 
 	@Override
