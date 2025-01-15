@@ -13,81 +13,97 @@
 	<header>
 		<div th:replace="~{fragments :: navbar}"></div>
 	</header>
-	<!-- Título de la página -->
 	<h1>Statistics Graphics</h1>
 
-	<!-- Gráfico de Préstamos por Mes -->
 	<div class="chart-container">
 		<canvas id="loansByMonthChart"></canvas>
 	</div>
 
-	<!-- Gráfico de Préstamos por Usuario -->
 	<div class="chart-container">
 		<canvas id="loansPerUserChart"></canvas>
 	</div>
 
-	<!-- Gráfico de Libros por Categoría -->
 	<div class="chart-container">
 		<canvas id="booksByCategoryChart"></canvas>
 	</div>
 
-	<!-- Script para crear los gráficos -->
-	<script>
-//     var loansByMonth = [[${loansByMonth}]];  
-//     var loansPerUser = [[${loansPerUser}]]; 
-//     var booksByCategory = [[${booksByCategory}]]; 
+	<script th:inline="javascript">
+		var loansByMonth = /*[[${loansByMonth}]]*/[];
+		var loansPerUser = /*[[${loansPerUser}]]*/[];
+		var booksByCategory = /*[[${booksByCategory}]]*/[];
 
-    // Gráfico de Préstamos por Mes
-    var ctx1 = document.getElementById('loansByMonthChart').getContext('2d');
-    var loansByMonthChart = new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: loansByMonth.map(function(item) { return item[0]; }),  // Meses
-            datasets: [{
-                label: 'Loans by Month',
-                data: loansByMonth.map(function(item) { return item[1]; }),  // Número de préstamos
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+		var ctx1 = document.getElementById('loansByMonthChart')
+				.getContext('2d');
+		var loansByMonthChart = new Chart(ctx1, {
+			type : 'bar',
+			data : {
+				labels : loansByMonth.map(function(item) {
+					return item[0];
+				}), 
+				datasets : [ {
+					label : 'Loans by Month',
+					data : loansByMonth.map(function(item) {
+						return item[1];
+					}),
+					backgroundColor : 'rgba(54, 162, 235, 0.2)',
+					borderColor : 'rgba(54, 162, 235, 1)',
+					borderWidth : 1
+				} ]
+			},
+			options : {
+				scales : {
+					y : {
+						beginAtZero : true
+					}
+				}
+			}
+		});
 
-    // Gráfico de Préstamos por Usuario
-    var ctx2 = document.getElementById('loansPerUserChart').getContext('2d');
-    var loansPerUserChart = new Chart(ctx2, {
-        type: 'pie',
-        data: {
-            labels: loansPerUser.map(function(item) { return item[0]; }),  // Correos de los usuarios
-            datasets: [{
-                label: 'Loans per User',
-                data: loansPerUser.map(function(item) { return item[1]; }),  // Número de préstamos
-                backgroundColor: ['#FF5733', '#33FF57', '#3357FF'],
-            }]
-        }
-    });
+		var ctx2 = document.getElementById('loansPerUserChart')
+				.getContext('2d');
+		var loansPerUserChart = new Chart(ctx2, {
+			type : 'pie',
+			data : {
+				labels : loansPerUser.map(function(item) {
+					return item[0];
+				}), 
+				datasets : [ {
+					label : 'Loans per User',
+					data : loansPerUser.map(function(item) {
+						return item[1];
+					}), 
+					backgroundColor: [ 
+		                '#FF5733', 
+		                '#33FF57', 
+		                '#3357FF', 
+		                '#FF33A5', 
+		                '#FFC300', 
+		                '#581845',
+		                '#900C3F', 
+		                '#DAF7A6'  
+		            ]
+				} ]
+			}
+		});
 
-    // Gráfico de Libros por Categoría
-    var ctx3 = document.getElementById('booksByCategoryChart').getContext('2d');
-    var booksByCategoryChart = new Chart(ctx3, {
-        type: 'doughnut',
-        data: {
-            labels: booksByCategory.map(function(item) { return item[0]; }),  // Categorías de libros
-            datasets: [{
-                label: 'Books by Category',
-                data: booksByCategory.map(function(item) { return item[1]; }),  // Número de libros
-                backgroundColor: ['#FF5733', '#33FF57', '#3357FF'],
-            }]
-        }
-    });
-</script>
+		var ctx3 = document.getElementById('booksByCategoryChart').getContext(
+				'2d');
+		var booksByCategoryChart = new Chart(ctx3, {
+			type : 'doughnut',
+			data : {
+				labels : booksByCategory.map(function(item) {
+					return item[0];
+				}), 
+				datasets : [ {
+					label : 'Books by Category',
+					data : booksByCategory.map(function(item) {
+						return item[1];
+					}), 
+					backgroundColor : [ '#FF5733', '#33FF57', '#3357FF' ],
+				} ]
+			}
+		});
+	</script>
 
 </body>
 

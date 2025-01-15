@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -96,11 +97,23 @@ public class AdminController {
 	@GetMapping("/graphics")
 	public String getAdminGraphics(Model model) {
 		List<Object[]> loansByMonthData = loanService.getLoansByMonth();
-		List<Object[]> loansPerUserData = loanService.getLoansPerUser();
+		List<Object[]> formattedLoansByMonth = new ArrayList<>();
+
+		String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+				"October", "November", "December" };
+
+		for (Object[] row : loansByMonthData) {
+			int monthNumber = (int) row[0];
+			long loanCount = (long) row[1];
+
+			String monthName = monthNames[monthNumber - 1];
+			formattedLoansByMonth.add(new Object[] { monthName, loanCount });
+		}
+		List<Object[]> loansPerUser = loanService.getLoansPerUser();
 		List<Object[]> booksByCategoryData = bookService.getBooksByCategory();
 
-		model.addAttribute("loansByMonth", loansByMonthData);
-		model.addAttribute("loansPerUser", loansPerUserData);
+		model.addAttribute("loansByMonth", formattedLoansByMonth);
+		model.addAttribute("loansPerUser", loansPerUser);
 		model.addAttribute("booksByCategory", booksByCategoryData);
 
 		return "graphics";
