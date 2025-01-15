@@ -26,6 +26,8 @@ public interface BookService {
 	Page<Book> searchBooksByTitle(String title, Pageable pageable);
 
 	Page<Book> getBooksOrderedAlphabetically(Pageable pageable);
-
+	
 	Page<Book> getBooksOrderedByDate(Pageable pageable);
+	
+	List<Object[]> getBooksByCategory();
 }

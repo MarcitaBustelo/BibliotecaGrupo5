@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,13 +45,10 @@ public class BookController {
 		int pageSize = 3;
 		Pageable pageable = PageRequest.of(page, pageSize);
 
-		// para vaciar la búsqueda si el filtro cambia (preguntar a felix mañana si es
-		// mejor)
 		if (!filter.equals("all") && search != null && !search.isEmpty()) {
 			search = "";
 		}
 
-		// Filtrado y búsqueda
 		Page<Book> booksPage;
 		if (!search.isEmpty()) {
 			booksPage = bookService.searchBooksByTitle(search, pageable);
@@ -93,7 +94,17 @@ public class BookController {
 			book = new Book();
 		}
 
+		List<String> genres = Arrays.asList("Fiction", "Non-Fiction", "Mystery", "Science Fiction", "Fantasy",
+				"Biography", "Romance", "Murder");
+
+		if (book.getYearPublished() != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String formattedDate = book.getYearPublished().format(formatter);
+			model.addAttribute("formattedYearPublished", formattedDate);
+		}
+
 		model.addAttribute("books", book);
+		model.addAttribute("genres", genres);
 		return BOOKS_FORM;
 	}
 
@@ -132,7 +143,10 @@ public class BookController {
 			existingBook.setTitle(updatedBook.getTitle());
 			existingBook.setAuthor(updatedBook.getAuthor());
 			existingBook.setGenre(updatedBook.getGenre());
-			existingBook.setYearPublished(updatedBook.getYearPublished());
+
+			if (updatedBook.getYearPublished() != null) {
+				existingBook.setYearPublished(updatedBook.getYearPublished());
+			}
 
 			if (!file.isEmpty()) {
 				try {

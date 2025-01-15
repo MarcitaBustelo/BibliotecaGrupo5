@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Book Form</title>
-	<div th:insert="~{fragments :: head}"></div>
+<title>Book Form</title>
+<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
@@ -14,59 +14,60 @@
 		<div class="d-flex justify-content-center align-items-center mt-5">
 			<div class="card" style="width: 50em;">
 				<div class="card-body">
-					<h4 class="card-title" th:text="${books.id == 0 ? 'Add Book' : 'Edit Book'}"></h4>
-					<!-- Formulario corregido -->
-					<form th:action="@{${books.id == 0 ? '/books/addBook' : '/books/updateBook'}}" th:object="${books}"
-						method="post" enctype="multipart/form-data">
+					<h4 class="card-title"
+						th:text="${books.id == 0 ? 'Add Book' : 'Edit Book'}"></h4>
+					<form
+						th:action="@{${books.id == 0 ? '/books/addBook' : '/books/updateBook'}}"
+						th:object="${books}" method="post" enctype="multipart/form-data">
 
-						<!-- Campo oculto para el ID -->
-						<input type="hidden" th:field="*{id}">
+						<input type="hidden" th:field="*{id}"> <input
+							type="hidden" name="${_csrf.parameterName}"
+							th:value="${_csrf.token}">
 
-						<!-- Protección CSRF -->
-						<input type="hidden" name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
-						<!-- Campo Title -->
 						<div class="mb-3">
-							<label class="form-label" for="title">Title</label>
-							<input class="form-control" type="text" id="title" name="title" th:field="*{title}"
-								placeholder="Type title..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+							<label class="form-label" for="title">Title</label> <input
+								class="form-control" type="text" id="title" name="title"
+								th:field="*{title}" placeholder="Type title..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('title')}"
+								th:errors="*{title}"></div>
 						</div>
 
-						<!-- Campo Author -->
 						<div class="mb-3">
-							<label class="form-label" for="author">Author</label>
-							<input class="form-control" type="text" id="author" name="author" th:field="*{author}"
-								placeholder="Type author..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+							<label class="form-label" for="author">Author</label> <input
+								class="form-control" type="text" id="author" name="author"
+								th:field="*{author}" placeholder="Type author..." required>
+							<div class="text-danger" th:if="${#fields.hasErrors('author')}"
+								th:errors="*{author}"></div>
 						</div>
 
-						<!-- Campo Genre -->
 						<div class="mb-3">
-							<label class="form-label" for="genre">Genre</label>
-							<input class="form-control" type="text" id="genre" name="genre" th:field="*{genre}"
-								placeholder="Type genre..." required>
-							<div class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+							<label class="form-label" for="genre">Genre</label> <select
+								class="form-control" id="genre" name="genre" th:field="*{genre}"
+								required>
+								<option th:each="g : ${genres}" th:value="${g}" th:text="${g}"></option>
+							</select>
+							<div class="text-danger" th:if="${#fields.hasErrors('genre')}"
+								th:errors="*{genre}"></div>
 						</div>
 
-						<!-- Campo Year Published -->
 						<div class="mb-3">
-							<label class="form-label" for="yearPublished">Year Published</label>
-							<input class="form-control" type="date" id="yearPublished" name="yearPublished"
-								th:field="*{yearPublished}" required>
-							<div class="text-danger" th:if="${#fields.hasErrors('yearPublished')}"
+							<label class="form-label" for="yearPublished">Year
+								Published</label> <input class="form-control" type="date"
+								id="yearPublished" name="yearPublished"
+								th:field="*{yearPublished}" th:required="${books.id == 0}">
+							<div class="text-danger"
+								th:if="${#fields.hasErrors('yearPublished')}"
 								th:errors="*{yearPublished}"></div>
 						</div>
 
-						<!-- Subida de Imagen -->
+
 						<div class="mb-3">
-							<label class="form-label" for="file">Upload Image</label>
-							<input class="form-control" type="file" id="file" name="file"
+							<label class="form-label" for="file">Upload Image</label> <input
+								class="form-control" type="file" id="file" name="file"
 								th:required="${books.id == null}">
 
 						</div>
 
-						<!-- Botones -->
 						<div class="mb-3">
 							<button class="btn btn-primary d-inline" type="submit">Save</button>
 							<a class="btn btn-warning" th:href="@{/admin/bookADMIN}">Return</a>

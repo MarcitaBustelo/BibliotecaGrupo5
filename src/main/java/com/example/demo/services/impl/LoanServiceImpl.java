@@ -124,4 +124,15 @@ public class LoanServiceImpl implements LoanService {
 
 	}
 
+	@Override
+	public List<Object[]> getLoansByMonth() {
+		  return loanRepository.findLoansByMonth();
+	}
+
+	@Override
+	public List<Object[]> getLoansPerUser() {
+        return loanRepository.findLoansPerUser();
+
+	}
+
 }

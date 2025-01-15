@@ -72,4 +72,9 @@ public class BookServiceImpl implements BookService {
 		return bookRepository.findAll(pageable);
 	}
 
+	@Override
+	public List<Object[]> getBooksByCategory() {
+		return bookRepository.findBooksByCategory();
+	}
+
 }
