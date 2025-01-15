@@ -14,17 +14,25 @@ import com.example.demo.entity.Loan;
 import com.example.demo.entity.User;
 
 @Repository("loanRepository")
-public interface LoanRepository extends JpaRepository<Loan, Serializable>{
+public interface LoanRepository extends JpaRepository<Loan, Serializable> {
 
 	int countByUser(User user);
-    Optional<Loan> findByUserAndBook(User user, Book book);
-   
-    @Query("SELECT COUNT(l) FROM Loan l WHERE l.user.email = :email")
-    int countByUser(@Param("email") String username);
-    
-    @Query("SELECT MONTH(l.initial_date) AS month, COUNT(l) AS loanCount FROM Loan l GROUP BY MONTH(l.initial_date)")
-    List<Object[]> findLoansByMonth();
 
-    @Query("SELECT l.user, COUNT(l) FROM Loan l GROUP BY l.user")
-    List<Object[]> findLoansPerUser();
+	Optional<Loan> findByUserAndBook(User user, Book book);
+
+	@Query("SELECT COUNT(l) FROM Loan l WHERE l.user.email = :email")
+	int countByUser(@Param("email") String username);
+
+	@Query("SELECT MONTH(l.initial_date) AS month, COUNT(l) AS loanCount FROM Loan l GROUP BY MONTH(l.initial_date)")
+	List<Object[]> findLoansByMonth();
+
+	@Query("SELECT l.user, COUNT(l) FROM Loan l GROUP BY l.user")
+	List<Object[]> findLoansPerUser();
+
+	@Query("SELECT l.book, COUNT(l) AS borrowCount " + "FROM Loan l " + "GROUP BY l.book "
+			+ "ORDER BY borrowCount DESC")
+	List<Object[]> findMostBorrowedBooks();
+
+	List<Loan> findLoansByUserId(Long userId);
+
 }

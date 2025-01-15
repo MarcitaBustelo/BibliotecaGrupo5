@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Loan;
 import com.example.demo.entity.User;
@@ -25,11 +24,17 @@ public class ReportController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/")
-	public String getAdminReports(Long userId, Model model) {
+	@GetMapping("/mostBorrow")
+	public String getMostBorrow(Long userId, Model model) {
 		// Lista de libros más prestados
 		List<Map<String, Object>> mostBorrowedBooks = reportService.getMostBorrowedBooks();
 		model.addAttribute("mostBorrowedBooks", mostBorrowedBooks);
+
+		return "reportsMostBorrow";
+	}
+
+	@GetMapping("/loanHistory")
+	public String getLoanHistory(Long userId, Model model) {
 
 		// Lista de usuarios (excluyendo al administrador)
 		List<User> users = userService.getAllUsers().stream().filter(user -> !user.getRole().equals("ROLE_ADMIN"))
@@ -49,6 +54,6 @@ public class ReportController {
 		// Asegurar que el usuario seleccionado se envía al modelo
 		model.addAttribute("userId", userId);
 
-		return "reports";
+		return "reportsLoanHistory";
 	}
 }

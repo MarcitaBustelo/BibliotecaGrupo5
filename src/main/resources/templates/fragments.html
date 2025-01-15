@@ -7,8 +7,28 @@
 	<!--	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/loan/adminLoans}">Loans</a>-->
 	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')"
 		th:href="@{/reservation/adminReservations}">Reservations</a>
-	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/reports}">Reports</a>
 	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/graphics}">Graphics</a>
+
+	<div class="ps-2 navbar-brand dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+		<a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown"
+			aria-expanded="false">
+			Reports
+		</a>
+		<ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+			<li>
+				<form th:action="@{/report/mostBorrow}" method="get">
+					<button type="submit" class="dropdown-item">Most Borrowed Books</button>
+				</form>
+			</li>
+			<li>
+				<form th:action="@{/report/loanHistory}" method="get">
+					<button type="submit" class="dropdown-item">User Loan History</button>
+				</form>
+			</li>
+		</ul>
+	</div>
+
+
 
 
 	<div class="ms-auto" sec:authorize="!isAuthenticated()">

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Admin reports</title>
+	<link rel="stylesheet" th:href="@{/css/reports.css}" />
+	<div th:insert="~{fragments :: head}"></div>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+	<div class="reports-container">
+
+		<!-- Lista de libros más prestados -->
+		<h2>Most Borrowed Books</h2>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Borrow Count</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book : ${mostBorrowedBooks}">
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.borrowCount}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
