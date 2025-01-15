@@ -39,7 +39,7 @@
 			data : {
 				labels : loansByMonth.map(function(item) {
 					return item[0];
-				}), 
+				}),
 				datasets : [ {
 					label : 'Loans by Month',
 					data : loansByMonth.map(function(item) {
@@ -66,22 +66,13 @@
 			data : {
 				labels : loansPerUser.map(function(item) {
 					return item[0];
-				}), 
+				}),
 				datasets : [ {
 					label : 'Loans per User',
 					data : loansPerUser.map(function(item) {
 						return item[1];
-					}), 
-					backgroundColor: [ 
-		                '#FF5733', 
-		                '#33FF57', 
-		                '#3357FF', 
-		                '#FF33A5', 
-		                '#FFC300', 
-		                '#581845',
-		                '#900C3F', 
-		                '#DAF7A6'  
-		            ]
+					}),
+					backgroundColor : [ '#FF5733', '#33FF57', '#3357FF' ]
 				} ]
 			}
 		});
@@ -93,13 +84,14 @@
 			data : {
 				labels : booksByCategory.map(function(item) {
 					return item[0];
-				}), 
+				}),
 				datasets : [ {
-					label : 'Books by Category',
 					data : booksByCategory.map(function(item) {
 						return item[1];
-					}), 
-					backgroundColor : [ '#FF5733', '#33FF57', '#3357FF' ],
+					}),
+					backgroundColor : [ '#FF5733', '#33FF57', '#3357FF',
+							'#FF33A5', '#FFC300', '#581845', '#900C3F',
+							'#DAF7A6' ]
 				} ]
 			}
 		});

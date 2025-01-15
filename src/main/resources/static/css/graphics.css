@@ -1,8 +1,92 @@
-@charset "UTF-8";
+/* General Reset */
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background-color: #f5f5f5;
+	color: #333;
+}
 
+header {
+	background-color: #007BFF;
+	color: white;
+	padding: 15px 0;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+h1 {
+	text-align: center;
+	margin: 20px 0;
+	font-size: 2em;
+	color: #444;
+}
+
+/* Chart Containers */
 .chart-container {
-	margin: 2rem auto;
-	width: 80%;
+	width: 100%; /* Aseguramos que ocupe el 100% del contenedor */
 	max-width: 800px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para las gráficas en fila */
+.charts-row {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px; /* Espacio entre las gráficas */
+	margin: 20px auto;
+	width: 100%;
+	max-width: 800px;
+}
+
+/* Estilo para la primera gráfica (barra) */
+#loansByMonthChart {
+	width: 100% !important; /* Asegura que ocupe el 100% del contenedor */
 	height: 400px;
+}
+
+/* Estilo para las gráficas pequeñas (pie y doughnut) */
+.small-chart {
+	width: 48%; /* Esto hará que las gráficas sean más pequeñas */
+	height: 300px; /* Puedes ajustar el tamaño según lo necesites */
+}
+
+/* Canvas Styling */
+canvas {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/* Responsive Design */
+@media ( max-width : 768px) {
+	h1 {
+		font-size: 1.5em;
+		/* Tamaño de fuente ajustado en pantallas más pequeñas */
+	}
+	.chart-container {
+		width: 90%;
+		/* Contenedores de los gráficos más anchos en pantallas pequeñas */
+		padding: 15px; /* Ajuste de padding */
+	}
+	.charts-row {
+		flex-direction: column;
+		/* Cambiar la disposición a columna en pantallas más pequeñas */
+		width: 100%;
+	}
+	.charts-row .chart-container {
+		width: 100%;
+		/* Asegura que los gráficos ocupen el 100% del ancho disponible */
+		margin-bottom: 20px;
+	}
+
+	/* Ajustes para las gráficas dentro de la fila */
+	.small-chart {
+		width: 100%;
+		/* Asegura que las gráficas pequeñas ocupen todo el ancho en pantallas pequeñas */
+		height: 250px; /* Se ajusta el tamaño */
+	}
 }
