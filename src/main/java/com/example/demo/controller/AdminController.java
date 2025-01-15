@@ -47,7 +47,7 @@ public class AdminController {
 
 	@Autowired
 	private LoanService loanService;
-	
+
 	@GetMapping("/listUsers")
 	public ModelAndView listUsers(Authentication authentication) {
 		ModelAndView mav = new ModelAndView(USERS_VIEW);
@@ -93,35 +93,17 @@ public class AdminController {
 		return "redirect:/admin/listUsers";
 	}
 
-	@GetMapping("/reports")
-	public String getAdminReports(@RequestParam(value = "userId", required = false) Long userId, Model model) {
-		List<Map<String, Object>> mostBorrowedBooks = reportService.getMostBorrowedBooks();
-		model.addAttribute("mostBorrowedBooks", mostBorrowedBooks);
-		List<User> users = userService.getAllUsers().stream().filter(user -> !user.getRole().equals("ROLE_ADMIN"))
-				.toList();
-		model.addAttribute("users", users);
-		if (userId != null) {
-			List<Reservation> userLoanHistory = reportService.getUserLoanHistory(userId);
-			model.addAttribute("userLoanHistory", userLoanHistory);
-		}
-		long totalUserCount = reportService.getTotalUserCount();
-		model.addAttribute("totalUserCount", totalUserCount);
-		model.addAttribute("userId", userId);
-
-		return "reports";
-	}
-	
 	@GetMapping("/graphics")
 	public String getAdminGraphics(Model model) {
-        List<Object[]> loansByMonthData = loanService.getLoansByMonth(); 
-        List<Object[]> loansPerUserData = loanService.getLoansPerUser(); 
-        List<Object[]> booksByCategoryData = bookService.getBooksByCategory();
+		List<Object[]> loansByMonthData = loanService.getLoansByMonth();
+		List<Object[]> loansPerUserData = loanService.getLoansPerUser();
+		List<Object[]> booksByCategoryData = bookService.getBooksByCategory();
 
-        model.addAttribute("loansByMonth", loansByMonthData);
-        model.addAttribute("loansPerUser", loansPerUserData);
-        model.addAttribute("booksByCategory", booksByCategoryData);
+		model.addAttribute("loansByMonth", loansByMonthData);
+		model.addAttribute("loansPerUser", loansPerUserData);
+		model.addAttribute("booksByCategory", booksByCategoryData);
 
-        return "graphics";
+		return "graphics";
 	}
 
 }

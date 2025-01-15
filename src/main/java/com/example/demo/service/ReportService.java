@@ -5,15 +5,17 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.Reservation;
+import com.example.demo.entity.Loan;
 
 @Service
 public interface ReportService {
 
 	List<Map<String, Object>> getMostBorrowedBooks();
 
-	List<Reservation> getUserLoanHistory(Long userId);
+	List<Loan> getUserLoanHistory(Long userId);
 
 	long getTotalUserCount();
+
+	int countLoansByUser(String email);
 
 }

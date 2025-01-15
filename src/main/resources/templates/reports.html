@@ -36,7 +36,7 @@
 
 		<!-- Historial de préstamos de un usuario -->
 		<h2>User Loan History</h2>
-		<form method="get" action="/admin/reports">
+		<form method="get" action="/report/">
 			<label for="userId">Select User:</label>
 			<select id="userId" name="userId" onchange="this.form.submit()">
 				<option value="" disabled th:if="${userId == null}" selected>Select a user</option>
@@ -50,15 +50,15 @@
 			<thead>
 				<tr>
 					<th>Book Title</th>
-					<th>Reservation Date</th>
-					<th>Status</th>
+					<th>Initial date</th>
+					<th>Due date</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="reservation : ${userLoanHistory}">
-					<td th:text="${reservation.Id_Book.title}"></td>
-					<td th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}"></td>
-					<td th:text="${reservation.status}"></td>
+				<tr th:each="loan : ${userLoanHistory}">
+					<td th:text="${loan.book.title}"></td>
+					<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}"></td>
 				</tr>
 			</tbody>
 		</table>
