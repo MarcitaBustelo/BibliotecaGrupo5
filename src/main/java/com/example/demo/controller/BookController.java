@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -166,6 +167,16 @@ public class BookController {
 		}
 
 		return "redirect:/admin/bookADMIN";
+	}
+	
+	@GetMapping("/byCategory")
+	public String getByCategoryGraphic(Model model) {
+		
+		List<Object[]> booksByCategoryData = bookService.getBooksByCategory();
+
+		model.addAttribute("booksByCategory", booksByCategoryData);
+
+		return "byCategory";
 	}
 
 }

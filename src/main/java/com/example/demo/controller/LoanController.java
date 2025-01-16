@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,5 +94,34 @@ public class LoanController {
 			redirectAttributes.addFlashAttribute("error", "Error returning book: " + e.getMessage());
 		}
 		return "redirect:/loan/userLoans";
+	}
+	
+	@GetMapping("/byMonth")
+	public String getByMonthGraphic(Model model) {
+		List<Object[]> loansByMonthData = loanService.getLoansByMonth();
+		List<Object[]> formattedLoansByMonth = new ArrayList<>();
+
+		String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+				"October", "November", "December" };
+
+		for (Object[] row : loansByMonthData) {
+			int monthNumber = (int) row[0];
+			long loanCount = (long) row[1];
+
+			String monthName = monthNames[monthNumber - 1];
+			formattedLoansByMonth.add(new Object[] { monthName, loanCount });
+		}
+
+		model.addAttribute("loansByMonth", formattedLoansByMonth);
+
+		return "byMonth";
+	}
+	
+	@GetMapping("/perUser")
+	public String getPerUserGraphic(Model model) {
+		List<Object[]> loansPerUser = loanService.getLoansPerUser();
+		model.addAttribute("loansPerUser", loansPerUser);
+
+		return "perUser";
 	}
 }

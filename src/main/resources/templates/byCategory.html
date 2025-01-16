@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Graphics</title>
+<link rel="stylesheet" th:href="@{/css/graphics.css}" />
+<div th:insert="~{fragments :: head}"></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+	<h1>Books By Category</h1>
+
+	<div class="chart-container">
+		<canvas id="booksByCategoryChart"></canvas>
+	</div>
+
+	<script th:inline="javascript">
+		
+		var booksByCategory = /*[[${booksByCategory}]]*/[];
+
+
+		var ctx3 = document.getElementById('booksByCategoryChart').getContext(
+				'2d');
+		var booksByCategoryChart = new Chart(ctx3, {
+			type : 'doughnut',
+			data : {
+				labels : booksByCategory.map(function(item) {
+					return item[0];
+				}),
+				datasets : [ {
+					data : booksByCategory.map(function(item) {
+						return item[1];
+					}),
+					backgroundColor : [ '#FF5733', '#33FF57', '#3357FF',
+							'#FF33A5', '#FFC300', '#581845', '#900C3F',
+							'#DAF7A6' ]
+				} ]
+			}
+		});
+	</script>
+
+</body>
+
+</html>

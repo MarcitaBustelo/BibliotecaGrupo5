@@ -1,28 +1,59 @@
-<nav th:fragment="navbar" class="navbar navbar-expand-md navbar-dark bg-dark">
-	<a class="ps-2 navbar-brand" href="/admin/listUsers" sec:authorize="hasRole('ROLE_ADMIN')">Users</a>
-	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/bookADMIN}">Books</a>
-	<a class="ps-2 navbar-brand" sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/books/listBooks}">Books</a>
-	<a class="ps-2 navbar-brand" sec:authorize="!hasRole('ROLE_ADMIN')" href="/">Home</a>
-	<a class="ps-2 navbar-brand" href="/about" sec:authorize="!hasRole('ROLE_ADMIN')">About us</a>
+<nav th:fragment="navbar"
+	class="navbar navbar-expand-md navbar-dark bg-dark">
+	<a class="ps-2 navbar-brand" href="/admin/listUsers"
+		sec:authorize="hasRole('ROLE_ADMIN')">Users</a> <a
+		class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')"
+		th:href="@{/admin/bookADMIN}">Books</a> <a class="ps-2 navbar-brand"
+		sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/books/listBooks}">Books</a>
+	<a class="ps-2 navbar-brand" sec:authorize="!hasRole('ROLE_ADMIN')"
+		href="/">Home</a> <a class="ps-2 navbar-brand" href="/about"
+		sec:authorize="!hasRole('ROLE_ADMIN')">About us</a>
 	<!--	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/loan/adminLoans}">Loans</a>-->
 	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')"
 		th:href="@{/reservation/adminReservations}">Reservations</a>
-	<a class="ps-2 navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/graphics}">Graphics</a>
 
-	<div class="ps-2 navbar-brand dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
-		<a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown"
-			aria-expanded="false">
-			Reports
-		</a>
+	<div class="ps-2 navbar-brand dropdown"
+		sec:authorize="hasRole('ROLE_ADMIN')">
+		<a class="nav-link dropdown-toggle" href="#" id="reportsDropdown"
+			role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			Graphics </a>
+		<ul class="dropdown-menu" aria-labelledby="reportsDropdown">
+			<li>
+				<form th:action="@{/loan/byMonth}" method="get">
+					<button type="submit" class="dropdown-item">Loans By Month
+						Chart</button>
+				</form>
+			</li>
+			<li>
+				<form th:action="@{/loan/perUser}" method="get">
+					<button type="submit" class="dropdown-item">Loans Per User
+						Chart</button>
+				</form>
+			</li>
+			<li>
+				<form th:action="@{/books/byCategory}" method="get">
+					<button type="submit" class="dropdown-item">Books By Category Chart</button>
+				</form>
+			</li>
+		</ul>
+	</div>
+
+	<div class="ps-2 navbar-brand dropdown"
+		sec:authorize="hasRole('ROLE_ADMIN')">
+		<a class="nav-link dropdown-toggle" href="#" id="reportsDropdown"
+			role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			Reports </a>
 		<ul class="dropdown-menu" aria-labelledby="reportsDropdown">
 			<li>
 				<form th:action="@{/report/mostBorrow}" method="get">
-					<button type="submit" class="dropdown-item">Most Borrowed Books</button>
+					<button type="submit" class="dropdown-item">Most Borrowed
+						Books</button>
 				</form>
 			</li>
 			<li>
 				<form th:action="@{/report/loanHistory}" method="get">
-					<button type="submit" class="dropdown-item">User Loan History</button>
+					<button type="submit" class="dropdown-item">User Loan
+						History</button>
 				</form>
 			</li>
 		</ul>
@@ -32,13 +63,14 @@
 
 
 	<div class="ms-auto" sec:authorize="!isAuthenticated()">
-		<a class="navbar-brand d-inline" th:href="@{/login}">Login</a> <a class="navbar-brand d-inline"
-			th:href="@{/register}">Register</a>
+		<a class="navbar-brand d-inline" th:href="@{/login}">Login</a> <a
+			class="navbar-brand d-inline" th:href="@{/register}">Register</a>
 	</div>
 
 	<div class="ms-auto me-3" sec:authorize="isAuthenticated()">
 		<div class="btn-group">
-			<button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button"
+				id="triggerId" data-bs-toggle="dropdown">
 				<span sec:authentication="name"></span>
 			</button>
 			<div class="dropdown-menu dropdown-menu-end">
@@ -48,10 +80,12 @@
 				<form th:action="@{/myaccount}" method="get">
 					<button type="submit" class="dropdown-item">My account</button>
 				</form>
-				<form th:action="@{/reservation/userReservation}" method="get" sec:authorize="hasRole('ROLE_USER')">
+				<form th:action="@{/reservation/userReservation}" method="get"
+					sec:authorize="hasRole('ROLE_USER')">
 					<button type="submit" class="dropdown-item">Reservations</button>
 				</form>
-				<form th:action="@{/loan/userLoans}" method="get" sec:authorize="hasRole('ROLE_USER')">
+				<form th:action="@{/loan/userLoans}" method="get"
+					sec:authorize="hasRole('ROLE_USER')">
 					<button type="submit" class="dropdown-item">Loans</button>
 				</form>
 			</div>
@@ -60,15 +94,17 @@
 </nav>
 
 <head th:fragment="head">
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
-	<link rel="stylesheet" th:href="@{/css/styles.css}">
-	<link rel="stylesheet" th:href="@{/css/about.css}">
-	<link rel="stylesheet" th:href="@{/css/welcome.css}" />
-	<link rel="stylesheet" th:href="@{/css/myaccount.css}" />
-	<link rel="stylesheet" th:href="@{/css/userADMIN.css}" />
-	<link rel="stylesheet" th:href="@{/css/bookADMIN.css}" />
-	<!-- Bootstrap Bundle JS -->
-	<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<link rel="stylesheet" th:href="@{/css/about.css}">
+<link rel="stylesheet" th:href="@{/css/welcome.css}" />
+<link rel="stylesheet" th:href="@{/css/myaccount.css}" />
+<link rel="stylesheet" th:href="@{/css/userADMIN.css}" />
+<link rel="stylesheet" th:href="@{/css/bookADMIN.css}" />
+<!-- Bootstrap Bundle JS -->
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
 </head>
