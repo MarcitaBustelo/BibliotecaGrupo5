@@ -11,8 +11,6 @@
 	<header>
 		<div th:replace="~{fragments :: navbar}"></div>
 	</header>
-	<div class="alert alert-success" th:if="${success}"
-		th:text="${success}"></div>
 	<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
 	<main class="d-flex justify-content-center align-items-center vh-100">
@@ -21,21 +19,11 @@
 			<div class="card-body p-4">
 				<h4 class="card-title text-center text-brown">Login</h4>
 
-				<!-- Mensajes de error y éxito -->
+				<div class="alert alert-success"
+					th:if="${success != null and success != ''}" th:text="${success}"></div>
 				<div class="alert alert-info" th:if="${logout != null}">Logout
 					successful!</div>
-				<div class="alert alert-danger" th:if="${error != null}">
-					<div class="alert alert-danger" th:if="${error != null}">
-						<span th:if="${error == 'Invalid username or password.'}">Invalid
-							username or password.</span> <span
-							th:if="${error == 'Your account is not activated.'}">Your
-							account is not activated. Please contact support.</span> <span
-							th:if="${error == 'Login failed. Please try again.'}">Login
-							failed. Please try again.</span>
-					</div>
-				</div>
 
-				<!-- Formulario de login -->
 				<form th:action="@{/login}" th:object="${user}" method="post">
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}">
@@ -58,6 +46,9 @@
 					</div>
 				</form>
 			</div>
+
+			</form>
+		</div>
 		</div>
 	</main>
 </body>

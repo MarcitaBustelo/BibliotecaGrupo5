@@ -27,14 +27,25 @@ public class LoginController {
 	private static final String LOGIN_VIEW = "login";
 
 	@GetMapping("")
-	public String tryLogin(Model model, @RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout,
-			@RequestParam(value = "email", required = false) String email) {
-		model.addAttribute("logout", logout);
-		model.addAttribute("user", new User());
-		model.addAttribute("error", error);
+	public String tryLogin(
+	        Model model,
+	        @RequestParam(value = "error", required = false) String error,
+	        @RequestParam(value = "logout", required = false) String logout,
+	        @RequestParam(value = "email", required = false) String email,
+	        @RequestParam(value = "success", required = false) String success) {
 
-		return LOGIN_VIEW;
+		System.out.println("Error: " + error);
+		System.out.println("Email: " + email);
+		
+	    model.addAttribute("logout", logout);
+	    model.addAttribute("user", new User());
+	    model.addAttribute("error", error);
+	    model.addAttribute("email", email);
+	    model.addAttribute("success", success);
+
+
+	    return LOGIN_VIEW;
 	}
+
 
 }

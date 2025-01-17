@@ -26,8 +26,9 @@ public class SecurityConfig {
 						"/webjars/**", "/photos/**", "/changePassword")
 				.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/login").usernameParameter("email")
-						.failureHandler(customAuthenticationFailureHandler()) // Esto es tb pa los errores
-						.defaultSuccessUrl("/", true).permitAll())
+						.failureHandler(customAuthenticationFailureHandler()) 
+						.defaultSuccessUrl("/login?success=Login successful!", true)
+						.permitAll())
 				.logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll());
 
 		return http.build();
@@ -38,14 +39,13 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-	// Esto es pa los errores pero no aparecen
 	@Bean
 	public AuthenticationFailureHandler customAuthenticationFailureHandler() {
 		return (request, response, exception) -> {
 			if (exception instanceof DisabledException) {
 				response.sendRedirect("/login?error=Your account is not activated.");
 			} else if (exception instanceof BadCredentialsException) {
-				response.sendRedirect("/login?error=Invalid username or password.");
+				response.sendRedirect("/login?email=Invalid username or password.");
 			} else {
 				response.sendRedirect("/login?error=Login failed. Please try again.");
 			}

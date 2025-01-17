@@ -18,7 +18,6 @@
 					<form th:action="@{/register/send}" th:object="${user}" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
-						<!-- Name -->
 						<div class="mb-3">
 							<label class="form-label" for="name">Name</label>
 							<input class="form-control" type="text" id="name" name="name" th:field="*{name}"
@@ -26,7 +25,6 @@
 							<div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 						</div>
 
-						<!-- Lastname -->
 						<div class="mb-3">
 							<label class="form-label" for="lastname">Lastname</label>
 							<input class="form-control" type="text" id="lastname" name="lastname" th:field="*{lastname}"
@@ -35,7 +33,6 @@
 							</div>
 						</div>
 
-						<!-- Email -->
 						<div class="mb-3">
 							<label class="form-label" for="email">Email</label>
 							<input class="form-control" type="email" id="email" name="email" th:field="*{email}"
@@ -43,7 +40,6 @@
 							<div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 						</div>
 
-						<!-- Password -->
 						<div class="mb-3">
 							<label class="form-label" for="password">Password</label>
 							<input class="form-control" type="password" id="password" name="password"
@@ -52,7 +48,6 @@
 							</div>
 						</div>
 
-						<!-- Confirm Password -->
 						<div class="mb-3">
 							<label class="form-label" for="repassword">Confirm Password</label>
 							<input class="form-control" type="password" id="repassword" name="repassword"
@@ -61,7 +56,6 @@
 								th:errors="*{rePassword}"></div>
 						</div>
 
-						<!-- Buttons -->
 						<div class="mb-3 d-flex justify-content-between">
 							<button class="btn btn-brown" type="submit">Register</button>
 							<a class="btn btn-secondary" href="/">Return</a>
