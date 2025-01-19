@@ -19,12 +19,6 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/login")
 public class LoginController {
 
-	@Autowired
-	@Qualifier("userService")
-	UserServiceImpl userService;
-
-	@Autowired
-	@Qualifier("userRepository")
 	UserRepository userRepository;
 
 	private static final String LOGIN_VIEW = "login";
@@ -44,6 +38,8 @@ public class LoginController {
 
 		if (success != null && !success.isEmpty()) {
 			model.addAttribute("success", success);
+			return "redirect:/";
+ 
 		}
 
 		model.addAttribute("logout", logout);
