@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+/* General Styles */
+.login-container body {
+	background-color: #fdf6e3;
+	font-family: 'Georgia', serif;
+	color: #5d4037;
+	margin: 0;
+	padding: 0;
+}
+
+/* Login Container */
+.login-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	padding: 20px;
+}
+
+/* Card Styles */
+.login-container .card {
+	background-color: #d7ccc8;
+	border: none;
+	box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+	border-radius: 30px;
+	width: 100%;
+	max-width: 600px;
+	padding: 60px;
+}
+
+/* Card Body */
+.login-container .card-body {
+	padding: 40px;
+}
+
+/* Header Text */
+.login-container h4 {
+	color: #3e2723;
+	/* Color del texto */
+	font-size: 2rem;
+	/* Tamaño del texto */
+	margin-bottom: 30px;
+	/* Espaciado inferior */
+	font-weight: bold;
+	/* Peso del texto */
+	text-align: center;
+	/* Centrado del texto */
+}
+
+/* Input Styles */
+.login-container .form-control {
+	border: 1px solid #6d4c41;
+	border-radius: 8px;
+	padding: 12px;
+	background-color: #fff4e1;
+	font-size: 1rem;
+}
+
+.login-container .form-control:focus {
+	border-color: #3e2723;
+	background-color: #fdf6e3;
+}
+
+/* Button Styles */
+.login-container .btn-brown {
+	background-color: #6d4c41;
+	color: white;
+	font-weight: bold;
+	border-radius: 8px;
+	padding: 12px;
+	font-size: 1rem;
+	text-transform: uppercase;
+}
+
+.login-container .btn-brown:hover {
+	background-color: #5d4037;
+}
+
+/* Alert Styles */
+.login-container .alert {
+	border-radius: 8px;
+	padding: 10px;
+	font-size: 0.9rem;
+	text-align: center;
+}
+
+.login-container .alert-info {
+	background-color: #d1c4b1;
+	color: #3e2723;
+}
+
+.login-container .alert-danger {
+	background-color: #f44336;
+	color: #ffffff;
+}
+
+/* Links */
+.login-container .text-brown {
+	color: #3e2723;
+	font-size: 0.9rem;
+	text-decoration: none;
+}
+
+.login-container .text-brown:hover {
+	text-decoration: underline;
+}

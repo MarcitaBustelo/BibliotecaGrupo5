@@ -12,6 +12,9 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.services.impl.UserServiceImpl;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -27,25 +30,25 @@ public class LoginController {
 	private static final String LOGIN_VIEW = "login";
 
 	@GetMapping("")
-	public String tryLogin(
-	        Model model,
-	        @RequestParam(value = "error", required = false) String error,
-	        @RequestParam(value = "logout", required = false) String logout,
-	        @RequestParam(value = "email", required = false) String email,
-	        @RequestParam(value = "success", required = false) String success) {
+	public String tryLogin(Model model, @RequestParam(value = "logout", required = false) String logout,
+			@RequestParam(value = "success", required = false) String success, HttpServletRequest request) {
 
-		System.out.println("Error: " + error);
-		System.out.println("Email: " + email);
-		
-	    model.addAttribute("logout", logout);
-	    model.addAttribute("user", new User());
-	    model.addAttribute("error", error);
-	    model.addAttribute("email", email);
-	    model.addAttribute("success", success);
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			String errorMessage = (String) session.getAttribute("error");
+			if (errorMessage != null) {
+				model.addAttribute("error", errorMessage);
+				session.removeAttribute("error"); 
+			}
+		}
 
+		if (success != null && !success.isEmpty()) {
+			model.addAttribute("success", success);
+		}
 
-	    return LOGIN_VIEW;
+		model.addAttribute("logout", logout);
+		model.addAttribute("user", new User());
+
+		return LOGIN_VIEW; 
 	}
-
-
 }

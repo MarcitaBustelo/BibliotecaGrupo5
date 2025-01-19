@@ -19,16 +19,15 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/books/**", "/register/**", "/about/**", "/photos/**").permitAll()
-				.requestMatchers("/users", "/admin/**").hasRole("ADMIN")
-				.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**",
-						"/webjars/**", "/photos/**")
-				.permitAll().anyRequest().authenticated())
+		http.authorizeHttpRequests(
+				(requests) -> requests.requestMatchers("/", "/books/**", "/register/**", "/about/**", "/photos/**")
+						.permitAll().requestMatchers("/users", "/admin/**").hasRole("ADMIN")
+						.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**",
+								"/webjars/**", "/photos/**")
+						.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/login").usernameParameter("email")
-						.failureHandler(customAuthenticationFailureHandler()) 
-						.defaultSuccessUrl("/login?success=Login successful!", true)
-						.permitAll())
+						.failureHandler(customAuthenticationFailureHandler())
+						.defaultSuccessUrl("/login?success=Login successful!", true).permitAll())
 				.logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll());
 
 		return http.build();
@@ -42,13 +41,19 @@ public class SecurityConfig {
 	@Bean
 	public AuthenticationFailureHandler customAuthenticationFailureHandler() {
 		return (request, response, exception) -> {
+			String errorMessage;
+
 			if (exception instanceof DisabledException) {
-				response.sendRedirect("/login?error=Your account is not activated.");
+				errorMessage = "Your account is not activated.";
 			} else if (exception instanceof BadCredentialsException) {
-				response.sendRedirect("/login?email=Invalid username or password.");
+				errorMessage = "Invalid username or password.";
 			} else {
-				response.sendRedirect("/login?error=Login failed. Please try again.");
+				errorMessage = "Login failed. Please try again.";
 			}
+
+			request.getSession().setAttribute("error", errorMessage);
+			response.sendRedirect("/login");
 		};
 	}
+
 }
