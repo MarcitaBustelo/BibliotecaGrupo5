@@ -24,8 +24,8 @@ public class Book {
 	private String author;
 	private String genre;
 	private LocalDate yearPublished;
-	private boolean isAvailable;
-	
+	private boolean isAvailable = true;
+
 	@OneToMany(mappedBy = "book")
 	private List<Reservation> reservations;
 
@@ -97,7 +97,7 @@ public class Book {
 	public void setYearPublished(LocalDate yearPublished) {
 		this.yearPublished = yearPublished;
 	}
-	
+
 	public boolean isAvailable() {
 		return isAvailable;
 	}

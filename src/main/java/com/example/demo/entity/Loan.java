@@ -27,13 +27,16 @@ public class Loan {
 	@JoinColumn(name = "id_book", nullable = false)
 	private Book book;
 
-	public Loan(long id, User user, Book book, Date initial_date, Date due_date) {
+	private boolean deleted = false;
+
+	public Loan(long id, User user, Book book, Date initial_date, Date due_date, boolean deleted) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.book = book;
 		this.initial_date = initial_date;
 		this.due_date = due_date;
+		this.deleted = deleted;
 	}
 
 	public Loan() {
@@ -78,6 +81,14 @@ public class Loan {
 
 	public void setDue_date(Date due_date) {
 		this.due_date = due_date;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override

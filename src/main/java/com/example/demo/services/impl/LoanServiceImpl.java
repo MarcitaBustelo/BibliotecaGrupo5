@@ -31,10 +31,9 @@ public class LoanServiceImpl implements LoanService {
 
 	@Autowired
 	private BookRepository bookRepository;
-	
+
 	@Autowired
 	private ReservationService reservationService;
-	
 
 	@Override
 	public void loanBook(Long bookId, String email) {
@@ -102,36 +101,38 @@ public class LoanServiceImpl implements LoanService {
 
 	@Override
 	public void deleteLoan(Long id) {
-	    Optional<Loan> loan = loanRepository.findById(id);
-	    Book book = loan.get().getBook();
-	    
-	    if (loan.isPresent()) {
-	        
-	        book.isAvailable(true);
-	        bookRepository.save(book);
+		Optional<Loan> loan = loanRepository.findById(id);
 
-	        loanRepository.deleteById(id);
-	    } else {
-	        throw new EntityNotFoundException("Loan with id " + id + " not found");
-	    }
-	    reservationService.handleLoanRemoval(book.getId());
+		if (loan.isPresent()) {
+			Loan existingLoan = loan.get();
+			existingLoan.setDeleted(true);
+			loanRepository.save(existingLoan);
+
+			Book book = existingLoan.getBook();
+			book.isAvailable(true);
+			bookRepository.save(book);
+
+			reservationService.handleLoanRemoval(book.getId());
+		} else {
+			throw new EntityNotFoundException("Loan with id " + id + " not found");
+		}
 	}
 
 	@Override
 	public int countLoansByUser(String email) {
 		User user = userRepository.findByEmail(email);
-	    return loanRepository.countByUser(user.getEmail());
+		return loanRepository.countByUser(user.getEmail());
 
 	}
 
 	@Override
 	public List<Object[]> getLoansByMonth() {
-		  return loanRepository.findLoansByMonth();
+		return loanRepository.findLoansByMonth();
 	}
 
 	@Override
 	public List<Object[]> getLoansPerUser() {
-        return loanRepository.findLoansPerUser();
+		return loanRepository.findLoansPerUser();
 
 	}
 
