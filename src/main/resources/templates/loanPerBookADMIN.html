@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Admin Reports</title>
+	<link rel="stylesheet" th:href="@{/css/reports.css}" />
+	<div th:insert="~{fragments :: head}"></div>
+</head>
+
+<body>
+	<header>
+		<div th:replace="~{fragments :: navbar}"></div>
+	</header>
+	<div class="reports-container">
+
+		<!-- Historial de préstamos de un libro -->
+		<h2>Book Loan History</h2>
+		<form method="get" action="/report/loanHistoryByBook" style="display: flex; align-items: center; gap: 10px;">
+			<!-- Selección de libro -->
+			<div>
+				<label for="bookId">Select Book:</label>
+				<select id="bookId" name="bookId" onchange="this.form.submit()">
+					<option value="" disabled th:if="${bookId == null}" selected>Select a book</option>
+					<!-- Combobox lleno dinámicamente -->
+					<option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title}"
+						th:selected="${book.id == bookId}"></option>
+				</select>
+			</div>
+
+			<!-- Selección de usuario (aparece solo cuando hay un libro seleccionado) -->
+			<div th:if="${bookId != null}">
+				<label for="userId">Filter by User:</label>
+				<select id="userId" name="userId" onchange="this.form.submit()">
+					<option value="" disabled th:if="${userId == null}" selected>Select a user</option>
+					<!-- Usuarios relacionados con el libro -->
+					<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}"
+						th:selected="${user.id == userId}"></option>
+				</select>
+			</div>
+		</form>
+
+		<!-- Tabla de préstamos -->
+		<table border="1" th:if="${bookLoanHistory != null}">
+			<thead>
+				<tr>
+					<th>Initial date</th>
+					<th>Due date</th>
+					<th>User</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="loan : ${bookLoanHistory}">
+					<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}"></td>
+					<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}"></td>
+					<td th:text="${loan.user.email}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

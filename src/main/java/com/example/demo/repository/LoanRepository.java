@@ -18,6 +18,8 @@ public interface LoanRepository extends JpaRepository<Loan, Serializable> {
 
 	int countByUser(User user);
 
+	Book findById(int id);
+
 	Optional<Loan> findByUserAndBook(User user, Book book);
 
 	@Query("SELECT COUNT(l) FROM Loan l WHERE l.user.email = :email")
@@ -34,5 +36,12 @@ public interface LoanRepository extends JpaRepository<Loan, Serializable> {
 	List<Object[]> findMostBorrowedBooks();
 
 	List<Loan> findLoansByUserId(Long userId);
+
+	List<Loan> findByBookId(Long bookId);
+
+	@Query("SELECT DISTINCT l.user FROM Loan l WHERE l.book.id = :bookId")
+	List<User> findUsersByBookId(@Param("bookId") Long bookId);
+
+	List<Loan> findByBookIdAndUserId(Long bookId, Long userId);
 
 }

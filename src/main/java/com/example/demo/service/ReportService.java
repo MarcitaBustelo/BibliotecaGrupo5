@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Loan;
+import com.example.demo.entity.User;
 
 @Service
 public interface ReportService {
@@ -17,5 +18,13 @@ public interface ReportService {
 	long getTotalUserCount();
 
 	int countLoansByUser(String email);
+
+	long getTotalBookCount();
+
+	List<Loan> getBookLoanHistory(Long bookId);
+
+	List<Loan> getBookLoanHistoryByUser(Long bookId, Long userId);
+
+	List<User> getUsersByBookId(Long bookId);
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Book;
 import com.example.demo.entity.Loan;
 import com.example.demo.entity.User;
+import com.example.demo.repository.BookRepository;
 import com.example.demo.repository.LoanRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ReportService;
@@ -23,6 +24,9 @@ public class ReportServiceImpl implements ReportService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private BookRepository bookRepository;
 
 	public List<Map<String, Object>> getMostBorrowedBooks() {
 		List<Object[]> results = loanRepository.findMostBorrowedBooks();
@@ -58,4 +62,22 @@ public class ReportServiceImpl implements ReportService {
 		return loanRepository.findLoansByUserId(userId);
 
 	}
+
+	public List<Loan> getBookLoanHistory(Long bookId) {
+		return loanRepository.findByBookId(bookId); // Filtra préstamos por libro
+	}
+
+	public long getTotalBookCount() {
+		return bookRepository.count(); // Cuenta el total de libros registrados
+	}
+	
+	public List<Loan> getBookLoanHistoryByUser(Long bookId, Long userId) {
+	    return loanRepository.findByBookIdAndUserId(bookId, userId);
+	}
+
+	public List<User> getUsersByBookId(Long bookId) {
+	    return loanRepository.findUsersByBookId(bookId);
+	}
+
+
 }

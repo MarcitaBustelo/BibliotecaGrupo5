@@ -8,9 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Book;
 import com.example.demo.entity.Loan;
 import com.example.demo.entity.User;
+import com.example.demo.service.BookService;
 import com.example.demo.service.ReportService;
 import com.example.demo.service.UserService;
 
@@ -23,6 +26,9 @@ public class ReportController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BookService bookService;
 
 	@GetMapping("/mostBorrow")
 	public String getMostBorrow(Long userId, Model model) {
@@ -56,4 +62,36 @@ public class ReportController {
 
 		return "reportsLoanHistory";
 	}
+
+	@GetMapping("/loanHistoryByBook")
+	public String getLoanHistoryByBook(@RequestParam(value = "bookId", required = false) Long bookId,
+			@RequestParam(value = "userId", required = false) Long userId, Model model) {
+
+		// Lista de libros
+		List<Book> books = bookService.listAllBooks();
+		model.addAttribute("books", books);
+
+		// Lista de usuarios relacionados con los préstamos del libro seleccionado
+		if (bookId != null) {
+			List<User> users = reportService.getUsersByBookId(bookId); // Método para obtener usuarios
+			model.addAttribute("users", users);
+		}
+
+		// Historial de préstamos filtrado por libro y usuario
+		if (bookId != null) {
+			List<Loan> bookLoanHistory;
+			if (userId != null) {
+				bookLoanHistory = reportService.getBookLoanHistoryByUser(bookId, userId); // Filtrado por usuario
+			} else {
+				bookLoanHistory = reportService.getBookLoanHistory(bookId); // Solo por libro
+			}
+			model.addAttribute("bookLoanHistory", bookLoanHistory);
+		}
+
+		model.addAttribute("bookId", bookId);
+		model.addAttribute("userId", userId);
+
+		return "loanPerBookADMIN";
+	}
+
 }
