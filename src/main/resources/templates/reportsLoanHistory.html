@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Admin Reports</title>
-	<link rel="stylesheet" th:href="@{/css/reports.css}" />
-	<div th:insert="~{fragments :: head}"></div>
+<title>Admin Reports</title>
+<link rel="stylesheet" th:href="@{/css/reports.css}" />
+<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
@@ -12,37 +12,36 @@
 		<div th:replace="~{fragments :: navbar}"></div>
 	</header>
 	<div class="reports-container">
-		<!-- Número total de libros registrados -->
-		<p>Total Books: <span th:text="${totalBookCount}"></span></p>
+		<p>
+			Total Users: <span th:text="${totalUserCount-1}"></span>
+		</p>
 
-		<!-- Historial de préstamos de un libro -->
-		<h2>Loan History by Book</h2>
-		<form method="get" action="/loanHistoryByBook">
-			<label for="bookId">Select Book:</label>
-			<select id="bookId" name="bookId" onchange="this.form.submit()">
-				<option value="" disabled th:if="${bookId == null}" selected>Select a book</option>
-				<!-- Combobox lleno dinámicamente -->
-				<option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title}"
-					th:selected="${book.id == bookId}"></option>
-			</select>
-		</form>
-
-		<table border="1" th:if="${bookLoanHistory != null}">
-			<thead>
-				<tr>
-					<th>User</th>
-					<th>Loan Date</th>
-					<th>Return Date</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="loan : ${bookLoanHistory}">
-					<td th:text="${loan.user.email}"></td>
-					<td th:text="${#dates.format(loan.loanDate, 'yyyy-MM-dd')}"></td>
-					<td th:text="${#dates.format(loan.returnDate, 'yyyy-MM-dd')}"></td>
-				</tr>
-			</tbody>
-		</table>
+		<h2>User Loan History</h2>
+			<form method="get" action="/report/loanHistory">
+				<label for="userId">Select User:</label> <select id="userId"
+					name="userId" onchange="this.form.submit()">
+					<option value="" disabled th:if="${userId == null}" selected>Select
+						a user</option>
+					<option th:each="user : ${users}" th:value="${user.id}"
+						th:text="${user.email}" th:selected="${user.id == userId}"></option>
+				</select>
+			</form>
+			<table border="1" th:if="${userLoanHistory != null}">
+				<thead>
+					<tr>
+						<th>Book Title</th>
+						<th>Initial date</th>
+						<th>Due date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="loan : ${userLoanHistory}">
+						<td th:text="${loan.book.title}"></td>
+						<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}"></td>
+					</tr>
+				</tbody>
+			</table>
 	</div>
 </body>
 

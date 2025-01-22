@@ -42,22 +42,18 @@ public class ReportController {
 	@GetMapping("/loanHistory")
 	public String getLoanHistory(Long userId, Model model) {
 
-		// Lista de usuarios (excluyendo al administrador)
 		List<User> users = userService.getAllUsers().stream().filter(user -> !user.getRole().equals("ROLE_ADMIN"))
 				.toList();
 		model.addAttribute("users", users);
 
-		// Historial de préstamos de un usuario específico
 		if (userId != null) {
 			List<Loan> userLoanHistory = reportService.getUserLoanHistory(userId);
 			model.addAttribute("userLoanHistory", userLoanHistory);
 		}
 
-		// Número total de usuarios registrados
 		long totalUserCount = reportService.getTotalUserCount();
 		model.addAttribute("totalUserCount", totalUserCount);
 
-		// Asegurar que el usuario seleccionado se envía al modelo
 		model.addAttribute("userId", userId);
 
 		return "reportsLoanHistory";
