@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Book;
@@ -35,6 +37,9 @@ public class LoanServiceImpl implements LoanService {
 	@Autowired
 	private ReservationService reservationService;
 
+	@Autowired
+	private JavaMailSender emailSender;
+
 	@Override
 	public void loanBook(Long bookId, String email) {
 		User user = userRepository.findByEmail(email);
@@ -55,6 +60,12 @@ public class LoanServiceImpl implements LoanService {
 		loan.setDue_date(Date.valueOf(LocalDate.now().plusWeeks(2)));
 
 		book.isAvailable(false);
+
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(user.getEmail());
+		message.setSubject("You have loaned a book");
+		message.setText("You have borrowed '" + book.getTitle() + "' Hope you love it! Enjoy!");
+		emailSender.send(message);
 
 		loanRepository.save(loan);
 		bookRepository.save(book);
@@ -102,6 +113,7 @@ public class LoanServiceImpl implements LoanService {
 	@Override
 	public void deleteLoan(Long id) {
 		Optional<Loan> loan = loanRepository.findById(id);
+		User user = userRepository.findByEmail(loan.get().getUser().getEmail());
 
 		if (loan.isPresent()) {
 			Loan existingLoan = loan.get();
@@ -111,11 +123,19 @@ public class LoanServiceImpl implements LoanService {
 			Book book = existingLoan.getBook();
 			book.isAvailable(true);
 			bookRepository.save(book);
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(user.getEmail());
+			message.setSubject("You have returned a book");
+			message.setText("You have return '" + book.getTitle()
+					+ "' to the library! Start loaning more books right away! Enjoy! http://localhost:8081/books/listBooks");
+			emailSender.send(message);
 
 			reservationService.handleLoanRemoval(book.getId());
 		} else {
 			throw new EntityNotFoundException("Loan with id " + id + " not found");
 		}
+
 	}
 
 	@Override
