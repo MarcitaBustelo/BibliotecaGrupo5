@@ -23,7 +23,8 @@ public interface LoanRepository extends JpaRepository<Loan, Serializable> {
 	Optional<Loan> findByUserAndBook(User user, Book book);
 
 	@Query("SELECT COUNT(l) FROM Loan l WHERE l.user.email = :email")
-	int countByUser(@Param("email") String username);
+	int countByUser(@Param("email") String email);
+
 
 	@Query("SELECT MONTH(l.initial_date) AS month, COUNT(l) AS loanCount FROM Loan l GROUP BY MONTH(l.initial_date) ORDER BY MONTH(l.initial_date)")
 	List<Object[]> findLoansByMonth();

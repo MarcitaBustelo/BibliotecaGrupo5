@@ -64,11 +64,11 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	public List<Loan> getBookLoanHistory(Long bookId) {
-		return loanRepository.findByBookId(bookId); // Filtra préstamos por libro
+		return loanRepository.findByBookId(bookId); 
 	}
 
 	public long getTotalBookCount() {
-		return bookRepository.count(); // Cuenta el total de libros registrados
+		return bookRepository.count(); 
 	}
 	
 	public List<Loan> getBookLoanHistoryByUser(Long bookId, Long userId) {

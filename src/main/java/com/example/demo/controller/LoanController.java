@@ -62,28 +62,17 @@ public class LoanController {
 
 	@PostMapping("/loanBook/{id}")
 	public String loanBook(@RequestParam("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
-	    try {
-	        Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
-
-	        if (!book.isAvailable()) {
-	            throw new IllegalStateException("Book is not available for loan");
-	        }
-
-	        int userLoanCount = loanService.countLoansByUser(principal.getName());
-	        if (userLoanCount >= 5) {
-	            throw new IllegalStateException("You cannot loan more than 5 books at the same time");
-	        }
-
-	        loanService.loanBook(book.getId(), principal.getName());
-	        redirectAttributes.addFlashAttribute("success", "Book loaned successfully!");
-	    } catch (IllegalArgumentException | IllegalStateException e) {
-	        redirectAttributes.addFlashAttribute("error", e.getMessage());
-	    } catch (Exception e) {
-	        redirectAttributes.addFlashAttribute("error", "An unexpected error occurred. Please try again later.");
-	    }
-	    return "redirect:/books/listBooks";
+		try {
+			Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+			loanService.loanBook(book.getId(), principal.getName());
+			redirectAttributes.addFlashAttribute("success", "Book loaned successfully!");
+		} catch (IllegalArgumentException | IllegalStateException e) {
+			redirectAttributes.addFlashAttribute("error", e.getMessage());
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("error", "An unexpected error occurred. Please try again later.");
+		}
+		return "redirect:/books/listBooks";
 	}
-
 
 	@PostMapping("/return/{id}")
 	public String returnBook(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
@@ -95,7 +84,7 @@ public class LoanController {
 		}
 		return "redirect:/loan/userLoans";
 	}
-	
+
 	@GetMapping("/byMonth")
 	public String getByMonthGraphic(Model model) {
 		List<Object[]> loansByMonthData = loanService.getLoansByMonth();
@@ -116,7 +105,7 @@ public class LoanController {
 
 		return "byMonth";
 	}
-	
+
 	@GetMapping("/perUser")
 	public String getPerUserGraphic(Model model) {
 		List<Object[]> loansPerUser = loanService.getLoansPerUser();

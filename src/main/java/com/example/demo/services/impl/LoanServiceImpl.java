@@ -42,34 +42,49 @@ public class LoanServiceImpl implements LoanService {
 
 	@Override
 	public void loanBook(Long bookId, String email) {
-		User user = userRepository.findByEmail(email);
-		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+	    User user = userRepository.findByEmail(email);
+	    Book book = bookRepository.findById(bookId)
+	            .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
-		if (loanRepository.countByUser(user) >= 5) {
-			throw new IllegalArgumentException("You cannot loan more than 5 books.");
+	    List<Loan> loans = listAllLoans();
+		List<Loan> userLoans = new ArrayList<>();
+
+		for (Loan lo : loans) {
+			if (user == lo.getUser()) {
+				userLoans.add(lo);
+			}
+
 		}
+	    long activeLoansCount = userLoans.stream()
+	            .filter(loan -> !loan.isDeleted())
+	            .count();
 
-		if (!book.isAvailable()) {
-			throw new IllegalArgumentException("The book is not available.");
-		}
+	    if (activeLoansCount >= 5) {
+	        throw new IllegalArgumentException("You cannot loan more than 5 books.");
+	    }
 
-		Loan loan = new Loan();
-		loan.setUser(user);
-		loan.setBook(book);
-		loan.setInitial_date(Date.valueOf(LocalDate.now()));
-		loan.setDue_date(Date.valueOf(LocalDate.now().plusWeeks(2)));
+	    if (!book.isAvailable()) {
+	        throw new IllegalArgumentException("The book is not available.");
+	    }
 
-		book.isAvailable(false);
+	    Loan loan = new Loan();
+	    loan.setUser(user);
+	    loan.setBook(book);
+	    loan.setInitial_date(Date.valueOf(LocalDate.now()));
+	    loan.setDue_date(Date.valueOf(LocalDate.now().plusWeeks(2)));
 
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(user.getEmail());
-		message.setSubject("You have loaned a book");
-		message.setText("You have borrowed '" + book.getTitle() + "' Hope you love it! Enjoy!");
-		emailSender.send(message);
+	    book.isAvailable(false);
 
-		loanRepository.save(loan);
-		bookRepository.save(book);
+	    SimpleMailMessage message = new SimpleMailMessage();
+	    message.setTo(user.getEmail());
+	    message.setSubject("You have loaned a book");
+	    message.setText("You have borrowed '" + book.getTitle() + "' Hope you love it! Enjoy!");
+	    emailSender.send(message);
+
+	    loanRepository.save(loan);
+	    bookRepository.save(book);
 	}
+
 
 	@Override
 	public void returnBook(Long bookId, String email) {
@@ -123,7 +138,7 @@ public class LoanServiceImpl implements LoanService {
 			Book book = existingLoan.getBook();
 			book.isAvailable(true);
 			bookRepository.save(book);
-			
+
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(user.getEmail());
 			message.setSubject("You have returned a book");
