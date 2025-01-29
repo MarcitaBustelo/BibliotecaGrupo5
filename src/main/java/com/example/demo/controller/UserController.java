@@ -16,15 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
 @Controller
 public class UserController {
-
-	@Autowired
-	@Qualifier("userRepository")
-	UserRepository userRepository;
 
 	@Autowired
 	@Qualifier("userService")
@@ -34,7 +29,7 @@ public class UserController {
 	public ModelAndView getMyAccount() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
-		User user = userRepository.findByEmail(email);
+		User user = userService.findByEmail(email);
 		if (user == null) {
 			throw new RuntimeException("User not found");
 		}
@@ -49,7 +44,7 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
 
-		User user = userRepository.findByEmail(email);
+		User user = userService.findByEmail(email);
 		if (user == null) {
 			throw new RuntimeException("User not found");
 		}
@@ -62,20 +57,15 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentEmail = authentication.getName();
 
-		// Encontrar el usuario autenticado actual
-		User currentUser = userRepository.findByEmail(currentEmail);
+		User currentUser = userService.findByEmail(currentEmail);
 
-		// Actualizar los datos del usuario
 		currentUser.setName(user.getName());
 		currentUser.setLastname(user.getLastname());
-		currentUser.setEmail(user.getEmail()); // Actualiza el email
+		currentUser.setEmail(user.getEmail());
 
-		// Guardar los cambios
 		userService.edit(currentUser);
 
-		// Actualizar la sesión con el nuevo email
-		Authentication newAuth = new UsernamePasswordAuthenticationToken(currentUser.getEmail(), // Nuevo email como
-																									// principal
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(currentUser.getEmail(), //
 				authentication.getCredentials(), authentication.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(newAuth);
 
@@ -84,7 +74,7 @@ public class UserController {
 
 	@GetMapping("/changePassword")
 	public String showChangePasswordForm() {
-		return "changePassword"; // Nombre de la plantilla HTML
+		return "changePassword";
 	}
 
 	@Autowired
@@ -95,33 +85,28 @@ public class UserController {
 			@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword,
 			RedirectAttributes redirectAttributes) {
 
-		// Obtener el usuario autenticado
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getName();
-		User currentUser = userRepository.findByEmail(email);
+		User currentUser = userService.findByEmail(email);
 
-		// Verificar que la contraseña actual sea correcta
 		if (!passwordEncoder.matches(currentPassword, currentUser.getPassword())) {
 			redirectAttributes.addFlashAttribute("error", "The current password is incorrect.");
 			return "redirect:/changePassword";
 		}
 
-		// Validar que las nuevas contraseñas coincidan
 		if (!newPassword.equals(confirmPassword)) {
 			redirectAttributes.addFlashAttribute("error", "The new passwords do not match.");
 			return "redirect:/changePassword";
 		}
 
-		// Validar que la nueva contraseña sea diferente de la actual
 		if (passwordEncoder.matches(newPassword, currentUser.getPassword())) {
 			redirectAttributes.addFlashAttribute("error",
 					"The new password cannot be the same as the current password.");
 			return "redirect:/changePassword";
 		}
 
-		// Encriptar la nueva contraseña y guardarla
 		currentUser.setPassword(passwordEncoder.encode(newPassword));
-		userRepository.save(currentUser);
+		userService.edit(currentUser);
 
 		redirectAttributes.addFlashAttribute("success", "Password updated successfully.");
 		return "redirect:/myaccount";

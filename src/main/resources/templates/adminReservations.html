@@ -44,9 +44,9 @@
 			</thead>
 			<tbody>
 				<tr th:each="reservation : ${reservations}">
-					<td th:text="${reservation.Id_User.email}"></td>
-					<td th:text="${reservation.Id_Book.title}"></td>
-					<td th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}"></td>
+					<td th:text="${reservation.userEmail}"></td>
+					<td th:text="${reservation.bookTitle}"></td>
+					<td th:text="${reservation.reservationDate}"></td>
 					<td th:text="${reservation.status}"></td>
 					<td>
 						<form th:action="@{/reservation/delete/{id}(id=${reservation.id})}" method="post"

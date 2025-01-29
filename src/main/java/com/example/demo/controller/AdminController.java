@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.entity.Book;
-import com.example.demo.entity.Reservation;
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BookService;
 import com.example.demo.service.LoanService;
-import com.example.demo.service.ReportService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -31,20 +30,13 @@ import com.example.demo.service.UserService;
 public class AdminController {
 
 	private static final String USERS_VIEW = "users";
-	private static final String USERS_FORM = "userForm";
 	private static final String BOOKS_VIEW = "bookADMIN";
 
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private BookService bookService;
-
-	@Autowired
-	private ReportService reportService;
 
 	@Autowired
 	private LoanService loanService;
@@ -73,12 +65,31 @@ public class AdminController {
 
 	@GetMapping("/bookADMIN")
 	public String listBooks(@RequestParam(defaultValue = "0") int page, Model model) {
-
 		int pageSize = 5;
 		Pageable pageable = PageRequest.of(page, pageSize);
 		Page<Book> booksPage = bookService.getBooksPaginated(pageable);
 
-		model.addAttribute("books", booksPage.getContent());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
+		List<Map<String, String>> formattedBooks = new ArrayList<>();
+
+		for (Book book : booksPage.getContent()) {
+			Map<String, String> formattedBook = new HashMap<>();
+			formattedBook.put("image", book.getImage());
+			formattedBook.put("title", book.getTitle());
+			formattedBook.put("author", book.getAuthor());
+			formattedBook.put("genre", book.getGenre());
+
+			if (book.getYearPublished() != null) {
+				formattedBook.put("yearPublished", book.getYearPublished().format(formatter));
+			} else {
+				formattedBook.put("yearPublished", "none");
+			}
+
+			formattedBook.put("id", String.valueOf(book.getId()));
+			formattedBooks.add(formattedBook);
+		}
+
+		model.addAttribute("books", formattedBooks);
 		model.addAttribute("currentPage", booksPage.getNumber() + 1);
 		model.addAttribute("totalPages", booksPage.getTotalPages());
 		model.addAttribute("totalItems", booksPage.getTotalElements());
@@ -90,7 +101,7 @@ public class AdminController {
 	public String toggleActivation(@RequestParam int id) {
 		User user = userService.findById(id);
 		user.setActivated(!user.getActivated());
-		userRepository.save(user);
+		userService.edit(user);
 		return "redirect:/admin/listUsers";
 	}
 

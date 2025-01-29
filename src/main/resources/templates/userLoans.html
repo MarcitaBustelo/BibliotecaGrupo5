@@ -32,18 +32,20 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="loan : ${loans}" th:if="${!loan.deleted}">
-						<td th:text="${loan.book.title}">Book Title</td>
-						<td th:text="${loan.book.author}">Author</td>
-						<td th:text="${loan.book.genre}">Genre</td>
-						<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}">Initial
-							Date</td>
-						<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}">Due
-							Date</td>
+					<tr th:each="loan : ${loans}" th:if="${loan.deleted == 'false'}">
+						<td th:text="${loan.title}">Book Title</td>
+						<td th:text="${loan.author}">Author</td>
+						<td th:text="${loan.genre}">Genre</td>
+						<td th:text="${loan.initialDate}">Initial Date</td>
+						<td th:text="${loan.dueDate}">Due Date</td>
+
 						<td>
-							<form th:action="@{/loan/return/{id}(id=${loan.id})}" method="post">
+							<form th:action="@{/loan/return/{id}(id=${loan.id})}" method="post"
+								style="display: inline;">
 								<button type="submit" class="btn btn-danger"
-									onclick="return confirm('Are you sure you want to return this book?');">Return</button>
+									onclick="return confirm('Are you sure you want to return this book?');">
+									Return
+								</button>
 							</form>
 						</td>
 					</tr>

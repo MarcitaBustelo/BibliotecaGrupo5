@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.entity.Book;
 import com.example.demo.entity.Loan;
 import com.example.demo.entity.User;
-import com.example.demo.repository.BookRepository;
+import com.example.demo.service.BookService;
 import com.example.demo.service.LoanService;
 import com.example.demo.service.UserService;
 
@@ -33,7 +37,7 @@ public class LoanController {
 	private UserService userService;
 
 	@Autowired
-	private BookRepository bookRepository;
+	private BookService bookService;
 
 	private static final String USER_LOANS = "userLoans";
 
@@ -44,7 +48,6 @@ public class LoanController {
 
 	@GetMapping("/userLoans")
 	public String userLoans(Principal principal, Model model) {
-
 		User usu = new User();
 
 		for (User u : userService.getAllUsers()) {
@@ -55,7 +58,37 @@ public class LoanController {
 
 		List<Loan> loans = loanService.findLoansByUser(usu);
 
-		model.addAttribute("loans", loans);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
+
+		List<Map<String, String>> formattedLoans = new ArrayList<>();
+
+		for (Loan loan : loans) {
+			Map<String, String> formattedLoan = new HashMap<>();
+			formattedLoan.put("id", String.valueOf(loan.getId()));
+			formattedLoan.put("title", loan.getBook().getTitle());
+			formattedLoan.put("author", loan.getBook().getAuthor());
+			formattedLoan.put("genre", loan.getBook().getGenre());
+
+			if (loan.getInitial_date() != null) {
+				LocalDate initialDate = loan.getInitial_date().toLocalDate();
+				formattedLoan.put("initialDate", initialDate.format(formatter));
+			} else {
+				formattedLoan.put("initialDate", "None");
+			}
+
+			if (loan.getDue_date() != null) {
+				LocalDate dueDate = loan.getDue_date().toLocalDate();
+				formattedLoan.put("dueDate", dueDate.format(formatter));
+			} else {
+				formattedLoan.put("dueDate", "None");
+			}
+
+			formattedLoan.put("deleted", String.valueOf(loan.isDeleted()));
+
+			formattedLoans.add(formattedLoan);
+		}
+
+		model.addAttribute("loans", formattedLoans);
 
 		return USER_LOANS;
 	}
@@ -63,12 +96,13 @@ public class LoanController {
 	@PostMapping("/loanBook/{id}")
 	public String loanBook(@RequestParam("id") Long id, Principal principal, RedirectAttributes redirectAttributes) {
 		try {
-			Book book = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+			Book book = bookService.findById(id);
 			loanService.loanBook(book.getId(), principal.getName());
 			redirectAttributes.addFlashAttribute("success", "Book loaned successfully!");
 		} catch (IllegalArgumentException | IllegalStateException e) {
 			redirectAttributes.addFlashAttribute("error", e.getMessage());
 		} catch (Exception e) {
+			e.printStackTrace();
 			redirectAttributes.addFlashAttribute("error", "An unexpected error occurred. Please try again later.");
 		}
 		return "redirect:/books/listBooks";

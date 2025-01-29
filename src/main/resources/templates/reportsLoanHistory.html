@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Admin Reports</title>
-<link rel="stylesheet" th:href="@{/css/reports.css}" />
-<div th:insert="~{fragments :: head}"></div>
+	<title>Admin Reports</title>
+	<link rel="stylesheet" th:href="@{/css/reports.css}" />
+	<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
@@ -17,31 +17,30 @@
 		</p>
 
 		<h2>User Loan History</h2>
-			<form method="get" action="/report/loanHistory">
-				<label for="userId">Select User:</label> <select id="userId"
-					name="userId" onchange="this.form.submit()">
-					<option value="" disabled th:if="${userId == null}" selected>Select
-						a user</option>
-					<option th:each="user : ${users}" th:value="${user.id}"
-						th:text="${user.email}" th:selected="${user.id == userId}"></option>
-				</select>
-			</form>
-			<table border="1" th:if="${userLoanHistory != null}">
-				<thead>
-					<tr>
-						<th>Book Title</th>
-						<th>Initial date</th>
-						<th>Due date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="loan : ${userLoanHistory}">
-						<td th:text="${loan.book.title}"></td>
-						<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}"></td>
-						<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}"></td>
-					</tr>
-				</tbody>
-			</table>
+		<form method="get" action="/report/loanHistory">
+			<label for="userId">Select User:</label> <select id="userId" name="userId" onchange="this.form.submit()">
+				<option value="" disabled th:if="${userId == null}" selected>Select
+					a user</option>
+				<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}"
+					th:selected="${user.id == userId}"></option>
+			</select>
+		</form>
+		<table border="1" th:if="${userLoanHistory != null}">
+			<thead>
+				<tr>
+					<th>Book Title</th>
+					<th>Initial date</th>
+					<th>Due date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="loan : ${userLoanHistory}">
+					<td th:text="${loan.title}"></td>
+					<td th:text="${loan.initialDate}"></td>
+					<td th:text="${loan.dueDate}"></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 

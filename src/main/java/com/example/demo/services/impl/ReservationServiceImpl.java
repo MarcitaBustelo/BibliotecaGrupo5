@@ -17,7 +17,6 @@ import com.example.demo.repository.BookRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ReservationService;
-import com.example.demo.service.UserService;
 
 @Service("reservationService")
 public class ReservationServiceImpl implements ReservationService {
@@ -30,9 +29,6 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	private BookRepository bookRepository;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private JavaMailSender emailSender;
@@ -92,7 +88,6 @@ public class ReservationServiceImpl implements ReservationService {
 		reservationRepository.deleteById(id);
 	}
 
-	// Enviar correo de confirmación
 	public void sendEmail(Long bookId, String email) {
 		User user = userRepository.findByEmail(email);
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));

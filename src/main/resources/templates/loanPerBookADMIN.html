@@ -51,9 +51,9 @@
 			</thead>
 			<tbody>
 				<tr th:each="loan : ${bookLoanHistory}">
-					<td th:text="${#dates.format(loan.initial_date, 'yyyy-MM-dd')}"></td>
-					<td th:text="${#dates.format(loan.due_date, 'yyyy-MM-dd')}"></td>
-					<td th:text="${loan.user.email}"></td>
+					<td th:text="${loan.initialDate}"></td>
+					<td th:text="${loan.dueDate}"></td>
+					<td th:text="${loan.userEmail}"></td>
 				</tr>
 			</tbody>
 		</table>

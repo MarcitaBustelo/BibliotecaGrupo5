@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>User Reservations</title>
-<div th:insert="~{fragments :: head}"></div>
+	<title>User Reservations</title>
+	<div th:insert="~{fragments :: head}"></div>
 </head>
 
 <body>
@@ -16,8 +16,7 @@
 		<h3>My reservations</h3>
 		<br>
 
-		<div class="alert alert-success" th:if="${success}"
-			th:text="${success}"></div>
+		<div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
 		<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
 
 		<div class="table-responsive">
@@ -34,18 +33,16 @@
 				</thead>
 				<tbody>
 					<tr th:each="reservation : ${reservations}">
-						<td th:text="${reservation.getId_Book().title}">Book Title</td>
-						<td th:text="${reservation.getId_Book().author}">Author</td>
-						<td th:text="${reservation.getId_Book().genre}">Genre</td>
-						<td
-							th:text="${#dates.format(reservation.reservation, 'yyyy-MM-dd')}">Reservation
+						<td th:text="${reservation.title}">Book Title</td>
+						<td th:text="${reservation.author}">Author</td>
+						<td th:text="${reservation.genre}">Genre</td>
+						<td th:text="${reservation.date}">Reservation
 							Date</td>
 						<td th:text="${reservation.status}"></td>
 
 						<td>
-							<form
-								th:action="@{/reservation/cancel/{id}(id=${reservation.id})}"
-								method="post" style="display: inline;">
+							<form th:action="@{/reservation/cancel/{id}(id=${reservation.id})}" method="post"
+								style="display: inline;">
 								<button type="submit" class="btn btn-danger"
 									onclick="return confirm('Are you sure you want to cancel this reservation?');">Cancel</button>
 							</form>

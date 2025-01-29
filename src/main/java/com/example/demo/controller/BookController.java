@@ -3,7 +3,10 @@ package com.example.demo.controller;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -61,7 +64,29 @@ public class BookController {
 			booksPage = bookService.getBooksPaginated(pageable);
 		}
 
-		mav.addObject("books", booksPage.getContent());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
+		List<Map<String, String>> formattedBooks = new ArrayList<>();
+
+		for (Book book : booksPage.getContent()) {
+			Map<String, String> formattedBook = new HashMap<>();
+			formattedBook.put("image", book.getImage());
+			formattedBook.put("title", book.getTitle());
+			formattedBook.put("author", book.getAuthor());
+			formattedBook.put("genre", book.getGenre());
+
+			if (book.getYearPublished() != null) {
+				formattedBook.put("yearPublished", book.getYearPublished().format(formatter));
+			} else {
+				formattedBook.put("yearPublished", "none");
+			}
+
+			formattedBook.put("isAvailable", book.isAvailable() ? "true" : "false");
+
+			formattedBook.put("id", String.valueOf(book.getId()));
+			formattedBooks.add(formattedBook);
+		}
+
+		mav.addObject("books", formattedBooks);
 		mav.addObject("currentPage", page + 1);
 		mav.addObject("totalPages", booksPage.getTotalPages());
 		mav.addObject("totalItems", booksPage.getTotalElements());
@@ -168,10 +193,10 @@ public class BookController {
 
 		return "redirect:/admin/bookADMIN";
 	}
-	
+
 	@GetMapping("/byCategory")
 	public String getByCategoryGraphic(Model model) {
-		
+
 		List<Object[]> booksByCategoryData = bookService.getBooksByCategory();
 
 		model.addAttribute("booksByCategory", booksByCategoryData);

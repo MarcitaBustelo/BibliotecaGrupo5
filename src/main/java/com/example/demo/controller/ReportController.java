@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +36,6 @@ public class ReportController {
 
 	@GetMapping("/mostBorrow")
 	public String getMostBorrow(Long userId, Model model) {
-		// Lista de libros más prestados
 		List<Map<String, Object>> mostBorrowedBooks = reportService.getMostBorrowedBooks();
 		model.addAttribute("mostBorrowedBooks", mostBorrowedBooks);
 
@@ -41,14 +44,25 @@ public class ReportController {
 
 	@GetMapping("/loanHistory")
 	public String getLoanHistory(Long userId, Model model) {
-
 		List<User> users = userService.getAllUsers().stream().filter(user -> !user.getRole().equals("ROLE_ADMIN"))
 				.toList();
 		model.addAttribute("users", users);
 
 		if (userId != null) {
 			List<Loan> userLoanHistory = reportService.getUserLoanHistory(userId);
-			model.addAttribute("userLoanHistory", userLoanHistory);
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
+			List<Map<String, String>> formattedLoanHistory = new ArrayList<>();
+
+			for (Loan loan : userLoanHistory) {
+				Map<String, String> formattedLoan = new HashMap<>();
+				formattedLoan.put("title", loan.getBook().getTitle());
+				formattedLoan.put("initialDate", sdf.format(loan.getInitial_date()));
+				formattedLoan.put("dueDate", sdf.format(loan.getDue_date()));
+				formattedLoanHistory.add(formattedLoan);
+			}
+
+			model.addAttribute("userLoanHistory", formattedLoanHistory);
 		}
 
 		long totalUserCount = reportService.getTotalUserCount();
@@ -63,25 +77,34 @@ public class ReportController {
 	public String getLoanHistoryByBook(@RequestParam(value = "bookId", required = false) Long bookId,
 			@RequestParam(value = "userId", required = false) Long userId, Model model) {
 
-		// Lista de libros
 		List<Book> books = bookService.listAllBooks();
 		model.addAttribute("books", books);
 
-		// Lista de usuarios relacionados con los préstamos del libro seleccionado
 		if (bookId != null) {
-			List<User> users = reportService.getUsersByBookId(bookId); // Método para obtener usuarios
+			List<User> users = reportService.getUsersByBookId(bookId);
 			model.addAttribute("users", users);
 		}
 
-		// Historial de préstamos filtrado por libro y usuario
 		if (bookId != null) {
 			List<Loan> bookLoanHistory;
 			if (userId != null) {
-				bookLoanHistory = reportService.getBookLoanHistoryByUser(bookId, userId); // Filtrado por usuario
+				bookLoanHistory = reportService.getBookLoanHistoryByUser(bookId, userId);
 			} else {
-				bookLoanHistory = reportService.getBookLoanHistory(bookId); // Solo por libro
+				bookLoanHistory = reportService.getBookLoanHistory(bookId);
 			}
-			model.addAttribute("bookLoanHistory", bookLoanHistory);
+
+			SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
+			List<Map<String, String>> formattedBookLoanHistory = new ArrayList<>();
+
+			for (Loan loan : bookLoanHistory) {
+				Map<String, String> formattedLoan = new HashMap<>();
+				formattedLoan.put("initialDate", sdf.format(loan.getInitial_date()));
+				formattedLoan.put("dueDate", sdf.format(loan.getDue_date()));
+				formattedLoan.put("userEmail", loan.getUser().getEmail());
+				formattedBookLoanHistory.add(formattedLoan);
+			}
+
+			model.addAttribute("bookLoanHistory", formattedBookLoanHistory);
 		}
 
 		model.addAttribute("bookId", bookId);
