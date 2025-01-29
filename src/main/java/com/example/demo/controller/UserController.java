@@ -107,7 +107,7 @@ public class UserController {
 
 		currentUser.setPassword(passwordEncoder.encode(newPassword));
 		userService.edit(currentUser);
-
+//comiteo
 		redirectAttributes.addFlashAttribute("success", "Password updated successfully.");
 		return "redirect:/myaccount";
 	}
