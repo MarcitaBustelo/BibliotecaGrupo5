@@ -23,7 +23,7 @@ RUN java -version
 WORKDIR /app
 
 # Copiar el JAR generado desde la etapa de compilación
-COPY --from=builder /app/target/BibliotecaGrupo5-0.0.1-SNAPSHOT.jar /app.jar
+COPY --from=builder /app/target/BibliotecaGrupo5-0.0.1-SNAPSHOT.jar /app/app.jar
 
 # Exponer el puerto 8081
 EXPOSE 8081
