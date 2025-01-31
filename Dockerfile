@@ -32,4 +32,5 @@ EXPOSE 8081
 RUN ls -l /app
 
 # Ejecutar la aplicación
-CMD ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "app.jar"]
+
