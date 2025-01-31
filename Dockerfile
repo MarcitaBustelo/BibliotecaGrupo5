@@ -9,4 +9,4 @@ WORKDIR /app
 COPY --from=builder /app/target/BibliotecaGrupo5-0.0.1-SNAPSHOT.jar /app/app.jar
 EXPOSE 8081
 RUN ls -l /app
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "/app/app.jar"]
