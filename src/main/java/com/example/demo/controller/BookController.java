@@ -49,10 +49,6 @@ public class BookController {
 		int pageSize = 3;
 		Pageable pageable = PageRequest.of(page, pageSize);
 
-		if (!filter.equals("all") && search != null && !search.isEmpty()) {
-			search = "";
-		}
-
 		Page<Book> booksPage;
 		if (!search.isEmpty()) {
 			booksPage = bookService.searchBooksByTitle(search, pageable);
