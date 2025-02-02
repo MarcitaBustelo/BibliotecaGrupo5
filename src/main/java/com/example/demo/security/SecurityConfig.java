@@ -23,7 +23,7 @@ public class SecurityConfig {
 				(requests) -> requests.requestMatchers("/", "/books/**", "/register/**", "/about/**", "/photos/**")
 						.permitAll().requestMatchers("/users", "/admin/**", "/report/**").hasRole("ADMIN")
 						.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**",
-								"/webjars/**", "/photos/**")
+								"/webjars/**")
 						.permitAll().anyRequest().authenticated())
 				.formLogin((form) -> form.loginPage("/login").usernameParameter("email")
 						.failureHandler(customAuthenticationFailureHandler())
