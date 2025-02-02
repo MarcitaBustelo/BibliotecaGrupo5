@@ -20,31 +20,27 @@
 
 
 	<script th:inline="javascript">
-    var loansPerUser = /*[[${loansPerUser}]]*/ [];
+		var loansPerUser = /*[[${loansPerUser}]]*/[];
 
-    console.log(loansPerUser); 
+		var ctx2 = document.getElementById('loansPerUserChart')
+				.getContext('2d');
+		var loansPerUserChart = new Chart(ctx2, {
+			type : 'pie',
+			data : {
+				labels : loansPerUser.map(function(item) {
+					return item[0];
+				}),
+				datasets : [ {
+					label : 'Loans per User',
+					data : loansPerUser.map(function(item) {
+						return item[1];
+					}),
+					backgroundColor : [ '#FF5733', '#33FF57', '#3357FF' ]
+				} ]
+			}
+		});
 
-    var formattedData = loansPerUser.map(function(item) {
-        return {
-            label: item[0].name || item[0] || "Unknown",
-            value: item[1] || 0
-        };
-    });
-
-    var ctx2 = document.getElementById('loansPerUserChart').getContext('2d');
-    var loansPerUserChart = new Chart(ctx2, {
-        type: 'pie',
-        data: {
-            labels: formattedData.map(item => item.label),
-            datasets: [{
-                label: 'Loans per User',
-                data: formattedData.map(item => item.value),
-                backgroundColor: ['#FF5733', '#33FF57', '#3357FF']
-            }]
-        }
-    });
-</script>
-
+	</script>
 
 </body>
 
