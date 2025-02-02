@@ -28,6 +28,7 @@ public interface LoanRepository extends JpaRepository<Loan, Serializable> {
 	@Query("SELECT MONTH(l.initial_date) AS month, COUNT(l) AS loanCount FROM Loan l GROUP BY MONTH(l.initial_date) ORDER BY MONTH(l.initial_date)")
 	List<Object[]> findLoansByMonth();
 
+	
 	@Query("SELECT l.user, COUNT(l) FROM Loan l GROUP BY l.user")
 	List<Object[]> findLoansPerUser();
 
