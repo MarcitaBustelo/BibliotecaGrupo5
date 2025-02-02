@@ -13,10 +13,8 @@
 	</header>
 	<div class="reports-container">
 
-		<!-- Historial de préstamos de un libro -->
 		<h2>Book Loan History</h2>
 		<form method="get" action="/report/loanHistoryByBook" style="display: flex; align-items: center; gap: 10px;">
-			<!-- Selección de libro -->
 			<div>
 				<label for="bookId">Select Book:</label>
 				<select id="bookId" name="bookId" onchange="this.form.submit()">
@@ -27,23 +25,19 @@
 				</select>
 			</div>
 
-			<!-- Selección de usuario (solo aparece si hay préstamos del libro) -->
 			<div th:if="${bookId != null and bookLoanHistory != null and not #lists.isEmpty(bookLoanHistory)}">
 				<label for="userId">Filter by User:</label>
 				<select id="userId" name="userId" onchange="this.form.submit()">
 					<option value="" disabled th:if="${userId == null}" selected>Select a user</option>
-					<!-- Usuarios relacionados con el libro -->
 					<option th:each="user : ${users}" th:value="${user.id}" th:text="${user.email}"
 						th:selected="${user.id == userId}"></option>
 				</select>
 			</div>
 		</form>
 
-		<!-- Mensaje si el libro no tiene préstamos -->
 		<p th:if="${bookId != null and (bookLoanHistory == null or #lists.isEmpty(bookLoanHistory))}">This book has not
 			been loaned.</p>
 
-		<!-- Tabla de préstamos -->
 		<table border="1" th:if="${bookLoanHistory != null and not #lists.isEmpty(bookLoanHistory)}">
 			<thead>
 				<tr>
