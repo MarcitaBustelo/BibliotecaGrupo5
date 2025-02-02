@@ -32,7 +32,6 @@ public interface LoanRepository extends JpaRepository<Loan, Serializable> {
 	@Query("SELECT l.user, COUNT(l) FROM Loan l GROUP BY l.user")
 	List<Object[]> findLoansPerUser();
 
-	
 	@Query("SELECT l.book, COUNT(l) AS borrowCount " + "FROM Loan l " + "GROUP BY l.book "
 			+ "ORDER BY borrowCount DESC")
 	List<Object[]> findMostBorrowedBooks();
