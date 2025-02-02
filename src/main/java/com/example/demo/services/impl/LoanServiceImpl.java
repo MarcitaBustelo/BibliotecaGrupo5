@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -43,10 +42,11 @@ public class LoanServiceImpl implements LoanService {
 
 	@Override
 	public void loanBook(Long bookId, String email) {
-		User user = userRepository.findByEmail(email);
-		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+	    User user = userRepository.findByEmail(email);
+	    Book book = bookRepository.findById(bookId)
+	            .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
-		List<Loan> loans = listAllLoans();
+	    List<Loan> loans = listAllLoans();
 		List<Loan> userLoans = new ArrayList<>();
 
 		for (Loan lo : loans) {
@@ -55,33 +55,36 @@ public class LoanServiceImpl implements LoanService {
 			}
 
 		}
-		long activeLoansCount = userLoans.stream().filter(loan -> !loan.isDeleted()).count();
+	    long activeLoansCount = userLoans.stream()
+	            .filter(loan -> !loan.isDeleted())
+	            .count();
 
-		if (activeLoansCount >= 5) {
-			throw new IllegalArgumentException("You cannot loan more than 5 books.");
-		}
+	    if (activeLoansCount >= 5) {
+	        throw new IllegalArgumentException("You cannot loan more than 5 books.");
+	    }
 
-		if (!book.isAvailable()) {
-			throw new IllegalArgumentException("The book is not available.");
-		}
+	    if (!book.isAvailable()) {
+	        throw new IllegalArgumentException("The book is not available.");
+	    }
 
-		Loan loan = new Loan();
-		loan.setUser(user);
-		loan.setBook(book);
-		loan.setInitial_date(Date.valueOf(LocalDate.now()));
-		loan.setDue_date(Date.valueOf(LocalDate.now().plusWeeks(2)));
+	    Loan loan = new Loan();
+	    loan.setUser(user);
+	    loan.setBook(book);
+	    loan.setInitial_date(Date.valueOf(LocalDate.now()));
+	    loan.setDue_date(Date.valueOf(LocalDate.now().plusWeeks(2)));
 
-		book.isAvailable(false);
+	    book.isAvailable(false);
 
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(user.getEmail());
-		message.setSubject("You have loaned a book");
-		message.setText("You have borrowed '" + book.getTitle() + "' Hope you love it! Enjoy!");
-		emailSender.send(message);
+	    SimpleMailMessage message = new SimpleMailMessage();
+	    message.setTo(user.getEmail());
+	    message.setSubject("You have loaned a book");
+	    message.setText("You have borrowed '" + book.getTitle() + "' Hope you love it! Enjoy!");
+	    emailSender.send(message);
 
-		loanRepository.save(loan);
-		bookRepository.save(book);
+	    loanRepository.save(loan);
+	    bookRepository.save(book);
 	}
+
 
 	@Override
 	public void returnBook(Long bookId, String email) {
@@ -164,8 +167,7 @@ public class LoanServiceImpl implements LoanService {
 
 	@Override
 	public List<Object[]> getLoansPerUser() {
-		return loanRepository.findLoansPerUser().stream().map(obj -> new Object[] { ((User) obj[0]).getName(), obj[1] })
-				.collect(Collectors.toList());
+		return loanRepository.findLoansPerUser();
 
 	}
 
