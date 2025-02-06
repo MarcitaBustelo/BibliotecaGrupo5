@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,8 @@ import com.example.demo.service.BookService;
 @Service("bookService")
 public class BookServiceImpl implements BookService {
 
-	@Autowired
+	
+	
 	@Qualifier("bookRepository")
 	private BookRepository bookRepository;
 	

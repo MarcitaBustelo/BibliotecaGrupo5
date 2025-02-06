@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,5 +31,10 @@ public class UserServiceImpl implements UserService {
 	    return false;
 	}
 
+
+	@Override
+	public List<User> getAllUsers() {
+		return userRepository.findAll().stream().collect(Collectors.toList());
+	}
 
 }
