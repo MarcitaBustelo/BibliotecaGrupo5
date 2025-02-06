@@ -19,16 +19,21 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(
-				(requests) -> requests.requestMatchers("/", "/books/**", "/register/**", "/about/**", "/photos/**")
-						.permitAll().requestMatchers("/users", "/admin/**", "/report/**").hasRole("ADMIN")
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/", "/books/**", "/register/**", "/about/**", "/photos/**").permitAll()
+						.requestMatchers("/api/users/").permitAll().requestMatchers("/api/books/available").permitAll()
+						.requestMatchers("/api/users/").hasRole("ADMIN").requestMatchers("/api/users/**")
+						.hasRole("ADMIN").requestMatchers("/api/loans/**").hasRole("USER")
+						.requestMatchers("/users", "/admin/**", "/report/**").hasRole("ADMIN")
 						.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/fonts/**",
 								"/webjars/**")
 						.permitAll().anyRequest().authenticated())
-				.formLogin((form) -> form.loginPage("/login").usernameParameter("email")
-						.failureHandler(customAuthenticationFailureHandler())
-						.defaultSuccessUrl("/login?success=Login successful!", true).permitAll())
-				.logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll());
+				.httpBasic().and()
+				.formLogin(form -> form.loginPage("/login").usernameParameter("email")
+						.failureHandler(customAuthenticationFailureHandler()).defaultSuccessUrl("/dashboard", true)
+						.permitAll())
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll());
 
 		return http.build();
 	}
@@ -55,5 +60,4 @@ public class SecurityConfig {
 			response.sendRedirect("/login");
 		};
 	}
-
 }
