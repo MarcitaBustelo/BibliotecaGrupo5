@@ -6,8 +6,12 @@ import com.example.demo.entity.User;
 
 public interface UserService {
 
-	boolean setUserActivation(Long id, boolean status);
-	List<User> getAllUsers();
+	User findByEmail(String email);
 
+	User registerUser(String name, String lastname, String email, String password);
+
+	boolean setUserActivation(Long id, boolean status);
+
+	List<User> getAllUsers();
 
 }
