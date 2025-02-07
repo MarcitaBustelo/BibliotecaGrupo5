@@ -8,7 +8,7 @@ public interface UserService {
 
 	User findByEmail(String email);
 
-	User registerUser(String name, String lastname, String email, String password);
+	User registerUser(String name, String lastname, String email, String password, String role, boolean activated);
 
 	boolean setUserActivation(Long id, boolean status);
 

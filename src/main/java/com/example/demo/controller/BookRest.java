@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Book;
+import com.example.demo.entity.User;
 import com.example.demo.service.BookService;
 
 @RestController
@@ -17,6 +18,11 @@ public class BookRest {
 
 	@Autowired
 	private BookService bookService;
+
+	@GetMapping("/")
+	public List<Book> getBook() {
+		return bookService.listAllBooks();
+	}
 
 	@GetMapping("/available")
 	public ResponseEntity<List<Book>> getAvailableBooks() {

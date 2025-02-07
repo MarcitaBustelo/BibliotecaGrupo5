@@ -24,23 +24,27 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public User registerUser(String name, String lastname, String email, String password) {
-	    User existingUser = userRepository.findByEmail(email);
-	    
-	    if (existingUser != null) {
-	        throw new RuntimeException("Email already in use");
-	    }
+	public User registerUser(String name, String lastname, String email, String password, String role,
+			boolean activated) {
 
-	    User user = new User();
-	    user.setName(name);
-	    user.setLastname(lastname);
-	    user.setEmail(email);
-	    user.setPassword(passwordEncoder.encode(password));
-	    user.setActivated(true);
+		User existingUser = userRepository.findByEmail(email);
 
-	    return userRepository.save(user);
+		if (existingUser != null) {
+			throw new RuntimeException("Email already in use");
+		}
+
+		User user = new User();
+		user.setName(name);
+		user.setLastname(lastname);
+		user.setEmail(email);
+		user.setPassword(passwordEncoder.encode(password)); // Asegurar que se encripta
+		user.setRole(role); // Asignar el rol correctamente
+		user.setActivated(activated); // Asignar false correctamente
+
+		System.out.println("Saving user: " + user); // Debugging
+
+		return userRepository.save(user);
 	}
-
 
 	public boolean setUserActivation(Long id, boolean activate) {
 		Optional<User> userOpt = userRepository.findById(id);

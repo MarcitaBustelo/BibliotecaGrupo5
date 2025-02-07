@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,34 +21,43 @@ import com.example.demo.service.UserService;
 @RequestMapping("/api/users")
 public class RestUser {
 
-    @Autowired
-    private UserService userService;
-    
-    @GetMapping("/")
+	@Autowired
+	private UserService userService;
+
+	@GetMapping("/")
 	public List<User> getUsers() {
 		return userService.getAllUsers();
 	}
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/{id}/activate")
-    public ResponseEntity<String> activateUser(@PathVariable Long id) {
-        if (userService.setUserActivation(id, true)) {
-            return ResponseEntity.ok("User activated successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-    }
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping("/{id}/activate")
+	public ResponseEntity<Map<String, Object>> activateUser(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/{id}/deactivate")
-    public ResponseEntity<String> deactivateUser(@PathVariable Long id) {
-        if (userService.setUserActivation(id, false)) {
-            return ResponseEntity.ok("User deactivated successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-    }
+		if (userService.setUserActivation(id, true)) {
+			response.put("success", true);
+			response.put("message", "User with ID " + id + " has been activated successfully.");
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "User with ID " + id + " not found.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+	}
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping("/{id}/deactivate")
+	public ResponseEntity<Map<String, Object>> deactivateUser(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+
+		if (userService.setUserActivation(id, false)) {
+			response.put("success", true);
+			response.put("message", "User with ID " + id + " has been deactivated successfully.");
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "User with ID " + id + " not found.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+	}
 }
-
-
-
