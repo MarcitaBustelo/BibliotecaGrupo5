@@ -2,6 +2,7 @@ package com.example.demo.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,8 @@ public class BookServiceImpl implements BookService {
     
 	@Override
 	public List<Book> listAllBooks() {
-		List<Book> libros = new ArrayList<Book>();
-		for (Book libro : bookRepository.findAll())
-			libros.add(libro);
-		return libros;
+		return bookRepository.findAll().stream().collect(Collectors.toList());
+
 
 	}
 
