@@ -21,15 +21,17 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll() // 🔹 Permite login y
 																								// registro sin
 																								// autenticación
-						.requestMatchers("/api/users/**", "/api/books/**").permitAll() // 🔹 Permite acceso público a
-																						// usuarios
+						.requestMatchers("/api/users/**", "/api/books/**", "/api/loans/**").permitAll() // 🔹 Permite
+																										// acceso
+																										// público a
+						// usuarios
 						.anyRequest().authenticated()) // 🔹 Protege el resto de las rutas
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.exceptionHandling(exception -> exception
 						.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))) // 🔹 No redirige
 																										// a login
-				.formLogin(form -> form.disable()) // 🔥 Desactiva formularios de login completamente
-				.httpBasic().disable(); // 🔥 Desactiva autenticación básica
+				.formLogin(form -> form.disable()) // Desactiva formularios de login completamente
+				.httpBasic().disable(); // Desactiva autenticación básica
 
 		return http.build();
 	}
