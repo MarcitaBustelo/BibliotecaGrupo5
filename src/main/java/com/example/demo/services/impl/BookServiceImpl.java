@@ -26,7 +26,6 @@ public class BookServiceImpl implements BookService {
 	public List<Book> listAllBooks() {
 		return bookRepository.findAll().stream().collect(Collectors.toList());
 
-
 	}
 
 	@Override

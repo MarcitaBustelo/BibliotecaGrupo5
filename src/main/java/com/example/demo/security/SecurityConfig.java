@@ -18,20 +18,13 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()) // 🔹 Desactiva CSRF (para APIs REST)
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll() // 🔹 Permite login y
-																								// registro sin
-																								// autenticación
-						.requestMatchers("/api/users/**", "/api/books/**", "/api/loans/**").permitAll() // 🔹 Permite
-																										// acceso
-																										// público a
-						// usuarios
-						.anyRequest().authenticated()) // 🔹 Protege el resto de las rutas
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
+						.requestMatchers("/api/users/**", "/api/books/**", "/api/loans/**").permitAll().anyRequest()
+						.authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.exceptionHandling(exception -> exception
-						.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))) // 🔹 No redirige
-																										// a login
-				.formLogin(form -> form.disable()) // Desactiva formularios de login completamente
-				.httpBasic().disable(); // Desactiva autenticación básica
+						.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+				.formLogin(form -> form.disable()).httpBasic().disable();
 
 		return http.build();
 	}

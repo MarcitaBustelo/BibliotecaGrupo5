@@ -26,29 +26,15 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> request) {
-		String email = request.get("email");
-		String password = request.get("password");
-		String name = request.get("name");
-		String lastname = request.get("lastname");
-
-		// 🔹 Asegurar valores predeterminados sin pasarlos en el body
-		String role = "ROLE_USER";
-		boolean activated = false;
-
-		// 🔹 Validación de campos vacíos
-		if (email == null || password == null || name == null || lastname == null) {
-			return ResponseEntity.badRequest().body(Map.of("success", false, "error", "Missing fields"));
-		}
-
+	public ResponseEntity<Map<String, Object>> register(@RequestBody User user) {
 		try {
+			user.setRole("ROLE_USER");
+			user.setActivated(false); 
 
-			User user = userService.registerUser(name, lastname, email, password, role, activated);
-
+			userService.registerUser(user);
 			return ResponseEntity
 					.ok(Map.of("success", true, "message", "User registered successfully", "email", user.getEmail()));
-		} catch (Exception e) {
-			System.out.println("Error registering user: " + e.getMessage()); // Debugging
+		} catch (RuntimeException e) {
 			return ResponseEntity.badRequest().body(Map.of("success", false, "error", e.getMessage()));
 		}
 	}
