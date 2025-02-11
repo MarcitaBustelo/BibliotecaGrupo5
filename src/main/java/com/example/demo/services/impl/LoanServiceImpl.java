@@ -17,6 +17,8 @@ import com.example.demo.repository.LoanRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.LoanService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class LoanServiceImpl implements LoanService {
 
@@ -56,19 +58,19 @@ public class LoanServiceImpl implements LoanService {
 		bookRepository.save(book);
 	}
 
-	@Override
-	public void returnBook(Long bookId, String email) {
-		User user = userRepository.findByEmail(email);
-		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
-
-		Loan loan = loanRepository.findByUserAndBook(user, book)
-				.orElseThrow(() -> new IllegalArgumentException("Loan not found"));
-
-		book.isAvailable(false);
-
-		loanRepository.delete(loan);
-		bookRepository.save(book);
-	}
+//	@Override
+//	public void returnBook(Long bookId, String email) {
+//		User user = userRepository.findByEmail(email);
+//		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+//
+//		Loan loan = loanRepository.findByUserAndBook(user, book)
+//				.orElseThrow(() -> new IllegalArgumentException("Loan not found"));
+//
+//		book.isAvailable(true);
+//
+//		loanRepository.delete(loan);
+//		bookRepository.save(book);
+//	}
 
 	@Override
 	public List<Loan> findLoansByUser(User user) {
@@ -91,6 +93,30 @@ public class LoanServiceImpl implements LoanService {
 		for (Loan loan : loanRepository.findAll())
 			loans.add(loan);
 		return loans;
+	}
+
+	@Override
+	public void deleteLoan(Long id) {
+		Optional<Loan> loan = loanRepository.findById(id);
+
+		if (loan.isPresent()) {
+			Loan existingLoan = loan.get();
+			existingLoan.setDeleted(true);
+			loanRepository.save(existingLoan);
+
+			Book book = existingLoan.getBook();
+			book.isAvailable(true);
+			bookRepository.save(book);
+
+		} else {
+			throw new EntityNotFoundException("Loan with id " + id + " not found");
+		}
+
+	}
+
+	@Override
+	public Optional<Loan> findById(Long id) {
+		return loanRepository.findById(id);
 	}
 
 }

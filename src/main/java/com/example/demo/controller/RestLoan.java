@@ -1,48 +1,89 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.entity.Book;
+import com.example.demo.entity.Loan;
+import com.example.demo.entity.User;
 import com.example.demo.service.LoanService;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/loans")
 public class RestLoan {
 
-    @Autowired
-    private LoanService loanService;
+	@Autowired
+	private LoanService loanService;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/loan/{bookId}")
-    public ResponseEntity<String> loanBook(@PathVariable Long bookId, @RequestParam String email) {
-        try {
-            loanService.loanBook(bookId, email);
-            return ResponseEntity.ok("Book loaned successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());  // Devolver error específico
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
-        }
-    }
-    
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PostMapping("/return/{bookId}")
-    public ResponseEntity<String> returnBook(@PathVariable Long bookId, @RequestParam String email) {
-        try {
-            loanService.returnBook(bookId, email);
-            return ResponseEntity.ok("Book returned successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());  // Devolver error específico
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
-        }
-    }
+	@Autowired
+	private UserService userService;
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@PostMapping("/loan/{bookId}")
+	public ResponseEntity<Map<String, Object>> loanBook(@PathVariable Long bookId,
+			@RequestBody Map<String, String> request) {
+		String email = request.get("email");
+
+		User user = userService.findByEmail(email);
+
+		Map<String, Object> data = new HashMap<>();
+		data.put("userId", user.getId());
+		data.put("bookId", bookId);
+
+		Map<String, Object> response = new HashMap<>();
+		if (email != null) {
+			loanService.loanBook(bookId, email);
+			response.put("success", true);
+			response.put("message", "User with email " + email + " has loaned book with ID: " + bookId);
+			response.put("data", data);
+
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "Book or user not found.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@PostMapping("/return/{loanId}")
+	public ResponseEntity<Map<String, Object>> returnBook(@PathVariable Long loanId) {
+
+		Optional<Loan> loan = loanService.findById(loanId);
+
+		User user = loan.get().getUser();
+		Book book = loan.get().getBook();
+
+		Map<String, Object> data = new HashMap<>();
+		data.put("userId", user.getId());
+		data.put("bookId", book.getId());
+		data.put("ini date", loan.get().getInitial_date());
+		data.put("due date", loan.get().getDue_date());
+
+		Map<String, Object> response = new HashMap<>();
+		if (loan.isPresent()) {
+			loanService.deleteLoan(loanId);
+			response.put("success", true);
+			response.put("message",
+					"User with email " + user.getEmail() + " has returned book with ID: " + book.getId());
+			response.put("data", data);
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("success", false);
+			response.put("message", "Loan not found.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+	}
 }
-

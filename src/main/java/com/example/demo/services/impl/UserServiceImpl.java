@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
@@ -20,9 +19,6 @@ public class UserServiceImpl implements UserService {
 	@Qualifier("userRepository")
 	UserRepository userRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
 	@Override
 	public User registerUser(User user) {
 
@@ -31,8 +27,6 @@ public class UserServiceImpl implements UserService {
 		if (existingUser != null) {
 			throw new RuntimeException("Email already in use");
 		}
-
-		System.out.println("Saving user: " + user);
 
 		return userRepository.save(user);
 	}
@@ -56,6 +50,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getAllUsers() {
 		return userRepository.findAll().stream().collect(Collectors.toList());
+	}
+
+	@Override
+	public Optional<User> findById(Long id) {
+		return userRepository.findById(id);
 	}
 
 }
