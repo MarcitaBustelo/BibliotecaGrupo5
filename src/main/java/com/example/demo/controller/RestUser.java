@@ -29,7 +29,6 @@ public class RestUser {
 		return userService.getAllUsers();
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("/{id}/activate")
 	public ResponseEntity<Map<String, Object>> activateUser(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();
@@ -45,7 +44,6 @@ public class RestUser {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("/{id}/deactivate")
 	public ResponseEntity<Map<String, Object>> deactivateUser(@PathVariable Long id) {
 		Map<String, Object> response = new HashMap<>();

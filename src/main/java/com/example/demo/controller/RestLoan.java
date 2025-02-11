@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +29,6 @@ public class RestLoan {
 	@Autowired
 	private UserService userService;
 
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping("/loan/{bookId}")
 	public ResponseEntity<Map<String, Object>> loanBook(@PathVariable Long bookId,
 			@RequestBody Map<String, String> request) {
@@ -57,10 +55,8 @@ public class RestLoan {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_USER')")
 	@PostMapping("/return/{loanId}")
 	public ResponseEntity<Map<String, Object>> returnBook(@PathVariable Long loanId) {
-
 		Optional<Loan> loan = loanService.findById(loanId);
 
 		User user = loan.get().getUser();
