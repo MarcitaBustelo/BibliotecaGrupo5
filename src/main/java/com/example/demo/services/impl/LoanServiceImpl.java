@@ -58,20 +58,6 @@ public class LoanServiceImpl implements LoanService {
 		bookRepository.save(book);
 	}
 
-//	@Override
-//	public void returnBook(Long bookId, String email) {
-//		User user = userRepository.findByEmail(email);
-//		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
-//
-//		Loan loan = loanRepository.findByUserAndBook(user, book)
-//				.orElseThrow(() -> new IllegalArgumentException("Loan not found"));
-//
-//		book.isAvailable(true);
-//
-//		loanRepository.delete(loan);
-//		bookRepository.save(book);
-//	}
-
 	@Override
 	public List<Loan> findLoansByUser(User user) {
 		List<Loan> loans = listAllLoans();

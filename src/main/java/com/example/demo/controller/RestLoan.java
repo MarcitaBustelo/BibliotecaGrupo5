@@ -21,7 +21,7 @@ import com.example.demo.service.LoanService;
 import com.example.demo.service.UserService;
 
 @RestController
-@RequestMapping("/api/loans")
+@RequestMapping("/api/users")
 public class RestLoan {
 
 	@Autowired
