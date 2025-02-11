@@ -26,12 +26,15 @@ public class User {
 	private String password;
 	private String role;
 
+	private String token;
+
 	private boolean activated;
 
 	@OneToMany(mappedBy = "user")
 	private List<Loan> loans;
 
-	public User(long id, String name, String lastname, String email, String password, String role, boolean activated) {
+	public User(long id, String name, String lastname, String email, String password, String role, String token,
+			boolean activated, List<Loan> loans) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -39,8 +42,9 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.token = token;
 		this.activated = activated;
-
+		this.loans = loans;
 	}
 
 	public User() {
@@ -95,7 +99,15 @@ public class User {
 		this.role = role;
 	}
 
-	public boolean getActivated() {
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public boolean isActivated() {
 		return activated;
 	}
 
@@ -103,10 +115,19 @@ public class User {
 		this.activated = activated;
 	}
 
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", lastname=" + lastname + ", email=" + email + ", password="
-				+ password + ", role=" + role + "]";
+				+ password + ", role=" + role + ", token=" + token + ", activated=" + activated + ", loans=" + loans
+				+ "]";
 	}
 
 }

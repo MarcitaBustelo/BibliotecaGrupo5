@@ -2,12 +2,15 @@ package com.example.demo.controller;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.User;
@@ -17,7 +20,9 @@ import com.example.demo.service.UserService;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-	private final UserService userService;
+	@Autowired
+	@Qualifier("userService")
+	private UserService userService;
 	private final PasswordEncoder passwordEncoder;
 
 	public AuthController(UserService userService, PasswordEncoder passwordEncoder) {
@@ -29,7 +34,7 @@ public class AuthController {
 	public ResponseEntity<Map<String, Object>> register(@RequestBody User user) {
 		try {
 			user.setRole("ROLE_USER");
-			user.setActivated(false); 
+			user.setActivated(false);
 
 			userService.registerUser(user);
 			return ResponseEntity
@@ -55,5 +60,25 @@ public class AuthController {
 		}
 
 		return ResponseEntity.ok(Map.of("message", "Login successful", "email", email));
+	}
+
+	@PostMapping("/login")
+	public User login(@RequestParam("user") String user, @RequestParam("password") String password) {
+		String token = getJWTToken(user);
+		User usuario = new User();
+		usuario.setEmail(user);
+		usuario.setPassword(password);
+		usuario.setToken(token);
+		return usuario;
+	}
+
+	private String getJWTToken(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@PostMapping("/register")
+	public User registerJWT(@RequestBody User user) {
+		return userService.registerUser(user);
 	}
 }
