@@ -28,9 +28,9 @@ public class SecurityConfig {
 		http.cors(cors -> cors.configurationSource((CorsConfigurationSource) corsConfigurationSource())) // Configuración
 																											// CORS
 				.csrf().disable()
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
-						.requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/user/**").hasRole("USER")
-						.anyRequest().authenticated())
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "api/books/**").permitAll()
+						.requestMatchers("api/admin/**").hasRole("ADMIN").requestMatchers("api/users/**")
+						.hasRole("USER").anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.exceptionHandling(exception -> exception
 						.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
