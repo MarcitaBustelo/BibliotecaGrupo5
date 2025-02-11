@@ -34,7 +34,9 @@ public class RestLoan {
 			@RequestBody Map<String, String> request) {
 		String email = request.get("email");
 
-		User user = userService.findByEmail(email);
+		Optional<User> userOp = userService.findByEmail(email);
+
+		User user = userOp.get();
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("userId", user.getId());
@@ -42,7 +44,7 @@ public class RestLoan {
 
 		Map<String, Object> response = new HashMap<>();
 		if (email != null) {
-			loanService.loanBook(bookId, email);
+			loanService.loanBook(bookId, user.getId());
 			response.put("success", true);
 			response.put("message", "User with email " + email + " has loaned book with ID: " + bookId);
 			response.put("data", data);

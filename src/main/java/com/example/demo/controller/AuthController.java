@@ -1,20 +1,25 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,62 +28,41 @@ public class AuthController {
 	@Autowired
 	@Qualifier("userService")
 	private UserService userService;
-	private final PasswordEncoder passwordEncoder;
 
-	public AuthController(UserService userService, PasswordEncoder passwordEncoder) {
-		this.userService = userService;
-		this.passwordEncoder = passwordEncoder;
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-	@PostMapping("/register")
-	public ResponseEntity<Map<String, Object>> register(@RequestBody User user) {
-		try {
-			user.setRole("ROLE_USER");
-			user.setActivated(false);
-
-			userService.registerUser(user);
-			return ResponseEntity
-					.ok(Map.of("success", true, "message", "User registered successfully", "email", user.getEmail()));
-		} catch (RuntimeException e) {
-			return ResponseEntity.badRequest().body(Map.of("success", false, "error", e.getMessage()));
-		}
-	}
-
-	@PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> request) {
-		String email = request.get("email");
-		String password = request.get("password");
-
-		if (email == null || password == null) {
-			return ResponseEntity.badRequest().body(Map.of("error", "Missing email or password"));
-		}
-
-		User user = userService.findByEmail(email);
-
-		if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-			return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
-		}
-
-		return ResponseEntity.ok(Map.of("message", "Login successful", "email", email));
-	}
+	private final String SECRET_KEY = "mySecretKeymySecretKeymySecretKeymySecretKey";
+	private final long EXPIRATION_TIME = 86400000;
 
 	@PostMapping("/login")
-	public User login(@RequestParam("user") String user, @RequestParam("password") String password) {
-		String token = getJWTToken(user);
-		User usuario = new User();
-		usuario.setEmail(user);
-		usuario.setPassword(password);
-		usuario.setToken(token);
-		return usuario;
-	}
+	public ResponseEntity<?> login(@RequestBody User loginRequest) {
+		Optional<User> userOp = userService.findByEmail(loginRequest.getEmail());
 
-	private String getJWTToken(String user) {
-		// TODO Auto-generated method stub
-		return null;
+		if (userOp.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid email or password"));
+		}
+
+		User user = userOp.get();
+
+		if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Invalid email or password"));
+		}
+
+		String token = getJWTToken(user.getEmail());
+		user.setToken(token);
+
+		return ResponseEntity.ok(user);
 	}
 
 	@PostMapping("/register")
 	public User registerJWT(@RequestBody User user) {
 		return userService.registerUser(user);
+	}
+
+	public String getJWTToken(String user) {
+		return Jwts.builder().setSubject(user).setIssuedAt(new Date())
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+				.signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()), SignatureAlgorithm.HS256).compact();
 	}
 }

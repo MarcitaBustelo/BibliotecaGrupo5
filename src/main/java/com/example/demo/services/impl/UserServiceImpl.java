@@ -22,11 +22,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registerUser(User user) {
 
-		User existingUser = userRepository.findByEmail(user.getEmail());
+		Optional<User> userOp = userRepository.findByEmail(user.getEmail());
 
-		if (existingUser != null) {
+		if (userOp.isPresent()) {
 			throw new RuntimeException("Email already in use");
 		}
+
+		user.setActivated(false);
+		user.setRole("ROLE_USER");
 
 		return userRepository.save(user);
 	}
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByEmail(String email) {
+	public Optional<User> findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
 

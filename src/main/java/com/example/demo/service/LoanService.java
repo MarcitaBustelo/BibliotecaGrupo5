@@ -11,7 +11,7 @@ import com.example.demo.entity.User;
 @Service
 public interface LoanService {
 
-	void loanBook(Long bookId, String username);
+	void loanBook(Long bookId, Long userId);
 
 	Optional<Loan> findById(Long id);
 

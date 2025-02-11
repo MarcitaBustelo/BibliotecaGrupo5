@@ -32,15 +32,17 @@ public class LoanServiceImpl implements LoanService {
 	private BookRepository bookRepository;
 
 	@Override
-	public void loanBook(Long bookId, String email) {
-		User user = userRepository.findByEmail(email);
+	public void loanBook(Long bookId, Long id) {
+		Optional<User> user = userRepository.findById(id);
 		Book book = bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
 		if (!book.isAvailable()) {
 			throw new IllegalArgumentException("The book is not available.");
 		}
 
-		List<Loan> loans = findLoansByUser(user);
+		User user2 = user.get();
+
+		List<Loan> loans = findLoansByUser(user2);
 		long activeLoansCount = loans.stream().filter(loan -> !loan.isDeleted()).count();
 
 		if (activeLoansCount >= 5) {
@@ -48,7 +50,7 @@ public class LoanServiceImpl implements LoanService {
 		}
 
 		Loan loan = new Loan();
-		loan.setUser(user);
+		loan.setUser(user2);
 		loan.setBook(book);
 		loan.setInitial_date(Date.valueOf(LocalDate.now()));
 		loan.setDue_date(Date.valueOf(LocalDate.now().plusWeeks(2)));

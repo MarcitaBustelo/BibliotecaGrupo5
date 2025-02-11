@@ -7,7 +7,7 @@ import com.example.demo.entity.User;
 
 public interface UserService {
 
-	User findByEmail(String email);
+	Optional<User> findByEmail(String email);
 
 	User registerUser(User user);
 
