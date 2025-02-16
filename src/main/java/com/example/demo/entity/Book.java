@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Book {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
